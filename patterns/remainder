@@ -1,0 +1,38 @@
+
+* make a check in signup's bucket insertion ,we have to know it is inserted or not and at the driveInfo
+* file name if exists change the name to add(1) . same file uploading not a problem 
+* csrf if existed , it will give in returns of userID . but we also need to give csrf token in result
+* now it self fix the xpiration authentication
+* now:authenticate expiration time
+* now:to expire if the expired access_token is used by using create a authenticator.
+* now: expire the old xsrf to 0 and if the req url is pdfupload redirect , if the req url is pdfbtn or tool btn create new
+* if bucket exist , signup success messgage not sendding
+* now: csrf pattern in project pattern pending
+* expiration pending work , in oauth
+-............- do the above asap
+* upload file has more pendings , upload file has some bugs fix it at last
+* COOKIE EXPIRATION DATE PROBLEM\
+*  xsrf verification should be used in pdf.upload.api  and converter.api - dont;t forgot
+* actiated time milli should be added , check xsrf session creating lib and update it 
+* pdf upload lib now showing not uploaded error instead upload success showing
+* botg upload check error handling
+*change user id spelling to USER_ID in csrf_Session and change typeof USER_ID in USER_IDS in mogodb
+* the pdfconverter should contain the popup that can open either through local and  our own drive and google drive [lets check if the possible]
+*i think changing the file mimetype in header will escalate the validfile functionn ithink [file upload vulnerability] 
+* error handling pending in upload .js
+* user id or any other validation or searching purpose with lets try something different[compulsory]
+* user id recursion pending in signup.js and dynamic limit limit pending
+* user id setting to upload bucket pending in upload.js
+* db connection and db works pending for upload.js [like bucke name (user id ) exist ornot file name exists or not]
+* if there is no images fiels field or empty then stop the excetion of creating bucket.
+* update size and values of images in upload : LATER 
+* check in intenet whether we need new connection for each time same file like signup.js have insert content in USERS and USER ids[check it later]
+* pendinng  validating the user id because we will try if there any new method to reduce the time take
+*file name  
+* what to do if suddenly our algorithm fails in middle of the project like algorithm is [a+b then its ans /3 then * 7] for i.e if the /3 fails then what to do? DONT KNOW LEARN THAT
+* token is null, fill them later
+* set Recursin limit , suppose it may fail MUST
+* check whether the username satisifes all pur conditions
+* we will make check mate by adding signed variable in db 0 first and then the user id used once to signup then put 1 there
+* create like sep server for creating bucket
+* env varible working good but they are not[env variable] saved permanently

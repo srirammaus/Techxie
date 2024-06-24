@@ -1,0 +1,138 @@
+
+:root{
+ --primary-color: #ffff33;
+ --secondary-color: rgb(204, 255, 255,.3);
+ --third-color: white;
+ --four-color: #C3E0E0;
+
+}
+
+
+
+html,body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.small-frame-items {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    flex: 0 0 auto
+}
+.small-Folder,.small-File {
+    display: inline-flex;
+    position: relative;
+    flex-direction: row;
+    width: 100%;
+    height: 13%;
+    flex: 0 0 auto;
+}
+.small-Folder div,.small-File div{
+    display: inline-flex;
+    height: 100%;
+    width:23%;
+    color: #000000a6;
+    align-items: center;
+    
+}
+/*there is no defined height of icon*/
+.small-Folder div[attr="small-Folder-icon"],.small-File div[attr="small-File-icon"]{
+    justify-content:center;
+    transform:translate(-30%,0);
+    width:10%;
+    flex: 0 0 auto;
+
+
+}
+.small-Folder div[attr="small-Folder-name"],.small-File div[attr="small-File-name"]{
+    flex-direction: column;
+    align-items:flex-start;
+    justify-content: center;
+
+
+}
+.small-Folder div[attr="small-Folder-name"] a,.small-File div[attr="small-File-name"] a {
+    font-family: 'Poppins', sans-serif;
+    color: #000000d4;
+    font-weight: bold;
+    font-size:100%;
+    transform:translate(-70%,0);  
+    
+}
+.small-Folder div[attr="small-Folder-name"]  a[attr=description] {
+    font-family: 'Poppins', sans-serif;
+    font-size: 50%;
+}
+.small-Folder div[attr="small-Folder-more"],.small-File div[attr="small-File-more"] {
+    display: inline-flex;
+    width:33%;
+    margin-left:50%;
+    justify-content:center;
+
+    
+
+}
+.small-Folder div[attr='small-Folder-more'] i,.small-File div[attr='small-File-more'] i{
+    display: inline-block;
+    position:relative;
+    float:left;
+
+}
+.small-Folder div[attr='small-Folder-more'] div{
+    display:block;
+    position:absolute;
+    background:white;
+    font-size:100%;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+    border-radius:10%;
+    height:150%;
+    transform:translate(-45%,32%);
+    width: 15%;
+}
+.small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] > div[attr="pop-item"] {
+ 
+    display: inline-block;
+    position: relative;
+    transform:translate(10%,0);
+    width: 80%;
+    height:33%;
+    border:none;
+    box-shadow:none;
+
+}
+.small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] i {
+    display:inline-block;
+    float:left;
+    margin:6% 0 0 5%;
+    height:100%;
+}
+.small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] a {
+    display:inline-block;;
+    margin:5% 0 0 15%;
+    font-family: 'Poppins', sans-serif;
+    width: 50%;  
+}
+
+.small-File div[attr="small-File-icon"] img {   
+    width: 15%;
+    aspect-ratio:1/1;   
+
+}
+
+
+.small-File div[attr="small-File-name"]  a[attr=description] {
+    font-family: 'Poppins', sans-serif;
+    font-size: 50%;
+}
+.large-frame-items{
+    display: none;
+}
+.page-btn {
+    display: none;
+}

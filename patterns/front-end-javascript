@@ -1,0 +1,16 @@
+//front- javascript pattern
+//0 - means pending
+requests:-
+	login
+	signup
+	upload
+	driveuplaod-0
+	converterer - 0
+	webdrive - 0
+	toolbtn 
+	grant_code
+	username  verifier
+
+Others:-
+	* socket javascript for php communications
+	* javascript requestes works form

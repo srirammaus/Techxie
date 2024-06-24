@@ -1,0 +1,286 @@
+keywwords: N-Not Done , D-Done. ,NW - next work 
+
+How to design a structure? idea !!!
+	* make a plan
+	* sep it into small small cuts
+	* compress those sperated stuffs
+	* check there is complication
+	* check whether it is interrupting other plan
+
+integrate signup libraries with api's =N; 
+install images-to-pdf = d;
+next work fully with fs = nw;
+
+* PHP FOR SOCKET BASED CONNECTION! 
+* PHP or PYTHON server should be clearing or miving the dump from db
+* PYTHON FLASK LISTNEING SERVER DO SOME AI BASED WORKS
+* nodejs common as usual backend works
+AIM:-
+	* contains lot of tools 
+	* present tools are - pdfconverter,drive
+
+Backend :-
+	* nodjs
+	* mongodb
+	* optional -  creating docker ,load it into in aws
+
+Frontend :-
+	* html
+	* css
+	* javascript
+
+
+architecture:-
+	multiple servers,:
+		* seperate CDN for css images
+		* content delivery server - providing like datas, converting pdf works  - REST .api for now we have everthing as same both ver sever and content sever
+		* verification server - searching , sorting , deleting
+		* signup  -required things email & ph otp verfication  -  last work
+		* login -  then create tokens [follow already availble token protocols]
+		* upload - check the file type
+		* chat with help -  AI [python or php] - other server
+		* CSRF tokens are are only for tools 
+		* OAuth  or JWT will be the main session token
+	
+	frontend :- 
+	 	* S- page  = seperate username, password and other stuffs will be then in same page or make it beautifull
+		* login page =  as usual
+		* home page already one nav bar then it should contain about , home , tools 
+		* tools contains things
+		* make it animated once your prj AIM completed
+	pdfconverter:-
+		* bucket name format - userid + md5(Date.now()time) --
+			* creation - put it inside the !fs.exsitsync()
+			* date.now() is as the first var before [try or antohere place .....better to bring the date.time var from somewhere else] starting it [date var should be initialized]
+			* inside try - insert the respected name once to db
+			* then second round [if there are another files] they already have the date var you can use them
+		* IMAGES AND THEIR META DATA AND THE PDF'S BUCKETS [DATA LIKE DATE N TIME , ]
+		* pdf converter btn or any tool btn clicked then xrsf token request sent , then you recive your token with repected front-end , then upload clicked pop-up raise , then the imgs slected u start upload then xrsrf verifcaation haappen then click convert
+
+* creat a event monitor in front-end throught which we can automatically log out if the cookies expired once
+
+*  every tools should need csrf token design them like that
+s2 - user verfication + id creation
+s1 - signup 
+s2 - login + token creation [session token ] and cookies
+s2 - validate each time username and token
+s1 - content data devlivers and converting work
+
+------------------------------------
+TOOLS patternn:-
+	* all tools library function should redirect properly
+	* tools clicked csrf created with time
+	Pdfconverter:-
+		* csrf created [check if there is token already available without expired by using their userID] 
+		* upload - csrf validated and fetch the time and create sha256 [userid-hasedvalue]
+		* convert - fetch the respected user's hashed value then we can get the proper folder
+		Expiration protocol:-
+			* before csrf new token insertion - check if there is token already available without expired by using their userID
+			* if valid time reached set them to expire 0
+
+------------------------------------
+have to create session tokens everywhere
+userid creation:-	
+	* req - username
+	* response - userid , username
+	* validating existing username
+signup:-
+	* creating user profile in db
+	* creating a bucket in db , server . 
+		* server - location: webdrive ,bucket name - userid[it is unique]
+		* db -  create a basic bucket profile.[bucket info]
+		* signup end is to redirection to login page then session creation
+		* general token for any unique works , may be used in future
+login:-
+	* login activity manager
+	* 1st login to verify the email and phone number
+	* OAuth for login. JWT for resouse sharing
+	* all activity base is session token 
+	* login is the authentication page -  auth grant should happen
+	* OAuth - db: username,grant_code[code],access_token,refresh_token,scopes[below scopes numbers are listed],client_id[optional],client_secret[optional]expiration,expired,callback url[if u provide any service,it is required that we have to store here]
+	* OAuth new token request - username,auth_url[login url],callback url [optional][if giving any serviceadd this],accesstoken,refresh toke [for another]
+	* scope number - 1: login session, 2: any kind of resourse sharing 
+	* why auth grant is required - because of the requested scopes. if the server won't allow that user's resourse for this request . it declines. 
+	* so we need OAuth authenticator & generating OAuth token
+services via OAuth:-
+	
+sesssion management:-
+	* if session management , process half completed, you have del  them  or move it somewhere else
+	* session management is working through OAuth
+	* but we need session ID
+	* session id should be created dynamically like userID creation .
+	in server.validater.js
+	* will do that later date: feb 23
+	* can session id differentiate the one browser and phone app and desktop.
+	* Yes
+drive.upload:-
+	* req.file is not working 
+	* lets create a small algo
+	* limit the valid reqest inputs [i.e if 4 keys should allow and the respected names should be there]
+	* 
+webdrive:- 
+	* how to get last directory number ? by adding a variable fo_tracker. this is will updated once 
+	* default main page is main folder fo_num:0,fid is f0.
+	* Main folder is F0
+	* common variables below,
+		* F_count - folder count tracker
+		* F_id - folder id i.e [f1]
+		* F_num - folder number [1]
+		* f_id - file id 
+		* f_num - file num
+		* i_count - items count within a folder
+		* F_name - folder name
+		* f_name - file name 
+		* F_count def value is 1
+		* i_count same as above
+	* create a active folders varible. as array // rejected
+	* active folder defual tshould be emppty //rejected
+	* if deleted then make the index of delted foler as 0 
+	* New Folder-
+		* create a new folder with repected csrf and session token accordingly
+		* i_count formula is def c=value  of i_count is 1, formula i_count -1, then update them with adding 1
+	bucket structure:-
+		* Name should be unique[userID is enough with respected time hased value]
+		* 
+	bucket db structure:-
+		* The bucket has two categroires
+		* files and folders.
+		* folders should be made as same structure 0,1,2..
+		* Inside folders counts or stuffs should be stored as object:like{0:{},1:{}} [lets go with this it think]this or seprate db.
+		* Inside files same like above
+		* Insertion
+		* for creating new folder you have validate via fo_count 
+		* folders stuffs should contain files as secondary parts eg:0:{ //0 is f0
+		parent-folders: should be here 
+		i_count: count of the below items // first get i count number then insert with the respected number
+		items: 1-file ,2- may be folder,3,4
+		below how it construced
+		......
+			0(file-0):{
+				...
+			}
+			1(folder-0):{
+				foldername:..
+				folder number: 0..
+				fid_s:1.
+				...
+			}
+		}
+		1:{
+		...
+		}
+		* file names: {
+			0:[], //match ur name with this for creating any file name or folder name
+			1:[],
+		}
+		* folder name:{
+		 	0: [],
+		}
+		* fetching:
+		* is it complicated?
+		* i think it will work perfectly becuase we gae the response proerly , so no prob, if the info cahngedd by the user like usning burp !  that's never be a server problem .
+		* small complication:  we are checking the name already exists but we are checking them in a particular folder, so we have to create new directory for each folder
+		complication : what if ?  if we send parent folder number to client . we can reach it easily. what if? instead we are sending the current folder also , we can minus.But my thought is that if we those suffs to client then it shows.id like it.[if u want to do that we have to maintain a session db for active folder management.  this beacuse here we  can use this for AI or machine learing purpose. but lets do it with simple or above stuffor 1 point because let's control those stuffs with font-end [not sure with front-end . but lets reduce the task] ]. it is like maintaining a seperate db
+		* if a folder delete then question raises?
+		* how will u delete.
+		* lets disable , by adding a varible, but it remains everywhere both in db and bucket 
+		* optional - folder 5 db has parent folders and items or sub folders . first go and del the parent's items object of this folder 5 . then del folder 5 in bucket and db should be clear the items or sub-folder and files 
+		server:-
+			* bucket name - user id 
+			* categorize everything
+		* Folder and File Drive Info
+			* this should contain the folder and file drive info
+			* structure example below
+				file(array):[]
+				folder(array):[]
+Later token :
+	create your own
+tools :
+	* use session token to check there is valid user by checking the actual session , then validate the csrf sessions if there is existing csrf token corresponding to the session token
+	* tools btn will make u to redirect with respectd page
+	* when tools is clicked ,if already don't create csrf, if not , a csrf token is automatically intiated
+	* when it expires create new
+	* csrf session db should contain the jwt session token also
+	* if jwt expires you should expire current csrf token
+	* classify the sessions , if there is session alerady created for the same device[browser] [broser and mob and desktop app also different] if that device re-request then make sure to expire the last one.
+pdfupload :-
+	* collect the files , validate , check if virus
+pdfconverter:-
+	* convert them
+
+csrf pattern:-
+	* csrf's compulsories or mandotories :- 
+		* sessionID ,session_token,userID
+	* create a seperate csrf session database for web app desktop
+	* ROUTING should be proper for web app desktop..
+	* if the desk app request made by broswers , have to stop it before it get into lib 
+	* eventhough we have session tokens , it is used as multi level check
+	* csrf purpose is check all activaties happening with user's consent ,  whereras cors resoure sharing to certain other domains. for example if u having cors allow to ur domain but u r a attacker now trying to hack a victim then u create a malicous link[contains crafted html of changing pwd] and then send to victim  he clicks then pwd changed , that's why csrf introduce
+
+OAuth:-
+	* set sessionID function is only for auth code grant not refresh token.keep updating the access token once expire time not reached via refresh token
+	* create a seperate session database for web app desktop
+	* ROUTING should be proper for web app desktop
+	* session db should contain if it is active
+	* once login authentication will be sent
+	* grant code and scopes will be in returns[bug: it is in nots]
+	* once the grant -code used make it as valid once // not implement ,for some time after hacking lets  change
+	* grant-code will requested for authorization
+	* then access and refresh will be sent
+	* if expired results sent to the client , then u have automatically make req from ur front-end by getting access token by refresh token
+
+error handling:-
+	* write all errors withing the library 
+
+-------
+backend files description:-
+
+lib :-
+	*pdf.upload.js - pdf files uploaded to server's bucket by creating a new one , for each time . used libs - xsrf_verification
+	*server.validater.js - validating the username and giving a userid
+	*upload.js - having too many pending works, this is used for uploading files to drive bucket
+	* validater - used to check the username userid is valid
+	* xsrf - creating a new token  for csrf 
+	* xsrf verfication  - checking whether the token is valid or not
+	* Exception handler -  to catch errors 
+	* signup - signup library , it will create bucketin both[db][server] , create a profile in db
+	* limit.env -  environmetal variales
+	* validater.js -  used for importatant validation like session token, username,email, phone_number
+
+api - 
+	* xsrf.api -  testing api 
+	* server.validater.api -  username verification api
+	* converter.api - converting images to pdf api
+	* signup api - signup 
+	* pdfupload.api - pdf files upload before converting
+	* drive.upload.api - uploading drive files
+	* xsrf.api  - testing api for now.
+
+
+Done :-
+	* userverification -  server.validater, server.validated.api
+	* signup - signup, signup.api.js
+
+PROTOCOLS used and their studies:-
+	*  OAuth 2.0 used for both service providing purpose and authorization
+	* for service Parameters are - client id , clien secret , auth url[this  contains cb url, client id and secret] , callback url , access_token url , scope , auth code if u used pkc.
+	* for login - auth URL or login URL which will authenticate user then access token provided
+
+
+--------------
+FRONT_END:-
+		
+drive main page:-
+		html :-
+				* Three main divisions
+					* bg
+					* nav-bars
+					* pages
+				* pages
+					* pages divsion contain empty iframe iframe pages - tool3,pdfupload
+					* seprate pages - web drive
+		javascript:-
+				* manipulating css
+				* updating html displays
+				* start making requests[suggested: fetch][do signup now: feb 9 early morning now]
+				

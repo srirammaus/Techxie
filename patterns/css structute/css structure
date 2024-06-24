@@ -1,0 +1,25 @@
+compulosory thing s we should know in css 
+
+animated rounded goes like a wave - translate,scale,animation
+moving elements - animation
+icon - svg
+scrolling - intersection observer api
+loading page before the elements shows them like loading which should be common for all elemnt
+graph
+transition
+
+IMPORTANT thing we must know
+
+responsiveness
+
+
+how to do css :-
+
+choosing fonts 
+icon resource
+sections or grid
+overall fit everything to respected place
+nav , main , footer
+then work individually on it like animate them,paint 
+loading 
+

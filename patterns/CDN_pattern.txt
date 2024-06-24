@@ -1,0 +1,11 @@
+//CDN pattern
+
+my idea:-
+	* use case - by serving the img, vides, css styles which inlcude if have some codes or programs within ur webite
+	* creation:-
+		* As usual , nodejs web server, express framework,
+		mongodb 
+		* session verfication , CORS , csrf token
+		* Load balancing soft code techniques
+		* bucket for proper storage management
+		

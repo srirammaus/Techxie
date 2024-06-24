@@ -1,0 +1,109 @@
+1. design a interface html and css . button functions shoud be written with js
+2. left side division completed
+3. right side division:-
+	* main page
+	* backspace - home folder  - new folder
+	* current folder
+	* videos (videos releated format should be accepted here)
+	* photos (photo releated format should be accepted here)
+	* documents (doc releated format should be accepted here like .pdf , .docx , .sql)
+	* Else should be rejected
+4.check if there is bucket already crated if not don't create
+5.The structure:-
+	* The files are created with their folder names
+	* like F1-orginalname.png 
+	* DB should consists username,token,parent dir, and the other all folders
+	* like {u:..,
+			....,
+			.....,
+			folders:{
+			f1:..,
+			}}
+	* change html content with javascript [here we need the f1-f2-f3 info]
+
+9.stduy about csrf
+10.f1 is pg-1 ,f2 is may be pg-1 then f3 may be pg-2
+11.need a formula like if def is 5 then f should be f1? answer found happie !!
+	* answer is - like 
+	* if available or def keys is 5 then if(k == 5) {c= 5-5 this is 0 now ,then c+=1;} then f is f1,
+	* if (k == 6) {c=6-5 ,c+=1} f2
+
+12.Error handling is a important check everywhere once prj completed
+
+
+
+
+14.common rules for algorithm
+15.retriving keys:- key point to develop a algo are below
+	* Algorithm :-
+		* available res - username,bucketname;
+		* output - pages, folder in that pages [new algo: 
+													* username,bucketname,pagenumber
+													* output:list of all folders
+													* possiblites]
+		* possiblities - the process
+	
+15.
+* task - pick up a file , adding a file , deleting the file in folder and entire folder ,renaming file name not bucket name .
+* spread user id every where
+* simplify - bucket name =  user id enough [why? if there any situation our db get hacked and upload folder spread then we have protect that this file coresspondig to speecific user ]. the user id should spread everywhere in our front-end
+* file name -  filename while adding the same file add (1 or else numbers) and encode .
+* check the file name exists with the help of db
+* [DON'T KNOW which is less complex to processor searchig through db or getting once and comparing?]get the db list once not too many times to reduce the time and put other check if the user having the same name in same uploading [i.e multiple file where there are two files having same name].
+* add the stuffs to db
+* no exceptional should throw if there is same file exist because it is users wish !so encode it with date.now
+* changes -  you should change the bucket name to userid instead of username.
+* check the file name exist through the db and then add(1) to name and encode with date(date.now()).toString().while checking , if there is multiple files uploading there are two having same sort them filename by adding (1) to other filename and enocode it with date  
+---------------------------- construction --------------
+* so there is no page number by default but there is classification and + button for each classified items if the button clicked a new page is opened and the item[i.e pdf's]
+ displayed .
+* all folders contain page number and the classification as above
+* folders are also a classification in default page
+* now lets look db storing aspect,
+	* what is my thought is ? make it simple to save but create algorithm that can do the stuffs easily like picking and del and renam and add
+	* we need to simplify picking folders and adding and del and renaming[picking]
+	* so how to save:- 
+		* folders and files classification
+		* for folders ,  
+		*  we save them like f1, f2 .....
+		* The f1 contains... folder name, previous folder number or parent of this folder and child folder numbers like below
+		* f3 - { // while checking the folder name u will get result that contains files and  cf folders name  then you get the res and then add them
+			folder_name: studies, 
+			PF: f1  // why f1 ? because the f1 may contain two folders and the 								present user juz requested the f3.. so!  
+			CF: f4,f5 .... // we have to update this // have to check whether it     is possible by adding comma after elements    
+			files: F1,F2....
+		}
+		* if the user changes and f1 to f2 using burp or any tool we will provide the requested folder but the name should match that is where there the check!! , so if he changes the f1 to f2 and altered the name correctly of f2 then we will provide the requested  one
+		*for files,
+		* f1,f2... like that 
+		* f1 -{
+		 filename:....,
+		 parent folder:null, -- if null means main page
+		}
+		* next thumbnail , we need thumb nail for every stuffs 
+
+* user id is caps everywhere it means about DB - DB it is USER_ID
+*setting dynamic limit :-
+	* if the recursive == the limit then will change the limit (min,max) -- FAILS , becuse in the recursion the 1 is come in first recursion answer then 0 , then 1 again coming , so we shouldn't consider the recursion will be equal to the limit
+
+	* put the limit count in enviromental files 
+
+16.Hack idea .
+ 
+ * can we do anything with the unknown key in the request
+ * we can try brutefore in grant_code here path: authentication
+ * authorization NOTE may bug
+ * if the grant code is used once , it is the developer duty to make it as valid once , if not it may reuse and will reproduce new session token we can use it infinite , dont fix this bug now let's hack it 
+ * Bucket name is designed in specific hash name . if the hash algorithm known and then any other way to acquire api is there available u may hack i think !!! lets try  
+
+ 
+ 17.xsrf
+
+ * db arch:-
+ 	 * isvalidtime is over create a new session and make the expiry to 0  
+
+ 17. don't make setbucket as cb function , we will catch themkdir err through them and put it in logs . bucket not created error can be come through destination 
+
+
+
+

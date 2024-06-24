@@ -1,0 +1,37 @@
+{
+  "name": "techxie",
+  "version": "1.0.0",
+  "description": "App which contains so many tools",
+  "main": "REST.api.js",
+  "scripts": {
+    "test": "nodemon REST.api.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "none"
+  ],
+  "author": "Sriram Mariappan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "envfile": "^6.18.0",
+    "exif": "^0.6.0",
+    "express": "^4.18.1",
+    "formidable": "^2.1.1",
+    "fs": "^0.0.1-security",
+    "image-to-pdf": "^2.0.0",
+    "images-to-pdf": "^1.0.3",
+    "mongodb": "^4.8.1",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.16"
+  },
+  "resolutions": {
+    "lodash": "^4.17.5"
+  }
+}

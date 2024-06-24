@@ -1,0 +1,29 @@
+/*scrollKit css */
+.scroll-bar {
+	display: inline-block;
+	position: relative;
+	z-index: 999;
+	height: inherit;
+	width: 10px;
+	float: right;
+	background-color: inherit;
+}
+.scroll-track {
+	display:block;
+	position: fixed;
+	z-index: 1000;
+	/*#f2f2f2*/
+	background-color:black;
+	width: inherit;
+	height: inherit;
+
+}.scroll-thumb  {
+	display: inline-block;
+	position: relative;
+	width: inherit;
+	border-radius:100px;
+	height: 50px;
+	/*#b3b3b3*/
+	background-color: red;
+	z-index: 10001;
+}

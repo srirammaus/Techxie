@@ -1,0 +1,12 @@
+<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" >
+	<path d="M 50 5 Q 52.5 3 55 5 V 45 L 50 50 V 5 z "
+		style="fill:#ff8c1a;stroke:#ff8c1a;stroke-width:10"/>
+	<path d="M 50 95 Q 53.5 97 55 95 V 45 L 50 50 V 95 z "
+		style="fill:yellow;stroke:yellow;stroke-width:10"/>
+	<path d= "M 95 50 Q 98 47.5 95 45  H 50 L 55 50  H 95 z" style="fill:#4d79ff;stroke:#4d79ff;stroke-width:10"
+		/>
+	<path d= "M 5 50 Q 2 47.5 5 45 H 50 L 55 50 H 5 z"
+		style="fill:#00ff80;stroke:#00ff80;stroke-width:10"/>
+	
+
+</svg>

@@ -1,0 +1,54 @@
+techxie.html:-
+	1.nav bar - it should be compatible to any devices and browser
+	2.drop-down -  nav bar shuld contain dropdown
+	3.Then other stuffs shoulb be portforlio
+	4. hash should be added 
+	5.Fetch the img and text stufss thorugh jvascript
+project cards :-
+	//project card resiszer - js
+	//no.of cards shown according to size 
+	//loop no.of card elements
+	my resoltion of broswer - 1326 x 626
+	so general browser or max size of windows depends 1200 with and above 600 height
+	prj card general size - for 1200 with or desktop is 250 x400
+							for less than 400 or mobiles 250 x 350
+
+WebDrive:-
+html:-
+css:-
+javascript:- 
+	design: 
+		main.js with two dynmic imports according to the media 
+
+general design :-
+	desktop:-
+		nav bar:
+			componets:
+				* search icon 
+				* search bar 
+				* setting
+				* profile
+				* help desk
+				* new upload
+		left side bar:-
+				* my drive -  list of folder withing that [dropdown]
+				* premium plans
+				---
+				* shared with me
+				* recent
+				* important or starred
+				---
+				* trash
+				* balance storage slide +  letters
+		main frame:-
+				* folder and file navigator nav bar
+				* small nav bar containing cutomizing components they are
+					* file type - dropdown containing videos, doc, then videos containe side down having -eg:videos , showing entire videos stuffs in his  drive
+					* last modified - recently added stuffs
+					* shared with people - nowitself optional
+
+					* right xide 
+
+				* right side :-  of main frame sorting orders 
+				* view orders
+				* main frame  default orders - grid with thumbnail

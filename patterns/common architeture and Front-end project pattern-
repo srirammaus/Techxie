@@ -1,0 +1,20 @@
+common architeture and Front-end project pattern-
+
+common architeture:-
+	* 
+navigation section:-
+	profile - which is contained woth tooltip or dropdown with SETTINGS , ACCOUNT MANAGEMENT, FREE USER OR NORMAL USER
+	helpdesk- redirect page to help desk or FAQ
+	search bar - To search items in our drive
+
+side navigation :-[everything in this sshould contain icon]
+	my drive - redirect them to account management
+	Recent - recently opened
+	trash -deleted
+	starred -  important 
+	storage - it should show how much storage below with colored img and should contain storage management system and premium plans
+
+main section:-[left and right side transparency important]
+	small naviagation bar - back button | undo button [default inactive] |current folder > folder > so ..., if more than three folder list then make it as '... .> folder > current folder.'| AT THE END   |sort|filter .
+	while selecting something the hidden nav bar should be opens and overrides this- delete | info | download |
+	move| select more | unselect | select all .

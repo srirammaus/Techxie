@@ -1,0 +1,4 @@
+<!-- quadratic curve , cubix bezier - two control points one end ,curve, smooth curve one control point one end, T curve  -->
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox = "0 0 100 100">
+	<path  d="M 0 100 90 100 C 94 98 94 92 90 94  " style="fill:white;stroke-width:3;stroke:blue;"/>
+</svg>

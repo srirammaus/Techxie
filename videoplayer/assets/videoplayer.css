@@ -1,0 +1,137 @@
+
+body {
+  margin: 0;
+  padding: 0;
+}
+.video-container {
+  display: flex;
+  position: relative;
+  inset: 0;
+  margin: 0;
+  padding: 2px;
+  /*background-color: #1e293b;*/
+  background-color: black;
+  border-radius: 5px;
+  overflow:hidden;
+  /*j - vertical */
+  justify-content: center;
+  align-items: center;
+}
+#video {
+  position:relative;
+  width:100%;
+  height:auto;
+  left:0;
+  top:0;
+  bottom:0;
+  
+}
+video {
+  position:relative;
+  width:100%;
+  height:auto;
+  inset: 0;
+
+}
+#loader {
+  display:none;
+  position: absolute;
+  top:45%;
+  left:45%;
+}
+#video-controls {
+  display:flex;
+  position:absolute;
+  opacity: 0;
+  left:0;
+  bottom:0;
+  width: 100%;
+  z-index: 9999;
+  padding: 2px;
+  background-color: #1e293b;
+  transition: opacity 1s;
+
+}
+/*.video-container:hover > #video-controls{
+    opacity: 1;
+}*/
+
+#video-controls button {
+  display:inline-flex;
+  flex-direction:row;
+  height:90%;
+  min-width: 5%;
+  justify-content:center;
+  align-items:center;
+  overflow: hidden;
+}
+#play-pause-btn .mdi-pause {
+  display: none;
+}
+#video-controls input {
+  width: 70%;
+}
+#video-controls #volume-bar {
+  width: 10%;
+}
+#video-controls  #speed-btn {
+  
+}
+#video-controls  #speed-btn i {
+
+}
+#video-controls  #full-screen-btn{
+
+}
+#video-controls i {
+  font-size: 1vw;
+}
+#video-controls:-moz-full-screen { position: fixed; }
+#video-controls:-webkit-full-screen { position: fixed; }
+#video-controls:-ms-fullscreen { position: fixed; }
+#video-controls:fullscreen { position: fixed; }
+
+video::-webkit-media-controls-enclosure { display:none!important; }
+/*.video{
+  position: absolute;
+  width: 100%;
+  height: auto;
+}
+video {
+  position: absolute;
+  width: 100%;
+  height: auto;
+}
+#video-controls {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  background-color: #1e293b;
+
+}*/
+
+@media screen and (max-width: 1000px) {
+  #video-controls i {
+    font-size: 2vw;
+  }
+}
+@media screen and (max-width: 400px) {
+  #video-controls i {
+    font-size: 3vw;
+  }
+}
+@media screen and (orientation: portrait){
+  .video-container:fullscreen >#video {
+    /*top:30%; by default center because of flex*/
+  }
+} 
+@media screen and (orientation: landscape) {
+  .video-container:fullscreen > #video{
+    
+  }
+}
+ 

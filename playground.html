@@ -1,0 +1,51 @@
+<!-- palyground is used to test our stuffs we gonna create -->
+<!-- in-built style mostly  -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<!-- <link rel="preload"  href="scrollKit/scrollKit.js" as="script"/> -->
+</head>
+<body  onload="main('scroll-ground','class')">
+	<style type="text/css">
+
+		.scroll-ground {
+			display: block;
+			position: relative;
+			width: 200px;
+			height: 200px;
+			border: 1px solid yellow;
+			top: 100px;	
+			overflow:hidden;
+		}
+		.force-overflow {
+			min-height: 10000px;
+			/*height:400px;*/
+			width: 100px;
+			border: 1px solid black;
+			overflow: hidden;
+		}
+		p{
+			display: inline-block;
+			position: relative;
+			width: inherit;
+			min-height: inherit;
+			word-break: keep-all;
+			word-wrap: break-word;
+			/*white-space: normal;*/
+		}
+		.force-overflow-1 {
+			height: 800px;
+			width: 100%;
+			display: block;
+			position: relative;
+		}
+	</style>
+	<!-- new scrollKit(this) -->
+	<div class="scroll-ground" >
+		<div class="force-overflow"><p>This Playground is designed to test scrollKit created by sriram mariappan https://github.com/srirammaus/ -- This Playground is designed to test scrollKit created by sriram mariappan https://github.com/srirammaus/ --This Playground is designed to test scrollKit created by sriram mariappan https://github.com/srirammaus/ --This Playground is designed to test scrollKit created by sriram mariappan https://github.com/srirammaus/ --This Playground is designed to test scrollKit created by sriram mariappan https://github.com/srirammaus/ --This Playground is designed to test scrollKit created by sriram mariappan https://github.com/srirammaus/ --This Playground is designed to test scrollKit created by sriram mariappan https://github.com/srirammaus/ --This Playground is designed to test scrollKit created by sriram mariappan https://github.com/srirammaus/ --This Playground is designed to test scrollKit created by sriram mariappan https://github.com/srirammaus/ -- </p></div>
+	</div>
+	<div class="force-overflow-1"></div>
+	<script type="text/javascript" src="scrollKit/scrollKit.js"></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+seperation of concern
+Model View controller

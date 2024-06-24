@@ -1,0 +1,69 @@
+WebDrive FrontEnd:-
+
+color choosing:-
+
+	primary-color: #ffff33;
+	secondary-color: rgb(204, 255, 255,.3);
+	third-color: white;
+font-selection:-
+google fonts - eg:- url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap')
+
+a -
+	nav - 
+	side - 
+	footer-
+p - 
+	
+icons:-
+	Font Awesome and Material icons
+	
+Big screen:-
+
+	nav section
+	side nav section
+	main section
+	footer section
+
+	nav section:-
+		profile icon
+		help desk
+		search icon 
+		search bar
+
+	side section:-
+		my drive
+		recents
+		starred
+		recents 
+		trash 
+		storage
+
+	main section:-	
+		default nav section
+			*upload
+			* Back - def gray
+			* front -  gray
+			* f > f > f if more than three ...
+			* info
+			* sort 
+		selection section:-
+			* box - for all select
+			* del
+			* link
+			* info
+			* download 
+			* move folder and file
+			* copy
+			* close box
+		main frame
+			* Folders
+			* files-
+				photos - common icon[jpeg,jpg,png,gif,svg]
+				audio - common[mp3,wav,m4a,ogg]
+				video - comon [mp4,avi,mov,mkv]
+				coding- code icon for all lang
+				text - txt icon
+				pdf - pdf icon
+				docx -docx icon
+				xlxs -xlxs icon
+		

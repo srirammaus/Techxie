@@ -1,0 +1,605 @@
+/*techxie- main page styless*/
+/* instead of using display: none ; we can se width: 0  ; it sometimes helpful
+/*block - in a new line div,inline- within the element or in same line, flex[it should be used as parent or container ]- it acts block,but automatically placed side by side  */
+/* not in use , but have to understand :root{
+	--main-content:  "content over here";
+}*/
+/*html::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+html::-webkit-scrollbar-thumb {
+	background-color: #000000;
+}
+html::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}*/
+@font-face{
+	/*First Layer*/
+	font-family: "chineseOwnFont_1";
+	src: url("fonts/richu_mast/chineseOwnFont.ttf");
+}
+@font-face{
+	/*Third Layer*/
+	font-family: "chineseOwnFont_3"; 
+	src: url("fonts/richu_mast/Richu Mast Extrude Shadow.ttf");
+}
+@font-face{
+	/*Second Layer*/
+	font-family: "chineseOwnFont_2";
+	src: url("fonts/richu_mast/Richu Mast Extrude.ttf");
+}
+body{
+  margin:0; /*This is important because this will reduce the gap between the browers and the div*/
+  padding:0;	
+}
+a{
+	font-family: "Josefin Sans", sans-serif;
+	font-size:30px;
+}
+#header{
+	display: block; /*it starts in new line, with the editing comfortable of width , height  and everything*/
+	width: 100%;
+	height: 200px;
+	position: relative;
+	background-color: white;
+	margin: 0;
+	padding: 0;
+	border-bottom: 2px solid ;
+	border-bottom-width: 100%;
+	border-color: yellow; /*dimgray*/
+	border-bottom-right-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+#nav-bar{ /* if you want side by side you can use display inline or inline-block bit for that you need the two divs with same class name else another method is use float: left in both parent and child [child should be in inline-block]*/
+	display: block;
+	background-image: url('nav-bg_.jpg'); /*get it thorugh cdn*/
+/*	background-size: 100% 100%;
+	background-position: 0% 0%; This work properly but if the resolution changes , it have to stretch , so not using*/
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+	height: 800px;
+	width: 100%;
+	
+}
+
+#nav-bar .hamburger{
+	position: absolute;
+	display: block;
+	width: 50px;
+	height: 50px;
+	/*border:  2px solid black;*/
+	/*background-color: black;*/
+	top: 4px;
+	margin-left: 4px;
+	border-radius: 100px;
+	opacity: .5;
+}
+
+#nav-bar .hamburger .bar{
+	position: relative;
+	display: block;
+	background-color: grey;
+	width: 30px;
+	height: 3.5px;
+	top:22px;
+	margin-left:5px;
+	/*border:1px solid black;*/
+	border-radius: 100px;
+	opacity: .9;
+	z-index: -1;
+}
+#nav-bar .hamburger .bar::after,#nav-bar .hamburger .bar::before {
+	content:'';
+	position:absolute;
+	width:100%;
+	height:100%;
+	background-color:grey;
+	left:0;
+	/*border: 1px solid black;*/
+	border-radius: 100px;
+	opacity: .9;
+}
+#nav-bar .hamburger .bar::after {
+	top:10px
+	
+}
+#nav-bar .hamburger .bar::before{
+	bottom: 10px
+}
+#nav-bar .nav-list .close-bar{
+	display: block;
+	position: absolute;
+	width: 30px;
+	height: 3.5px;
+	background-color: white;
+	right: 30px;
+	top: 30px;
+/* 	border: 1px solid white; */
+	border-radius: 100px;
+	transform: rotate(45deg);
+	
+}
+#nav-bar .nav-list .close-bar::after{
+	width:100%;
+	height:100%;
+	position: absolute;
+	content: '';
+	display: block;
+	top:10px;
+	background-color:white;
+	transform: translateX(-10px);
+	rotate: 90deg
+	
+}
+
+.dropdown-content {
+	display: block;
+	position:  absolute;
+	margin-left: 150px;
+	margin-top: 40px;
+	background-color: #ffff33;
+	box-shadow: 10px 10px 5px#aaaaaa;
+	overflow: hidden;
+	word-wrap: hidden;
+	height: 0;
+	width: auto;
+	transition: height .5s;
+}
+.dropdown-content a {
+	text-align: left;
+	text-decoration: none;
+	padding-top: 20px;
+	color:  black;
+	display: block;
+
+}
+.main-section-container {
+	margin: 0;
+	padding: 0;
+}
+.main-section-container a {
+	font-family: "Ubuntu", sans-serif;
+	font-style: italic;
+}
+.main-section-container p{
+	font-family: "Ubuntu" , sans-serif;
+	font-size: 21px;
+	font-style: normal;
+}
+#Home{
+	display: block;
+	position: relative;
+	clear:  both;
+	width: 95%;
+	height: auto;
+	box-sizing: border-box;
+	margin: 100px 40px 40px 20px;
+	padding:  25px;
+	box-shadow: 2px 2px 10px 5px #aaaaaa,-2px -2px 10px 5px #aaaaaa ;
+	/*border:  8px solid #003366;*/
+}
+
+#Home:hover {
+
+}
+#Home::after {
+	content: '';
+	clear: both;
+	display: table;
+
+}
+#Home a{
+	font-size: 40px;
+	text-shadow: 5px 5px 5px #aaaaaa;
+	opacity: .9;
+	left: 0;
+}
+#Home p {
+	word-wrap: break-word;
+}
+#Home .home-img {
+	width: 500px; 
+	height: 300px;
+	z-index: 2;
+	object-fit: cover;
+	object-position: right top;
+	overflow: hidden;
+	position: relative;
+	float: right;
+	padding: 40px;
+	top: 0px; 
+}
+
+#About {
+	font-family: "Ubuntu", sans-serif;
+	font-style: italic;
+	display: block;
+	position: relative;
+	margin-top: 100px;
+	width: 100%;
+	height: auto; /*Later change it to auto because it should be adjustable*/
+/*	background-color: yellow;*/
+	overflow-x: hidden;
+}
+.project-container {
+	display: block;
+	position: relative;
+	/*flex-direction: row; while using flex it makes the inner items flexibe so they are changin their width and adjeusted and viewd inside this flex container*/
+	/*flex-wrap: nowrap;*/
+	width: 100%;
+	height: 400px; 
+	margin: 80px 0px 0px 0px;
+	/*background-color: white;*/
+	border-radius: 10px;
+	padding: 20px 0px 20px 0px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	white-space: nowrap;
+	scroll-behavior: smooth;
+}
+
+.project-card {
+	position:relative;
+	display: inline-block;
+	margin-left: 150px;
+	/*flex-basis: 300px;*/
+	height: 400px;
+	width: 250px;
+	overflow: hidden;
+	background-color: #003366;
+	border-radius: 10px;
+	box-shadow:  2px 2px 10px 5px #aaaaaa,-2px -2px 10px 5px #aaaaaa;
+}
+.btn {
+	position: fixed;
+	display: block;
+	z-index: 100;
+	color: #808080;
+	text-shadow: 5px 5px 5px#aaaaaa;
+	visibility: hidden;
+}
+#btn-1{
+	top: 50%;
+	left: 2%;
+	float: left;
+}
+#btn-2 {
+	top: 50%;
+	right: 2%;
+	float: right;
+}
+
+.project-Thumbnail {
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	width:80%;
+	height: 40%;
+	margin: 10px 0px 0px 10%;
+	/*background-image: url("nav-bg.jpg");*/
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: contain;
+	border-radius: 2px;
+}
+.project-card-Desc-container {
+	display: block;
+	position: absolute;
+	background-color: #fdfd0f ;
+	word-break: keep-all;
+	word-wrap: break-word;
+	white-space: normal;
+	width: 100%;
+	height: 100%;
+	color: rgb(245, 240, 240);
+}
+
+.project-card-Desc{
+	margin-left: 10px;
+	font-family: "Ubuntu" , sans-serif;
+	/*font-size: px;*/
+	font-style: normal;
+}
+.page-container p{
+	margin: 20px 0px 0px 20px;
+	word-wrap: keep-all;
+	word-break: normal;
+}
+.gallery-container{
+	display: block;
+	postion: relative;
+	width: 100%;
+	margin:60px 0px 0px 0px;
+	/*background-color: grey;*/
+}
+.img-wrap {
+
+}
+.main-img {
+	background-color: black;
+	display: inline-block;
+	position: relative;
+	/*width: 100%; if u didn't put this , this image zoom themselves to fit in it
+	height: 100%;*/
+	width: 60%;
+	/*height: 75%; indirectly here is also height not working, but width manages those stuffs*/
+	max-width: 60%;
+	/*max-height: 75%; this should be manipulated by javascript*/
+	margin-left: 20%;
+  box-shadow: 2px 2px 10px 5px #aaaaaa,-2px -2px 10px 5px #aaaaaa;
+  border-radius: 20px;
+  overflow: hidden;
+  object-position: center center;
+  object-fit:cover;
+}
+.gallery{
+	display: flex;
+	position: relative;
+	box-sizing:border-box;
+	margin: 5% 5% 0px 5%;
+	width: 90%;
+	height: 100px;
+	background-color: inherit;
+	padding: 20px;
+	border-color: 2px solid black;
+	overflow-x: scroll;
+}
+.gallery-img {
+	display: inline-block;
+	position: relative;
+	max-width: 70px;
+	max-height: 70px;
+	border-radius: 10px;
+	box-shadow: 2px 2px 10px 2px #aaaaaa,-2px -2px 10px 2px #aaaaaa;
+	object-fit: cover;
+}
+.gallery-img:hover {
+	box-shadow: 2px 2px 10px 5px  #262626,-2px -2px 10px 5px  #262626;
+}
+#gallery::-webkit-scrollbar {
+	height:4px;
+	background-color: #F5F5F5;
+}
+#gallery::-webkit-scrollbar-thumb {
+	width:6px;
+	background-color: #808080;
+	border-radius:100px;
+}
+#gallery::-webkit-scrollbar-track {
+	border-radius:100px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+.contact {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 500px;
+}
+.contact-svg-rect {
+	fill: lightblue;
+	opacity: .5;
+}
+.contact-form-card{
+	position:absolute;
+	display: inline-block;
+	width: 80%;
+	height: 80%;
+	border-radius: 10px;
+	/*while these technique for opacity , it wont affect thhe child element[.05]*/
+ 	background-color: rgba(0, 0, 0, .05); 
+ 	inset: 10%;
+}
+.contact-form {
+	position: relative;
+	display:block;
+	width: 60%;
+	/*height: 60;*/
+	inset:20%
+
+}
+.contact-form input {
+	width: 60%;
+	height:20px;
+	border-radius: 5px;
+	border: 1px solid white;
+	display: block;
+	color: black;
+}
+.contact-form textarea {
+	width: 60%;
+	height:100px;
+	border-radius: 5px;
+	border: 1px solid white;
+	display: block;
+	color: black;
+}
+.contact-form label::before {
+	position: absolute;
+	display: inline-block;
+	color: darkred;
+	font-family: "chineseOwnFont_3";
+	content: attr(text);
+}
+.contact-form label {
+	position: relative;
+	display: block;
+	color: white;
+	font-family: "chineseOwnFont_2";
+}
+.contact-form label::after {
+	position: absolute;
+	display: inline-block;
+	color: orange;
+	font-family: "chineseOwnFont_1";
+	content: attr(text);
+	inset: 0;
+}
+/*
+.contact-form label::before {
+	content: "Name";
+	color: darkred;
+	font-family: "chineseOwnFont_3";
+	position: absolute;
+	display: inline-block;
+}
+.contact-form label{
+	font-family: "chineseOwnFont_2";
+	color: white;
+	position: relative;
+	display: block;
+
+}
+.contact-form label::after {
+	content:"Name";
+	color: orange;
+	display: inline-block;
+	position: absolute;
+	inset:0;
+	font-family: "chineseOwnFont_1";
+
+}*/
+/*.gallery-container::before ,.gallery-container::after{
+	content: " ";
+	display: block;
+	position: absolute;
+	color: "black";
+}
+.gallery-container::after{
+	float: right;
+	right: 10px;
+}
+.gallery-container::before{
+	left: 10px;
+}*/
+
+/*#nav-bar .hamburger::before,.hamburger::after{
+	content: " ";
+	display:block;
+	background-color:blue;
+	width:10px;
+	height:10px;
+	border:1px solid blue;
+	border-spacing:10px
+
+}*/
+/*Phone*/
+@media screen and (max-width: 800px ){ /*if below 800 this will work*/
+	#header{
+		height: 100px;
+	}
+	#nav-bar .nav-list{
+		display: block;
+		position: absolute;
+		width: 0;
+		height: 100%;
+		top: 0px;
+		bottom: 0px;
+		z-index: 1;
+		scroll-behavior: auto;
+		background-color: #ffff33;
+		overflow: scroll;
+	/*	animation-name: nav_list_slide;
+		animation-duration: 2s;*/
+		transition: 1s; 
+	}
+	#nav-bar .nav-list ul {
+		list-style-type: none;
+		position:relative;
+		top: 70px;
+		left:0px;
+	}
+	#nav-bar .nav-list ul li {
+		text-align:left;
+		display:block;
+		padding: 20px;
+		box-sizing: border-box;
+	}
+	#nav-bar .nav-list ul li a{
+		text-decoration: none;
+		color: white;
+		font-family: "Josefin Sans", sans-serif;
+		font-size:30px;	
+		
+	}
+	#nav-bar .nav-list ul li a:hover{
+		color: black;
+	}
+	.dropdown-content {
+		display: inline-block;
+		position: relative;
+		margin-left: 10px;
+		margin-top: 0px;
+	}
+	.dropdown-content a {
+		color:  white;
+		display: block;
+	}
+	#Home {
+		width: 100%;
+		margin-left: 0px;
+	}
+	#Home .home-img {
+		display: none;
+	}
+	.project-container{
+		flex-direction: row;
+	}
+	.project-card {
+		/*flex-basis: 70%;*/
+		width: 250px;
+		height: 350px;
+		margin-left: 40px;
+
+	}
+	.main-img {
+		width: 80%;
+		/*height: ; indirectly here is also height not working, but width manages those stuffs*/
+		max-width: 80%;
+		margin-left: 10% ;
+	}
+}
+/*@Keyframes nav_list_slide{
+	to{background-color: blue;}
+}*/
+@media screen and (min-width: 800px){
+	#nav-bar .hamburger{
+		display: none;
+	}
+	#nav-bar .nav-list{
+		display: inline-block;
+		position: relative;
+		width: 100%;
+		height: 60px;
+		background-color: #ffff33; /*our primary color is yellow*/
+		border-bottom-width: 100%;
+	}
+
+	#nav-bar .nav-list ul li{
+		display: inline-block;
+		list-style-type: none;
+		float: left;
+		padding-right: 80px;
+
+	}
+	#nav-bar .nav-list ul li a{
+		display: inline-block;
+		font-family: "Josefin Sans",sans-serif;
+		font-size: 30px;
+		text-decoration: none;
+		text-align: left;
+		color: black;
+		text-shadow: lavender;
+		position: relative;
+
+	}
+	#nav-bar .nav-list .close-bar{
+		display: none;
+	}
+
+	
+}

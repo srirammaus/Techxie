@@ -1,0 +1,28 @@
+.scrollbar {
+	background-color: #F5F5F5;
+	float: left;
+	height: 300px;
+	margin-bottom: 25px;
+	margin-left: 22px;
+	margin-top: 40px;
+	width: 65px;
+	overflow-y: scroll;
+}
+
+.force-overflow {
+	min-height: 450px;
+}
+#style-1::-webkit-scrollbar {
+	background-color: #F5F5F5;
+	height: 6px;
+	width: 6px;
+}
+#style-1::-webkit-scrollbar-thumb {
+	background-color: #000000;
+	height: 6px;
+}
+#style-1::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	height: 7px;
+}

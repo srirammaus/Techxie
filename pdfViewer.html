@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!-- a important notes : https://chatgpt.com/share/c04efd7b-971b-47d6-8eff-a4bc129e0c85 -->
+<html>
+<head>
+	 <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>temp</title>
+  
+  <!-- get icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&family=Lemon&family=Poppins:wght@200&family=Roboto:ital,wght@1,100;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+  <!-- get css -->
+  <link rel="stylesheet" type="text/css" href="assets/pdfViewer/pdfViewer.css">
+  <!-- dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  </script>
+  <!-- pdf's script source -->
+  <script src="https://cdn.jsdelivr.net/gh/dealfonso/pdfjs-viewer@1.1/pdfjs-viewer.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dealfonso/pdfjs-viewer@1.1/pdfjs-viewer.min.css">
+
+
+
+  <!-- in-built css styles -->
+  <link rel="stylesheet" type="text/css" href="assets/pdfViewer/pdfViewer.css">
+  <link rel="stylesheet" type="text/css" href="assets/pdfViewer/pdfViewerPrint.css" media="print">
+
+  <!-- print.js crably -->
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
+</head>
+
+<body>
+<!-- +- dropdown[75%],print,download,hamburger -->
+<section class="navigation">
+  <div class="tools">
+    <div class="seperator">
+      <!-- <div class="menu" ><i class="mdi mdi-menu"></i></div> -->
+      <div class="back" ><i class="mdi mdi-backburger"></i></div></div>
+    <div class="seperator">
+    <div attr="zoom_in"><i class="mdi mdi-magnify-plus"></i></div>
+    <div attr="zoom_out"><i class="mdi mdi-magnify-minus"></i></div>
+    <div class="dropdown">
+      <div class="wrapper">
+        <div class="dropdown-wrapper">
+          <div class="input-container">
+            <input type="text" placeholder="100%" readonly="true">
+          </div>
+          <i class="mdi mdi-chevron-down"></i></div>
+        
+        <div class="dropdown-content" onmousedown="return false" onselect="return false">
+            <div><a>100%</a></div>
+            <div><a>75%</a></div>
+            <div><a>50%</a></div>
+            <div><a>25%</a></div>
+            <div><a>Fit</a></div>
+            <div><a>Wide</a></div>
+
+        </div></div>
+    </div>
+    <div attr=counts ><a></a><a></a></div>
+</div>
+<div class="seperator">
+    <div attr=print><i class="mdi mdi-printer"></i></div>
+    <div attr="download"><i class="mdi mdi-download"></i></div></div>
+  </div>
+</section>
+<section class="main">
+  <div class="side-nav">
+    <div class="thumbnails pdfjs-viewer" ></div>
+
+  </div>
+  <!-- setting -->
+  <div class="pdf-wrapper">
+    <div class="maindoc pdfjs-viewer"  ><div></div>
+</section>
+<!-- pdf-document="/scripts/pdfViewer/components/elements/joint.pdf" -->
+<!-- initial-zoom="fit" on-document-ready="pdfViewer = this.pdfViewer" -->
+
+
+  
+
+
+<!--Intializing, pdf -->
+<script type="text/javascript" src="scripts/pdfViewer/utils/pdfUtils.js"></script>
+<script type="text/javascript" src="scripts/pdfViewer/components/elements/Elementsetting.js"></script>
+
+</body>
+</html>
+<!-- <select id="cars">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
+  
+</body>
+</html> -->

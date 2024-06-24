@@ -1,0 +1,53 @@
+Frontend  pattern :-
+
+* heading section
+	profile section 
+		settings [seperate page should contain  account]
+		storage [pop-page]
+		trash [pop-page]
+	searchbar
+
+* main frame 
+	iframe [main]
+		navbar [horizontal]
+			upload
+			selection checkbox
+			undo
+			redo
+			folder navigator
+			more [atlast]
+				move
+				copy 
+				del
+	Recents [seperata page should be shown ] 
+	Folder[pagination ]
+	videos [video viewer , file viewer [only pdf should be viewed] , image viewer , audio viewer]
+	photos
+	other [pdf,etc..]
+*  settings 
+
+change password
+add mobile or change mobile
+add emaill ...
+storage
+
+Rules to be applied:-
+	Loading design should be applied.
+	while selection the count should be near to the checkbox [inc & decrease ]and every files should be poped up.
+	wave img should be in stretch
+	 
+
+Notes:-
+* use integrity keyword in script tag
+fonts:-
+general font - Lexend deca
+Title- fugaz one
+search -lemonda
+side title - poetsenoneprofileicon:-
+
+
+//less than 800
+ 
+main page + which includes iframe 
+
+i saw something fishy in google drive , that it shwoing the icon before it load  check it later

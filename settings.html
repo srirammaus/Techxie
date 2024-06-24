@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Settings</title>
+
+	
+</head>
+<link rel="stylesheet" type="text/css" href="assets/settings.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&family=Lemon&family=Jost&family=Poppins:wght@200&family=Roboto:ital,wght@1,100;1,300&display=swap" rel="stylesheet">
+
+<!-- Need to optmize bcaz this render like WebFont , so it take time and reduce web perfomance -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+<body>
+	<div class="settings">
+		<section class="settings-section" > 
+			<div class="settings-item">
+				<div attr='icon'><i class="mdi mdi-security"></i></div>
+				<div attr='icon-names'><a >Change Password</a><a attr=description>Security Alert to change new password security Alertr</a></div>
+				<!-- <div attr = 'more'> </div> -->
+			</div>
+			<div class="settings-item">
+				<div attr='icon'><i class="mdi mdi-mail"></i></div>
+				<div attr='icon-names'><a >Change Email </a><a attr=description>Security Alert to change new password security Alertr</a></div>
+				<!-- <div attr = 'more'> </div> -->
+			</div>
+			<div class="settings-item">
+				<div attr='icon'><i class="mdi mdi-phone"></i></div>
+				<div attr='icon-names'><a >Change Number </a><a attr=description>Security Alert to change new password security Alertr</a></div>
+				<!-- <div attr = 'more'> </div> -->
+			</div>
+			<div class="settings-item" attr=storage>
+				<div attr='icon'><i class="mdi mdi-soundcloud"></i></div>
+				<div attr='icon-names'><a >Storage </a><a attr=description>To buy storage click here</a>
+					<div attr="storage-slider"><div attr="storage-slider-colored"></div></div></div>
+				<!-- <div attr = 'more'> </div> -->
+		<!-- 		<div class="storage-pop-up" >
+					<div class="pop-up-wrapper"> 
+						<div attr='icon'><i class="mdi mdi-phone"></i></div>
+						<div attr='icon-names'><a >Change Number </a><a attr=description>Security Alert to change new password security Alertr</a></div>
+					</div>
+				</div> -->
+			</div>
+		</section>
+
+		<section class="email-section">
+			<!-- label,input,verify page [done or failed] -->
+			<div class="email-items">
+				<label>Change Email</label>
+				<input type="Email" name="email" placeholder="xxxxxxx@mail.com">
+				<div><a id="confirm-btn">verify</a></div>
+			</div>
+			<div class="verification">
+				<div class="verification-wrapper" attr="processing">
+					<a attr=verifying>verifying</a>
+					<a attr=username>Username</a>
+					<div class="loader"></div>
+					<a attr="home"> Return to Home</a>
+				</div>
+
+				<div class="verification-wrapper" attr="done">
+					<div class="svg-wrapper" attr=tick >
+						<img src="assets/svg/tick.svg">
+					</div>
+					<div><a id="confirm-btn">Done</a></div>
+				</div>
+			</div>
+		</section>
+		<section class="phone-section" >
+			<!-- label,input,OTP verify page [done or failed] + redirect to main menu -->
+			<div class="phone-items">
+				<label>Change phone</label>
+				<input type="Number" name="phone" placeholder="+91 90999 XXXXX">
+				<div><a id="confirm-btn">verify</a></div>
+			</div>
+			<div class="verification">
+				<div class="verification-wrapper" attr="processing">
+					<a attr=verifying>Phones verifying</a>
+					<a attr=username>Username</a>
+					<div class="loader"></div>
+					<a attr="home"> Return to Home</a>
+				</div>
+				<div class="verification-wrapper" attr="done">
+					<div class="svg-wrapper" attr=tick >
+						<img src="assets/svg/tick.svg">
+					</div>
+					<div><a id="confirm-btn">Home</a></div>
+				</div>
+			</div>
+		</section>
+		<section class="storage-section" >
+			<!-- available storage , buy option [disabled] ,show premium plans-->
+			<div class="storage-items">
+				<!-- buy storage and highly occupied data -->
+						<div class=storage-item>
+							<div attr=icon><i class="mdi mdi-soundcloud"></i></div>
+							<div attr=main><div attr=heading><a>Buy2.5GB @ 99</a></div><div attr=description><a >Some descrption goes here</a></div></div>
+						</div>
+							<div class=storage-item>
+							<div attr=icon><i class="mdi mdi-soundcloud"></i></div>
+							<div attr=main><div attr=heading><a>Buy2.5GB @ 99</a></div><div attr=description><a >Some descrption goes here</a></div></div>
+						</div>
+
+			</div>
+			<div class="verification">
+				<div class="verification-wrapper" attr="completed">
+					<div class="svg-wrapper" attr=tick >
+						<img src="assets/svg/tick.svg">
+					</div>
+					<div><a> Payment Success </a></div>
+					<div><a id="confirm-btn">Home</a></div>
+				</div>
+			</div>
+		</section>
+		<section class="password-section">
+			<!-- password , to change new password -->
+			<div class="password-items">
+				<label>Change phone</label>
+                <input type="password" name="currentpassword" placeholder="old password">
+                <input type="password" name="newpassword " placeholder="new password">
+                <input type="password" name="confirmpassword" placeholder="confirm password">
+                <div class="prompt-message"><a>*Invalid parmeter</a></div>
+                <div><a id="confirm-btn">verfiy</a></div>
+			</div>
+			<div class="verification">
+				<div class="verification-wrapper" attr="completed">
+					<div class="svg-wrapper" attr=tick >
+						<img src="assets/svg/tick.svg">
+					</div>
+					<div><a>Password succesfully changed</a></div>
+					<div><a id="confirm-btn">Home</a></div>
+				</div>
+			</div>
+		</section>
+	</div>
+<script type="text/javascript" src="scripts/pages/settings.js"></script>
+</body>
+
+</html>

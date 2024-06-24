@@ -1,0 +1,2 @@
+important notes : https://chatgpt.com/share/c04efd7b-971b-47d6-8eff-a4bc129e0c85 
+ This should follow seperation of concern
