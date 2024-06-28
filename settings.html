@@ -17,22 +17,22 @@
 <body>
 	<div class="settings">
 		<section class="settings-section" > 
-			<div class="settings-item">
+			<div class="settings-item" attr="password-section">
 				<div attr='icon'><i class="mdi mdi-security"></i></div>
 				<div attr='icon-names'><a >Change Password</a><a attr=description>Security Alert to change new password security Alertr</a></div>
 				<!-- <div attr = 'more'> </div> -->
 			</div>
-			<div class="settings-item">
+			<div class="settings-item" attr="email-section">
 				<div attr='icon'><i class="mdi mdi-mail"></i></div>
 				<div attr='icon-names'><a >Change Email </a><a attr=description>Security Alert to change new password security Alertr</a></div>
 				<!-- <div attr = 'more'> </div> -->
 			</div>
-			<div class="settings-item">
+			<div class="settings-item" attr="phone-section">
 				<div attr='icon'><i class="mdi mdi-phone"></i></div>
 				<div attr='icon-names'><a >Change Number </a><a attr=description>Security Alert to change new password security Alertr</a></div>
 				<!-- <div attr = 'more'> </div> -->
 			</div>
-			<div class="settings-item" attr=storage>
+			<div class="settings-item" attr="storage-section">
 				<div attr='icon'><i class="mdi mdi-soundcloud"></i></div>
 				<div attr='icon-names'><a >Storage </a><a attr=description>To buy storage click here</a>
 					<div attr="storage-slider"><div attr="storage-slider-colored"></div></div></div>
@@ -51,7 +51,7 @@
 			<div class="email-items">
 				<label>Change Email</label>
 				<input type="Email" name="email" placeholder="xxxxxxx@mail.com">
-				<div><a id="confirm-btn">verify</a></div>
+				<div><a class="verify-btn">verify</a></div>
 			</div>
 			<div class="verification">
 				<div class="verification-wrapper" attr="processing">
@@ -65,7 +65,15 @@
 					<div class="svg-wrapper" attr=tick >
 						<img src="assets/svg/tick.svg">
 					</div>
-					<div><a id="confirm-btn">Done</a></div>
+					<div><a> Email verified</a></div> 
+					<div><a class="Done-btn">Home</a></div>
+				</div>
+				<div class="verification-wrapper" attr="failed">
+					<div class="svg-wrapper" attr=tick >
+						<img src="assets/svg/failed.gif">
+					</div>
+					<div><a> verification failed</a></div> 
+					<div><a class="Done-btn">Home</a></div>
 				</div>
 			</div>
 		</section>
@@ -74,7 +82,7 @@
 			<div class="phone-items">
 				<label>Change phone</label>
 				<input type="Number" name="phone" placeholder="+91 90999 XXXXX">
-				<div><a id="confirm-btn">verify</a></div>
+				<div><a class="verify-btn">verify</a></div>
 			</div>
 			<div class="verification">
 				<div class="verification-wrapper" attr="processing">
@@ -87,7 +95,16 @@
 					<div class="svg-wrapper" attr=tick >
 						<img src="assets/svg/tick.svg">
 					</div>
-					<div><a id="confirm-btn">Home</a></div>
+					<!-- add or change phone number-->
+					<div><a> Number Updated</a></div> 
+					<div><a class="Done-btn">Home</a></div>
+				</div>
+				<div class="verification-wrapper" attr="failed">
+					<div class="svg-wrapper" attr=tick >
+						<img src="assets/svg/failed.gif">
+					</div>
+					<div><a> verification failed</a></div> 
+					<div><a class="Done-btn">Home</a></div>
 				</div>
 			</div>
 		</section>
@@ -105,13 +122,27 @@
 						</div>
 
 			</div>
+			<!-- redirect to somewhere and go to stripe or razorpay then redirect here -->
 			<div class="verification">
-				<div class="verification-wrapper" attr="completed">
+				<div class="verification-wrapper" attr="processing">
+					<a attr=verifying>Payment Processing</a>
+					<a attr=username>Username</a>
+					<div class="loader"></div>
+					<a attr="home"> Return to Home</a>
+				</div>
+				<div class="verification-wrapper" attr="done">
 					<div class="svg-wrapper" attr=tick >
 						<img src="assets/svg/tick.svg">
 					</div>
 					<div><a> Payment Success </a></div>
-					<div><a id="confirm-btn">Home</a></div>
+					<div><a class="Done-btn">Home</a></div>
+				</div>
+				<div class="verification-wrapper" attr="failed">
+					<div class="svg-wrapper" attr=tick >
+						<img src="assets/svg/failed.gif">
+					</div>
+					<div><a> Paymentfailed</a></div> 
+					<div><a class="Done-btn">Home</a></div>
 				</div>
 			</div>
 		</section>
@@ -123,20 +154,34 @@
                 <input type="password" name="newpassword " placeholder="new password">
                 <input type="password" name="confirmpassword" placeholder="confirm password">
                 <div class="prompt-message"><a>*Invalid parmeter</a></div>
-                <div><a id="confirm-btn">verfiy</a></div>
+                <div><a class= "verify-btn">verfiy</a></div>
 			</div>
 			<div class="verification">
-				<div class="verification-wrapper" attr="completed">
+				<div class="verification-wrapper" attr="processing">
+					<a attr=verifying> validating</a>
+					<a attr=username>Username</a>
+					<div class="loader"></div>
+					<a attr="home"> Return to Home</a>
+				</div>
+				<div class="verification-wrapper" attr="done">
 					<div class="svg-wrapper" attr=tick >
 						<img src="assets/svg/tick.svg">
 					</div>
 					<div><a>Password succesfully changed</a></div>
-					<div><a id="confirm-btn">Home</a></div>
+					<div><a class="Done-btn">Home</a></div>
+				</div>
+				<div class="verification-wrapper" attr="failed">
+					<div class="svg-wrapper" attr=tick >
+						<img src="assets/svg/failed.gif">
+					</div>
+					<div><a> Password not Updated</a></div> 
+					<div><a class="Done-btn">Home</a></div>
 				</div>
 			</div>
 		</section>
 	</div>
-<script type="text/javascript" src="scripts/pages/settings.js"></script>
+	<script type="module" src="scripts/pages/Ifr//IfrPageFunc.js"></script>
+<script type="text/javascript" src="scripts/lib/settings.js"></script>
 </body>
 
 </html>

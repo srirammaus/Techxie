@@ -3,15 +3,6 @@ class settings {
 	constructor() {
 		
 	}
-	OnLoad(){
-
-	}
-	OnResize(){
-
-	}
-	settings (){
-
-	}
 	changePwd(){
 
 	}
@@ -26,6 +17,9 @@ class settings {
 	}
 	changeEmail(){
 
+	}
+	storageSetting (){
+		// update storage while deleting and adding files
 	}
 }
 new settings()

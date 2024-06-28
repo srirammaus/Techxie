@@ -133,10 +133,10 @@ body {
 		height: 15%;
 		margin: 5% 0 5% 0%;
 	}
-	#confirm-btn{
+	.verify-btn,.Done-btn{
 		display:inline-flex;
-		height: 70%;
-		width: 50%;
+		height: 70% !important;
+		width: 50% !important;
 		background:#106ebe;
 		border-radius:5%;
 		color:white;
@@ -178,9 +178,12 @@ body {
 		display: none;
 	}
 	.verification-wrapper[attr=completed] {
+		display:none;
+	} 
+	.verification-wrapper[attr=failed] {
 		display:flex;
 	} 
-	.verification-wrapper[attr=done] div,.verification-wrapper[attr=completed] div {
+	.verification-wrapper[attr=done] div,.verification-wrapper[attr=completed] div,.verification-wrapper[attr=failed] div {
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
@@ -188,7 +191,7 @@ body {
 		height: 15%;
 		
 	}
-	.verification-wrapper[attr=done] .svg-wrapper,.verification-wrapper[attr=completed] .svg-wrapper {
+	.verification-wrapper[attr=done] .svg-wrapper,.verification-wrapper[attr=completed] .svg-wrapper,.verification-wrapper[attr=failed] .svg-wrapper {
 		display: inline-flex;
 		position:relative;
 		height: 50%;
@@ -203,7 +206,7 @@ body {
 		width:100%;
 		height:auto;
 	}
-	.verification-wrapper[attr=completed] div a{
+	.verification-wrapper[attr=done] div a,.verification-wrapper[attr=failed] div a{
 		overflow:visible;
 		width:auto;
 		height:auto;
@@ -535,10 +538,10 @@ body {
 		height: 15%;
 		margin: 5% 0 5% 0%;
 	}
-	#confirm-btn{
+	.verify-btn,.Done-btn{
 		display:inline-flex;
-		height: 70%;
-		width: 50%;
+		height: 70% !important;
+		width: 50% !important;
 		background:#106ebe;
 		border-radius:10px;
 		color:white;
@@ -569,16 +572,20 @@ body {
 		flex-direction:column;
 	}
 	.verification-wrapper[attr=processing] {
-		display: flex;
+		display: none;
 	}
 	.verification-wrapper[attr=done] {
-		display: flex;
+		display: none;
 	}
 	.verification-wrapper[attr=completed] {
+		display:none;
+		
+	} 
+	.verification-wrapper[attr=failed] {
 		display:flex;
 		
 	} 
-	.verification-wrapper[attr=done] div,.verification-wrapper[attr=completed] div {
+	.verification-wrapper[attr=done] div,.verification-wrapper[attr=completed] div,.verification-wrapper[attr=failed] div {
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
@@ -587,12 +594,12 @@ body {
 		margin: 0;		
 		
 	}
-	.verification-wrapper[attr=completed] div a{
+	.verification-wrapper[attr=done] div a,.verification-wrapper[attr=failed] div a{
 		overflow:visible;
 		width:auto;
 		height:auto;
 	}
-	.verification-wrapper[attr=done] .svg-wrapper,.verification-wrapper[attr=completed] .svg-wrapper{
+	.verification-wrapper[attr=done] .svg-wrapper,.verification-wrapper[attr=completed] .svg-wrapper,.verification-wrapper[attr=failed] .svg-wrapper{
 		display: inline-flex;
 		position:relative;
 		min-height:18%;
@@ -608,6 +615,7 @@ body {
 		height:auto;
 		
 	}
+
 	.verification a {
 		display:inline-block;
 		text-align:center;
@@ -703,7 +711,7 @@ body {
 		margin: 5% 0 5% 0%;*/
 	}
 	.storage-section {
-		display: flex;
+		display: none;
 		position:absolute;
 		width: 100%;
 		height: 100%;

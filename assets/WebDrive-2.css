@@ -351,13 +351,20 @@ input[attr= 'search-bar-input'] {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    justify-items:center;
+    align-items:center;
 }
-.Folder-wrapper {
+.Folder-map >div {
+    display:none;
+    
+}
+.Folder-map > .Folder-wrapper {
     display: inline-flex;
     width: 50%;
     height: 100%;
     flex-direction: row;
 }
+
 .Folder-map .fm-icon {
     display: inline-flex;
     width: 33%;
