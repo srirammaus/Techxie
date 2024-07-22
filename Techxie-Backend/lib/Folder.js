@@ -369,43 +369,43 @@ var folder = new Folder();
 // 	}
 // })
 //---------------------------------
-// folder.checkLastFolderNum("sriram",2,1,(err,F_count,i_count,active,P_F_num,res)=>{
-// 	console.log()
-// 	if(err){ 
-// 		console.log(err);
-// 	}else{
-// 		// this F_count-1 should be used as actual F_num given by the user
+folder.checkLastFolderNum("shriramshri",0,0,(err,F_count,i_count,active,P_F_num,res)=>{
+	console.log()
+	if(err){ 
+		console.log(err);
+	}else{
+		// this F_count-1 should be used as actual F_num given by the user
 
-// 		folder.NewFolder("sriram",2,1,"classroom",F_count,i_count,(err,F_id_array)=>{
-// 			if(err){
-// 				console.log(err.message);
-// 			}else{ // new folder i data created up to this
+		folder.NewFolder("shriramshri",0,0,"classroom",F_count,i_count,(err,F_id_array)=>{
+			if(err){
+				console.log(err.message);
+			}else{ // new folder i data created up to this
 	
-// 				folder.updateIcount("sriram",2,1,i_count,(err,result_)=>{
-// 					if(err){
-// 						console.log(err)
-// 					}else{
-// 						folder.updateFcount("sriram","2",F_count,(err,result__)=>{
-// 							if(err){
-// 								console.log(err); 
-// 							}else{
-// 								folder.uploadFolderInfo("sriram",2,F_id_array,undefined,(err,res)=>{
-// 									if(err){
-// 										console.log(err.message)
-// 									}else{
-// 										console.log(res);
-// 									}
-// 								}) 
-// 							}
-// 						})
-// 					}
-// 				})
+				folder.updateIcount("shriramshri",0,1,i_count,(err,result_)=>{
+					if(err){
+						console.log(err)
+					}else{
+						folder.updateFcount("shriramshri",0,F_count,(err,result__)=>{
+							if(err){
+								console.log(err); 
+							}else{
+								folder.uploadFolderInfo("shriramshri",0,F_id_array,undefined,(err,res)=>{
+									if(err){
+										console.log(err.message)
+									}else{
+										console.log(res);
+									}
+								}) 
+							}
+						})
+					}
+				})
 					
 				
-// 			}
-// 		})
-// 	} 
-// })
+			}
+		})
+	} 
+})
 //getting folder info
 // folder.getFolderInfo("sriram",2,"F-1",(err,res)=>{
 // 	if(err){

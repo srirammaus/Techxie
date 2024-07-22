@@ -622,6 +622,15 @@ input[attr= 'search-bar-input'] {
     /*background: black;*/
     
 }
+.main-pop-box {
+    display: none;
+    position: absolute;
+    /* top:5%;
+    left:22.5%;*/
+    height:100%;
+    width:100%; 
+    background:none;
+}
 @media screen and (max-width: 420px) { 
     * {
         font-size: 3vw;
@@ -801,6 +810,16 @@ input[attr= 'search-bar-input'] {
     .page-front-btn i{
         margin: 0;
         /*background: black;*/
+    }
+    .main-pop-box {
+
+    display: none;
+    position: absolute;
+    /* top:25%;
+    left:25%;*/
+    height:100%;
+    width:100%; 
+    background: none;
         
     }
 }

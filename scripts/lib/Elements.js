@@ -9,7 +9,8 @@ export default class Elements {
     static header_container = document.querySelector('.header > .header-container');
     static search_dropdown = document.querySelector('.search-dropdown');
     static search_bar_input = document.querySelector('.search-bar .wrapper input');
-    static nav_drawer = document.querySelector('.nav-drawer');
+    static search_suggestion = document.querySelectorAll('.search-suggestion')
+	static nav_drawer = document.querySelector('.nav-drawer');
     static nav_drawer_close = document.querySelector('.nav-profile-container[attr="cont-3"] ');
     static nav_items = document.querySelector(".nav-items");
     static profile  = document.querySelector('.profile');
@@ -19,6 +20,8 @@ export default class Elements {
 	static Trash = document.querySelector('.nav-item[attr=Trash]')
 	static Account_settings= document.querySelector('.nav-item[attr=Account-settings]')
     static folder_wrapper = document.querySelector('.Folder-wrapper > div > a');
+	static homeIcon = document.getElementById("home-icon");
+	
 
 	constructor() {
 		let gfr;
@@ -107,7 +110,9 @@ export default class Elements {
 		return true;
 		
 	}
-
+	static toRedirect (val) {
+		window.location.href= this.FILE[val] + this.extension
+	}
 	static toRedirectIfr (val) {
 		this.iframe_element.src = this.FILE[val] + this.extension
 		// ifr.contentWindow.location.href = this.FILE[val] + this.extension

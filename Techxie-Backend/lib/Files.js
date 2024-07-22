@@ -221,38 +221,38 @@ class Files{
 
 var file = new Files();
 // new file insertion
-// file.getFolderInfo("sriram",2,4,(err,i_count)=>{ //-- done
-// 	if(err){
-// 		console.log(err.message);
-// 	}else{
-// 		file.newFile("sriram",2,4,["file-1","file-2","file-3"],i_count,(err,i_count_1,f_id_array)=>{
-// 			if(err){
-// 				console.log(err.message)
-// 			}else{
-// 				file.updateIcount("sriram",2,4,i_count_1,(err,res)=>{
-// 					if(err){
-// 						console.log(err.message)
-// 					}else{
-// 						file.getFilecount("sriram",2,(err,file_count)=>{
-// 							if(err){
-// 								cb(new Error(err.message))
-// 							}else{
-// 								file.uploadFileInfo("sriram",2,f_id_array,file_count,(err,res)=>{
-// 									if(err){
-// 										console.log(err.message)
-// 									}else{
-// 										console.log("went Fine")
-// 									}
-// 								})
-// 							}
-// 						})
+file.getFolderInfo("shriramshri",0,1,(err,i_count)=>{ //-- done
+	if(err){
+		console.log(err.message);
+	}else{
+		file.newFile("shriramshri",0,1,["file-1","file-2","file-3"],i_count,(err,i_count_1,f_id_array)=>{
+			if(err){
+				console.log(err.message)
+			}else{
+				file.updateIcount("shriramshri",0,1,i_count_1,(err,res)=>{
+					if(err){
+						console.log(err.message)
+					}else{
+						file.getFilecount("shriramshri",0,(err,file_count)=>{
+							if(err){
+								console.log(err.message) //cbnew Error(
+							}else{
+								file.uploadFileInfo("shriramshri",0,f_id_array,file_count,(err,res)=>{
+									if(err){
+										console.log(err.message)
+									}else{
+										console.log("went Fine")
+									}
+								})
+							}
+						})
 					
-// 					}
-// 				})
-// 			}
-// 		})
-// 	}
-// })
+					}
+				})
+			}
+		})
+	}
+})
 //get file count
 // file.getFilecount("sriram",2,(err,file_count)=>{
 // 	if(err){
@@ -262,13 +262,13 @@ var file = new Files();
 // 	}
 // })
 //view file 
-file.getFileInfo("sriram",2,"f-0-8",(err,res)=>{ //--done
-	if(err){
-		console.log(err)
-	}else{
-		console.log(res)
-	}
-})
+// file.getFileInfo("sriram",2,"f-0-8",(err,res)=>{ //--done
+// 	if(err){
+// 		console.log(err)
+// 	}else{
+// 		console.log(res)
+// 	}
+// })
 	// uploadFileInfoPush(username,userID,temp_f_id_array,cb){
 	// 	var query = {username: username,USER_ID: Number(userID)}
 	// 	var key_1 ;

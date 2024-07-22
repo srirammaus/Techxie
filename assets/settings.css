@@ -181,7 +181,7 @@ body {
 		display:none;
 	} 
 	.verification-wrapper[attr=failed] {
-		display:flex;
+		display:none;
 	} 
 	.verification-wrapper[attr=done] div,.verification-wrapper[attr=completed] div,.verification-wrapper[attr=failed] div {
 		display: inline-flex;
@@ -582,7 +582,7 @@ body {
 		
 	} 
 	.verification-wrapper[attr=failed] {
-		display:flex;
+		display:none;
 		
 	} 
 	.verification-wrapper[attr=done] div,.verification-wrapper[attr=completed] div,.verification-wrapper[attr=failed] div {

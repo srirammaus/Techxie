@@ -48,7 +48,7 @@ class Authorization{
 		var result,new_access_token,new_refresh_token;
 		var new_access_token = this.setToken();
 		var new_refresh_token = this.setToken();
-		var expiration = Date.now() + 1000000;
+		var expiration = Date.now() + 10000000;
 		console.log(userID)
 		var query = {username: username,grant_code:grant_code,sessionID: sessionID,USER_ID: Number(userID)} // once it changed to zero , it expires
 		var data = {refresh_token:new_refresh_token,access_token:new_access_token,expiration:expiration,expired:1};

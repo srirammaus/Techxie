@@ -46,7 +46,7 @@ class xsrf{
 				DB.InsertDocument(db,COLLECTION_NAME,setData,(err,res)=>{
 					if(err){ cb (new Error(err.message))}
 					else{
-						cb(null,1) // 1 is flag
+						cb(null,token) // 1 is flag  -- i remove flag as 1 instead i add here token
 					}
 				})
 			}

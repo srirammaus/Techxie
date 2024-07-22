@@ -3,11 +3,11 @@ import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
 
 // Add this file to every iframe pages
 
-function GeneralEventListeners () {
+function initializeGlobalEventListeners () {
     window.addEventListener("load",function(){
         more_();  
-        AccountSetting();
-        defaultSectionSetting();
+        handleAccountSettingsInteractions();
+        hideAllSectionsExceptFirst();
     });
     IfrElements.DoneBtn.forEach(function(e,i) {
         e.addEventListener('click',function (){
@@ -16,7 +16,7 @@ function GeneralEventListeners () {
     })
     
 }
-function AccountSetting () {
+function handleAccountSettingsInteractions () {
     IfrElements.setting_items.forEach(function(e,i){
         e.addEventListener('click',function(){
             let elem = IfrElements.getClickedSection(e.getAttribute('attr'));
@@ -25,31 +25,20 @@ function AccountSetting () {
                     //asks for old, new and confirm password
                     //then it should validate, then sent for confirmation
                     // processing , if success done, else fail
-
-
-                    defaultSectionSetting();
-                    var {items,verification} = setEachSectionSetting(elem);
-                  
-                    // corresponding function goes from here
-                    verification.style.setProperty("display","none");
-                    items.style.setProperty("display","flex");
-
+                    handleAllSectionInteraction(elem)
                     break;
                 case "storage-section":
                     //asks for storage buying option it should contain a redirect page which shows the highly occupied files,blurred etc..
 
-                    defaultSectionSetting();
-                    var {items,verification} = setEachSectionSetting(elem);
+                    // handleAllSectionInteraction(elem);
                     break;
                 case "phone-section":
-                    defaultSectionSetting();
-                    var {items,verification} = setEachSectionSetting(elem);
+                    handleAllSectionInteraction(elem);
                     //asks for mobile number,if valid number ,then sent for verifcation
                     //it should be load in meantime ,if success done, else fail
                     break;
                 case "email-section":
-                    defaultSectionSetting();
-                    var {items,verification} = setEachSectionSetting(elem);
+                    handleAllSectionInteraction(elem);
                     //asks for email  valid email ,then sent for verifcation
                     //it should be load in meantime ,if success done, else fail
                     break;
@@ -68,7 +57,7 @@ function setEachSectionSetting (elem) {
 
 }
 
-function defaultSectionSetting () {
+function hideAllSectionsExceptFirst () {
     //1st one setting section omit it //email-1,phone-2,storage-3,paswword-4
     IfrElements.sections.forEach(function(e,i){
         if(i != 0) {
@@ -76,7 +65,38 @@ function defaultSectionSetting () {
         }
     })
 }
+function handleAllSectionInteraction(elem) { //handlePasswordSectionInteraction
+    hideAllSectionsExceptFirst();
+    var {items,verification} = setEachSectionSetting(elem);
 
+    // corresponding function goes from here
+    IfrElements.disableDisplay([verification])
+    IfrElements.enableDisplay([items])
+
+    let verify_btn = items.querySelector(".verify-btn");
+    verify_btn.onclick =()=>{
+        IfrElements.disableDisplay([items])
+        IfrElements.enableDisplay([verification])
+
+        let processing,done,failed;
+        processing = verification.querySelector(".verification-wrapper[attr=processing]");
+        done = verification.querySelector(".verification-wrapper[attr=done]");
+        failed = verification.querySelector(".verification-wrapper[attr=failed]");
+        
+        //intialize
+        IfrElements.disableDisplay([done,failed]);
+
+        //1st step processing
+        IfrElements.enableDisplay([processing])
+        
+        setTimeout(function(){
+            IfrElements.disableDisplay([processing]);
+            //setp 2 done or failed
+
+            IfrElements.enableDisplay([done])
+        },1500)
+    }  
+}
 function more_ () {
     var check = null;
     var ElementBtn;
@@ -109,7 +129,7 @@ function more_ () {
 }
 
 try {
-    GeneralEventListeners();
+    initializeGlobalEventListeners();
 	
 }catch (e){
 	console.log(e)

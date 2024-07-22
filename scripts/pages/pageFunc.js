@@ -11,10 +11,15 @@ function GeneralEventListeners(){
 	Elements.search_bar_input.addEventListener('focus',()=>{
 		Elements.search_dropdown.style.display = 'block'
 	})
-	Elements.search_bar_input.addEventListener('focusout',()=>{
-		Elements.search_dropdown.style.display = "none"
-	})
 
+Elements.search_bar_input.addEventListener('focusout',()=>{
+	setTimeout(function(){
+        Elements.search_dropdown.style.display = "none"
+    },100)
+})
+Elements.homeIcon.addEventListener("click",function() {
+    Elements.toRedirectIfr(3)
+})
 
 }
 
@@ -58,6 +63,16 @@ function loadFrame () {
     }
 
 }
+function updateSearchValue () {
+    Elements.search_suggestion.forEach(element => {
+        element.onclick = () =>{
+            Elements.search_bar_input.value = element.querySelector("a")?.innerHTML;
+        }
+        element.onmouseover = ()=>{
+            Elements.search_bar_input.value = element.querySelector("a")?.innerHTML
+        }
+    });
+}
 
 function MoveBack() {
 //for mobile page-btn, for desktop back btn
@@ -68,11 +83,19 @@ function MoveFront() { //This feature not available for Desktop
 }
 try {
 	GeneralEventListeners();
+    updateSearchValue();
 	sideNav();
 	
 }catch (e){
 	console.log(e)
 }
+// cached [pagination also]
+// cookies
+// session management
+// system design 
+// essential javascript's in javascript.info
+// Functions
+
 // function FrameListeners() {
 //     if(document.readyState != "complete" ){
 //         window.addEventListener("load",function(){

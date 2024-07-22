@@ -53,6 +53,7 @@ async function  toolBtn(req,res,next){
 	}
 
 }
+//session token not adding in csrf session
 function xsrf_initialize(userID,sessionID,session_token,tool,res){
 	var xsrf = new xsrf_lib(tool);//  vars
 	var filter = xsrf.filter([userID]);
@@ -68,20 +69,22 @@ function xsrf_initialize(userID,sessionID,session_token,tool,res){
 						}else{
 							if(typeof result ==  "undefined" || result == null ){
 								//new token
-								var setToken = xsrf.setToken(f_userID,(err,flag)=>{
+								console.log("Failed...")
+								var setToken = xsrf.setToken(f_userID,(err,token)=>{
 									if(err){ //take err as log
 										results = {Error: "something went wrong"}
 										res.send(results);
 									}else{
 										results= {status: 1}
 										var expires =  new Date(Date.now() + 10000000)
-										res.cookie("temp",expires.toString(),{expires: expires}); //  new Date(Date.now() + 900000) this is the only accepted format, then only expire parameter works 
+										res.cookie("token",token,expires.toString(),{expires: expires}); //  new Date(Date.now() + 900000) this is the only accepted format, then only expire parameter works 
 										res.send(results);
 									}
 								})
 							}else{
 								//tommorow
-								res.send({userID: f_userID,token: res.token}) // temp
+								
+								res.send({userID: f_userID,token: result.token}) // temp
 							}
 						}
 					})
