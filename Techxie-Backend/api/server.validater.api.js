@@ -1,8 +1,9 @@
 //validater server instant middleware API
+//if signup 0 then userID should be visible
 var VL = require("./../lib/server.validater.js").validater;
 
 function ValidateServerMiddleware(req,res,next){
-	console.log( req.body.username)
+	console.log( req.body)
 	var username = req.body.username; // easy bug if username key not exists
 	if( username != undefined || username != null) {
 		try{

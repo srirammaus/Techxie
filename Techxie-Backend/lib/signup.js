@@ -265,7 +265,8 @@ class signup{
 		var results = {
 			username:user,
 			user_id: user_id,
-			token:token  
+			token:token ,
+			flag:1,
 		}
 		return results;
 	}

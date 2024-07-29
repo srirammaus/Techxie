@@ -2,9 +2,13 @@
 /*REST -  representational state transfer
 In nodejs rest api directly means the server.js
 The work of REST api is to give proper response if their[user request to server] condition get fails
+* express.static  makning as root
 */
+
+var path = require('path')
 var express = require('express');
 var bodyParser = require('body-parser');
+var HandlePage = require('./api/HandlePage.api.js');
 var app =  express();
 var multer = require('multer');
 var drive_upload =  require('./api/drive.upload.api.js');
@@ -21,6 +25,7 @@ var tools_lst = require('./api/tools.lst.api.js')
 // app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static('D:/Techxie'));
 app.get('/fetch_test',function(req,res){
    res.sendFile(__dirname + '/api/fetch_.html');
 })
@@ -60,7 +65,9 @@ app.post('/login',login.login,function(req,res){ // OAuth.authentication (new to
 app.post('/OAuth',OAuth.OAuth,function(req,res){ //OAuth.authorization (new session) // +  refresh sessions
 
 }) // new session req: username, grant_code, request_type//refresh session
-
+app.get('/page',HandlePage.sendPage ,function(req,res){
+   
+})
 app.all('*', function (req, res) { //useful
     res.send("No Page Found!");
 })
