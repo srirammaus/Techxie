@@ -10,20 +10,22 @@
 <body>
     <div class="container">
         <div class="phase-1">
-            <h2>Username Verification</h2>
-            <form action="#">
-                <input type="text" id="username" name="username" placeholder="Enter Username">
+            <h2>Username </h2>
+            <form action="#" autocomplete="off">
+                <input type="text" id="username" name="username" placeholder="Enter Username" autocomplete="off">
+                <a class="red-alert">*Please fill the requested field</a>
                 <button>Verify Username</button>
             </form>
         </div>
         <div class="phase-2 hidden">
-            <h2>User Information</h2>
-            <form action="#">
-                <input name="name" type="text" id="name" placeholder="Enter Name">
-                <input name="password" type="password" id="password" placeholder="Enter Password">
-                <input name="cpassword" type="password" id="cpassword" placeholder="Confirm Password">
-                <input name="email" type="email" id="email" placeholder="Enter Email">
-                <input name="ph_number" type="tel" id="phone" placeholder="Enter Phone Number">
+            <h2>Personal Information</h2>
+            <form action="#" autocomplete="off">
+                <input name="new-name" type="text" id="name" placeholder="Enter Name" autocomplete="off">
+                <input name="new-password" type="password" id="password" placeholder="Enter Password" autocomplete="off">
+                <input name="new-cpassword" type="password" id="cpassword" placeholder="Confirm Password" autocomplete="off">
+                <input name="new-email" type="email" id="email" placeholder="Enter Email" autocomplete="off">
+                <input name="new-ph_number" type="tel" id="phone" placeholder="Enter Phone Number" autocomplete="off-number">
+                <a class="red-alert">*Please fill the requested field</a>
                 <label>
                     <input type="checkbox" id="agree">
                     I agree to the terms and conditions

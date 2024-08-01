@@ -1,3 +1,4 @@
+
 body {
     font-family: Arial, sans-serif;
     background-image: url('https://picsum.photos/2000/1000?image=1056');
@@ -10,7 +11,10 @@ body {
     justify-content: center;
     align-items: center;
 }
-
+.red-alert {
+    color:red;
+    font-size: 2vh;
+}
 /* Rest of the CSS code remains the same */
 
 .container {

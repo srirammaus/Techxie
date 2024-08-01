@@ -1,5 +1,5 @@
-const signupURL = "http://127.0.0.1:5000/signup";
-const verificationURL = "http://127.0.0.1:5000/UserVerification";
+const signupURL = "http://techxie.local:5000/User/signup";
+const verificationURL = "http://techxie.local:5000/User/UserVerification";
 const emailVerificationURL = "";
 const phoneVerificationURL = "";
 
@@ -14,7 +14,13 @@ const verifyOtpBtn = document.querySelector('.phase-3 button');
 
 var currentPhase = phase1; //default
 
-
+FormData.prototype.changeKeyName = function (existingKey,newKey,...values) {
+    for(val of values){
+        this.append(newKey,val);
+        this.delete(existingKey)
+        
+    }
+}
 
 verifyOtpBtn.addEventListener("click",function (e) {
 
@@ -22,9 +28,16 @@ verifyOtpBtn.addEventListener("click",function (e) {
 
 
 async function userVerification () {
-    //diable the current phase
-    //check whether there is valid input 
-    //fetch
+    /***
+     * check if the user exist,if exist make a red small pop alert
+     * no empty fields alert
+     * filter words
+     * switch to next phase
+     * disable current phase
+     * make enter button enable 
+     */
+
+
     let formData =  phase1.querySelector("form");
 
     let response = await fetch (verificationURL,{
@@ -32,12 +45,13 @@ async function userVerification () {
         body: new URLSearchParams(new FormData(formData)) ,
     });
     var result = await response.json();
+    console.log(result)
     if(result?.USER_ID){
-       setCurrentUser(result)
+        setCurrentUser(result)
        currentPhase.style.setProperty("display","none");
        phase2.style.setProperty("display","flex");
        currentPhase = phase2;
-       //should be valid untilyl signup happens
+            //should be valid untilyl signup happens
     }else{
         console.log(result);
     }
@@ -50,10 +64,32 @@ verifyUsernameBtn.addEventListener("click",function(e){
     userVerification();
 })
 function signup () {
-    let formaData =  new FormData(phase2.querySelector("form"));
-    formaData.append("username",getCurrentUser().username);
-    formaData.append("userID",getCurrentUser().USER_ID)
-    let DATA = new URLSearchParams(formaData);
+    /** 
+     * Without agree dont let 
+     * create a terms and condition pop up
+     * move to next phase
+     * set current phase disable
+     * make a small session to maintain for 1 day for that particular device
+     * filter inputs
+     * password limits and rules
+     * number limit
+     * email check 
+     */
+    let formData =  new FormData(phase2.querySelector("form"));
+ 
+    for(const pair of Array.from(formData.entries())){
+        formData.changeKeyName(pair[0],pair[0].split('-')[1],pair[1])
+
+    }
+    for(const pai of formData.entries()){
+        console.log(pai[0] + " this " + pai[1])
+        
+    }
+
+
+    formData.append("username",getCurrentUser().username);
+    formData.append("userID",getCurrentUser().USER_ID)
+    let DATA = new URLSearchParams(formData);
 
     fetch(signupURL,{
         //i think by default is  urlencoded !
@@ -81,6 +117,14 @@ function signup () {
 nextBtn.addEventListener("click",function(e){
     e.preventDefault()
     signup();
+})
+//This for mobile confirmation 
+// for mail , the mail should send to person's mail id and redirect again to dashboard
+
+verifyOtpBtn.addEventListener("click",function(e) {
+    e.preventDefault();
+    //if success redirect to dashboard! else to home page
+
 })
 function emailVerification () {
     //email and phone

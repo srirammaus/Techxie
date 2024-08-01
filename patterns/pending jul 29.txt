@@ -1,0 +1,23 @@
+kindly spend some time to study principle of programming
+backend 
+routing
+smtp
+voip 
+socket 
+log 
+IPC
+another programm connection
+dockerizing 
+aws 
+hosting 
+virustotal api
+
+frontend 
+signup ui 
+login ui
+pdfivewer ui for tablet
+photo viewer
+javascript api connection 
+javascript polyfills
+scrollkit merging
+videoplayer 
