@@ -1,7 +1,7 @@
-
+import apiConfig from "/scripts/utils/apiConfig.js";
 export default class Elements {
 	static FILE = ["settings","Trash","Recents","Home"];
-	static URL = "http://techxie.local:3000/"
+	static URL = apiConfig.baseURL;
 	static extension = ".html";
 
 	static iframe_element = document.getElementById("iframe-doc");
@@ -21,6 +21,7 @@ export default class Elements {
 	static Account_settings= document.querySelector('.nav-item[attr=Account-settings]')
     static folder_wrapper = document.querySelector('.Folder-wrapper > div > a');
 	static homeIcon = document.getElementById("home-icon");
+	
 	
 
 	constructor() {

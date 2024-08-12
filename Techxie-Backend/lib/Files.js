@@ -221,23 +221,23 @@ class Files{
 
 var file = new Files();
 // new file insertion
-file.getFolderInfo("shriramshri",0,1,(err,i_count)=>{ //-- done
+file.getFolderInfo("asdfg",820,1,(err,i_count)=>{ //-- done
 	if(err){
 		console.log(err.message);
 	}else{
-		file.newFile("shriramshri",0,1,["file-1","file-2","file-3"],i_count,(err,i_count_1,f_id_array)=>{
+		file.newFile("asdfg",820,1,["file-1","file-2","file-3"],i_count,(err,i_count_1,f_id_array)=>{
 			if(err){
 				console.log(err.message)
 			}else{
-				file.updateIcount("shriramshri",0,1,i_count_1,(err,res)=>{
+				file.updateIcount("asdfg",820,1,i_count_1,(err,res)=>{
 					if(err){
 						console.log(err.message)
 					}else{
-						file.getFilecount("shriramshri",0,(err,file_count)=>{
+						file.getFilecount("asdfg",820,(err,file_count)=>{
 							if(err){
 								console.log(err.message) //cbnew Error(
 							}else{
-								file.uploadFileInfo("shriramshri",0,f_id_array,file_count,(err,res)=>{
+								file.uploadFileInfo("asdfg",820,f_id_array,file_count,(err,res)=>{
 									if(err){
 										console.log(err.message)
 									}else{

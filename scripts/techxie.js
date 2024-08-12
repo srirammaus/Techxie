@@ -1,4 +1,5 @@
 // techxie javscript controller
+import apiConfig from "./utils/apiConfig.js";
 
 class techxie_{
 	// #name = "shriram"; //private fields
@@ -78,7 +79,7 @@ class techxie_{
 
 	}
 	async tools_lst_(){ //get it through cdn , lets create that today iteself
-		var resp = await fetch("http://localhost:5000/tools_lst");
+		var resp = await fetch(apiConfig.tool_lstAPI);
 		var tools_lst = await resp.json();
 		alert(tools_lst)
 	}

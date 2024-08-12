@@ -28,7 +28,6 @@ export class WebDrive {
 		this.search_dropdown = Elements.search_dropdown;
 		
 
-
 		//Run
 		this.header();
 		this.mainFunc();
@@ -43,6 +42,7 @@ export class WebDrive {
 	}
 	OnContentloaded() {
 		window.addEventListener('DOMContentLoaded',()=>{
+
 		})
 		
 		
@@ -62,7 +62,6 @@ export class WebDrive {
 			if(window.innerWidth > 800) {
 				WebDrive.iframe_()
 			}
-
 		})
 	}
 
@@ -126,7 +125,6 @@ export class WebDrive {
 				elem[1].style.setProperty('height',(80/100 * window.screen.height) +'px');
 				elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
 			}
-
 		})
 
 	}

@@ -369,27 +369,27 @@ var folder = new Folder();
 // 	}
 // })
 //---------------------------------
-folder.checkLastFolderNum("shriramshri",0,0,(err,F_count,i_count,active,P_F_num,res)=>{
+folder.checkLastFolderNum("asdfg",820,0,(err,F_count,i_count,active,P_F_num,res)=>{
 	console.log()
 	if(err){ 
 		console.log(err);
 	}else{
 		// this F_count-1 should be used as actual F_num given by the user
 
-		folder.NewFolder("shriramshri",0,0,"classroom",F_count,i_count,(err,F_id_array)=>{
+		folder.NewFolder("asdfg",820,0,"classroom",F_count,i_count,(err,F_id_array)=>{
 			if(err){
 				console.log(err.message);
 			}else{ // new folder i data created up to this
 	
-				folder.updateIcount("shriramshri",0,1,i_count,(err,result_)=>{
+				folder.updateIcount("asdfg",820,1,i_count,(err,result_)=>{
 					if(err){
 						console.log(err)
 					}else{
-						folder.updateFcount("shriramshri",0,F_count,(err,result__)=>{
+						folder.updateFcount("asdfg",820,F_count,(err,result__)=>{
 							if(err){
 								console.log(err); 
 							}else{
-								folder.uploadFolderInfo("shriramshri",0,F_id_array,undefined,(err,res)=>{
+								folder.uploadFolderInfo("asdfg",820,F_id_array,undefined,(err,res)=>{
 									if(err){
 										console.log(err.message)
 									}else{

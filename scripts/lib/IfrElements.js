@@ -1,7 +1,8 @@
 //DOM raising voilation we are not putting the  new passwor din the form fiel , "auto-complete attr have some feture new-password, current-password, cc ,csc"
+import apiConfig from "/scripts/utils/apiConfig.js";
 export default class IfrElements {
     static FILE = ["settings","Trash","Recents","Home"];
-	static URL = "http://techxie.local:3000/"
+	static URL = apiConfig.baseURL;
 	static extension = ".html";
 
     static more =document.querySelectorAll(".small-frame-items div[data='more-box'] div[attr='pop-box']");
@@ -44,7 +45,7 @@ export default class IfrElements {
     }
     static toRedirect (val) {
         //check for cacheed page
-        return window.location.href = this.FILE[val] + this.extension
+        return window.location.href = this.FILE[val] //+ this.extension
     }
     static toReload () {
 

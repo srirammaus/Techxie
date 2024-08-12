@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup Form</title>
+    <title>Signup </title>
     <link rel="stylesheet" href="assets/signup.css">
+
 </head>
 <body>
-    <div class="container">
+  
+    <div class="container" >
         <div class="phase-1">
             <h2>Username </h2>
             <form action="#" autocomplete="off">
@@ -26,14 +28,10 @@
                 <input name="new-email" type="email" id="email" placeholder="Enter Email" autocomplete="off">
                 <input name="new-ph_number" type="tel" id="phone" placeholder="Enter Phone Number" autocomplete="off-number">
                 <a class="red-alert">*Please fill the requested field</a>
-                <label>
-                    <input type="checkbox" id="agree">
-                    I agree to the terms and conditions
-                </label>
                 <button>Next</button>
             </form>
         </div>
-        <div class="phase-3 hidden">
+        <!-- <div class="phase-3 hidden">
             <h2>Phone Number Verification</h2>
             <form action="#">
                 <input type="tel" id="otp" placeholder="Enter OTP">
@@ -44,13 +42,19 @@
             <h2>Phase 4: Final Step</h2>
             <p> Congratulations! You have completed the signup process.</p>
             <button>Finish</button>
+        </div> -->
+        <div class="em">
+          <p>Check you inbox and you will get verification mail <a href="#">abc123@gmail.com</a></p>
+          <!-- <div class="em-container"> -->
+
+          <!-- </div> -->
         </div>
     </div>
-      
+
     <script src="scripts/pages/signupSetting.js"></script>
     <script src="scripts/pages/userVerification.js">
     </script>
-    <script src="scripts/pages/signup.js"></script>
+    <script type="module" src="scripts/pages/signup.js"></script>
 </body>
 </html>
 

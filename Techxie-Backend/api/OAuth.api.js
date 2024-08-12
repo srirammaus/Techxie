@@ -11,6 +11,8 @@ function OAuth(req,res,next){
 	var sessionID = req.body.sessionID;
 	var Auth = new Auth_();
 	if(typeof request == "undefined" || request == null && username == "undefined" || username == null && sessionID == null || typeof sessionID == "undefined" && userID == null || typeof userID == "undefined"){
+		
+		// console.log(req.body)
 		def_result = {Error: "Invalid request"}
 		res.send(def_result);
 	}else if(request == "GRANT_CODE"){

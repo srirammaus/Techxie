@@ -1,0 +1,110 @@
+body{
+    font-family: Arial, sans-serif;
+    background-image: url('https://picsum.photos/2000/1000?image=1056');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login {
+    display: flex;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: 35%; /* Adjusted for better responsiveness */
+    max-width: 35%; /* Maximum width to prevent too large screens */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.red-alert {
+    color: red;
+    font-size: 1vw; /* Use viewport units for scalability */
+    /* margin: 0 0 0 5%; */
+    text-align: left;
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.em {
+    display: flex;
+    width: 50%;
+    background-color: #ecc910;
+    aspect-ratio: 1/.2;
+    border:5px solid #504610;
+    text-align: center;
+}
+/* .em p {
+
+} */
+.em a {
+    cursor: pointer;
+    
+}
+button {
+    width: 30%; /* Full width for larger buttons */
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+}
+.fg-btn {
+    display:block;
+    height: auto;
+    width: 100%;
+    text-align: left;
+    align-self: start;
+    font-size: 1vw;
+    color:black;
+    background: none;
+
+}
+
+.login-btn:hover {
+    background-color: #3e8e41;
+}
+.fg-btn:hover {
+    background-color:none;
+    color:blue;
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="tel"] {
+    width: 100%; /* Full width for better readability */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+@media only screen and (max-width: 768px) {
+    .container {
+        margin: 20px auto;
+    }
+    .login{
+        width: 95%; /* More space on smaller screens */
+        max-width:95%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+
+    input[type="text"], input[type="password"], input[type="email"], input[type="tel"] {
+        padding: 5px;
+        font-size: 14px; /* Smaller font size for better fit */
+    }
+    button {
+        padding: 5px;
+        font-size: 16px; /* Larger font size for better touch targets */
+    }
+}
+@media only screen and (max-width: 600px) {
+    .button {
+        width: 100%; /* Make the button full width on small screens */
+    }
+}
