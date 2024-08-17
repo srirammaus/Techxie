@@ -1,5 +1,6 @@
 //signup api
 //order =>name,userID,username,password,cpassword,email,ph_number
+// N
 var signup__ = require('./../lib/signup.js').signup;
 
 function signupMiddleware(req,res,next){	

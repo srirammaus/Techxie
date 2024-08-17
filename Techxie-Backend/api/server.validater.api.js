@@ -1,5 +1,6 @@
 //validater server instant middleware API
 //if signup 0 then userID should be visible
+//userverification
 var VL = require("./../lib/server.validater.js").validater;
 
 function ValidateServerMiddleware(req,res,next){

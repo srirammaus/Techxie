@@ -2,7 +2,7 @@
 //parameters of OAuth - username,access_token,refresh_token,grant_code,scopes,client_id,client_secret,expiration,expired,callback url,
 var DB = require('./../config/M_Database')
 var dotenv =require('dotenv');
-dotenv.config({path:'lib/session_params.env'})
+dotenv.config({path:'./../config/session_params.env'})
 class OAuth{
 	constructor(){
 

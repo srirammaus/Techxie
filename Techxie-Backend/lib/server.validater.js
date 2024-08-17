@@ -1,9 +1,12 @@
 //validater  with db
 //LATER: include it in another server then configure it
+//solve the user exist problem
+//this gets for userverification
+
 var DB = require('./../config/M_Database.js');
 var fs = require('fs')
 var dotenv = require('dotenv'); //initalize dotenv 
-dotenv.config({path:"lib/limit.env"}) // initalize path //why lib is used here? because they are start working from REST.api, so!
+dotenv.config({path:"./config/limit.env"}) // initalize path //why lib is used here? because they are start working from REST.api, so!
 class validater{
 	constructor(username){
 		var userID,limit; //limit temp
@@ -29,7 +32,8 @@ class validater{
 		fs.writeFileSync(path, data);
 	}
 	createUserId(){ //lets make this dynamic by putting this in db , because we have to alter
-		this.userID = Math.floor(Math.random() * (this.getLimit()[0] - this.getLimit()[1]) );
+			this.userID = Math.floor(Math.random() * (this.getLimit()[0] - this.getLimit()[1]) );
+		
 	}
 	getLimit(){ // let's do this with env files
 		return [process.env.MAX_LIMIT,process.env.MIN_LIMIT];
@@ -125,6 +129,7 @@ class validater{
 									}
 									this.Response(rec,recursive_array,cb); 
 								}else{ // other user id will be created if this else done
+
 									this.Response(recurse,recursive_array,cb); //it will recurse the all functions again and it set new user id . // set REccursion limit , suppose if something went wrong what will it do
 								}								
 							}

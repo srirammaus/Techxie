@@ -14,7 +14,7 @@ function isValidUsername(username,password =null , token =null,cb){ //token and 
 		if(err){
 			cb(new Error(err)); 
 		}else{
-			DB.FindDocument(db,"USERS",{username:username.toString()},(err,res) =>{ //Have to check this
+			DB.FindDocument(db,"USERS",{"credentials.username":username.toString()},(err,res) =>{ //Have to check this
 				if(err){ 
 					cb(new Error(err))
 				}else{
@@ -44,15 +44,16 @@ function isValidUserID(userID,cb){
 		}
 	})
 }
-function isValidEmail(username ,email ,token=null,cb){
+function isValidEmail(username ,email,USER_ID ,token=null,cb){
 	getConnection().getConnection(function(err,db){
 		if(err){
 			cb(new Error(err)); 
 		}else{
-			DB.FindDocument(db,"USERS",{username:username.toString(), email:email.toString()},(err,res) =>{
+			DB.FindDocument(db,"USERS",{email:email.toString(),"credentials.username":username.toString(),"credentials.USER_ID":Number(USER_ID)},(err,res) =>{
 				if(err){ 
 					cb(new Error(err))
 				}else{
+				
 					cb(null,res);
 				} 
 			});
@@ -96,4 +97,4 @@ function isValidSessionToken(userID,session_token,sessionID,cb){
 		}
 	})
 }
-module.exports ={isValidUsername , isValidUserID , isValidSessionToken}
+module.exports ={isValidUsername , isValidUserID , isValidSessionToken,isValidEmail}

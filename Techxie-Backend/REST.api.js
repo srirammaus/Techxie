@@ -6,22 +6,31 @@ The work of REST api is to give proper response if their[user request to server]
 Techxie should be the home page no problem , if logged in or not ,if tools like drive or pdfviewer should be opened it need to signup 
 
 */
+let dotenv = require('dotenv');
+dotenv.config({path:'ADDR.env'});
+
+const HOST =process.env.HOST ;
+const PORT = process.env.PORT;
+
 var http = require('http')
 var path = require('path')
 var express = require('express');
 var bodyParser = require('body-parser');
 var app =  express();
 var multer = require('multer');
+
+
+
 // var drive_upload =  require('./api/drive.upload.api.js');
 // var pdfupload = require('./api/pdf.upload.api.js');
 // var toolBtn = require('./api/toolBtn.api.js');
 // var convert = require('./api/converter.api.js');
 
-
+ 
 //routers
-var UserRoute = require('./api/UserRoute.api.js');
-var openAPI = require('./api/openAPI.api.js');
-var PageRoute = require('./api/PageRoute.api.js')
+var UserRoute = require('./api/routers/UserRoute.api.js');
+var openAPI = require('./api/routers/openAPI.api.js');
+var PageRoute = require('./api/routers/PageRoute.api.js')
 
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: true}));
@@ -44,17 +53,28 @@ app.get('/pentesting',function(req,res){ //need to check
    res.send(username)
 })
 
-
-
-
-app.all('*', function (req, res) { //useful
-    res.send("No Page Found!");
+app.get('/email',function(req,res){
+   res.sendFile("D:/Techxie/pages/email.html")
 })
-var service = app.listen(5000,'192.168.29.99',(req,res) =>{
-   var ADDR = service.address().address;
-   var PORT = service.address().port;
-   console.log("Running in http://%s : %s",ADDR , PORT);
+
+
+app.all('*', function (req, res) { //useful // 404 
+   res.status(404)
+   res.send("No Page Found!");
 })
+try {
+   var service = app.listen(PORT,HOST,(req,res) =>{
+      var ADDR = service.address().address;
+      var PORT = service.address().port;
+      console.log("Running in http://%s : %s",ADDR , PORT);
+   })
+}catch(err) {
+   console.log("something went wrong");
+   //emergency email alret 
+   //server down alert 
+   //enable backup server
+}
+
 //interceptor
 // const server = http.createServer(app);
 

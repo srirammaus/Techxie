@@ -196,7 +196,7 @@ class signup{
 					this.isValidUserID((err,flag) =>{
 						if(err){ cb(new Error(err))}
 						else{
-							if(flag[0] == 1 && flag[1] == 0){	
+							if(flag[0] == 1 && flag[1] == 0){	//if user exist get the username from there
 								this.getConnection().getConnection((err,db)=>{
 									if(err){ cb(new Error(err))}
 									else{

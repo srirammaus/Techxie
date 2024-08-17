@@ -1,7 +1,9 @@
-//middleware function for  authorization
+//middleware function for  authorization //try
 //OAuth authorization 
 //This is the default callback url we will provide
 //Three different database , web  desk app .kindly propery route everything
+//TRY
+//N
 var Auth_ = require('./../lib/Authorization').Auth;
 function OAuth(req,res,next){
 	var def_result;

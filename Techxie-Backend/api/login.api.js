@@ -1,5 +1,8 @@
 // login middlleware
-// This is the authentication api of OAuth 2.0 , through here authentication get granted , then next api provide OAuth acces token  
+// This is the authentication api of OAuth 2.0 , through here authentication get granted , then next api provide OAuth acces token  \
+//try
+// N
+//this should also check for the verified email
 var login_lib =  require('./../lib/login.js').login;
 function login(req,res,next){
 	var username = req.body.username;
