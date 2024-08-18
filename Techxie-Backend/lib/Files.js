@@ -211,50 +211,75 @@ class Files{
 			}
 		})
 	}
-	DeleteFile(){ // make them as inactive
-
-	}
-	DeleteFileInfo(){
-
-	}
-}
-
-var file = new Files();
-// new file insertion
-file.getFolderInfo("asdfg",820,1,(err,i_count)=>{ //-- done
-	if(err){
-		console.log(err.message);
-	}else{
-		file.newFile("asdfg",820,1,["file-1","file-2","file-3"],i_count,(err,i_count_1,f_id_array)=>{
+	deleteFile(username,userID,F_num,P_F_num){ // make them as inactive
+		var query = {username: username,USER_ID: Number(userID)}
+		var key_1 = F_num + ".active";
+		var key_2 = P_F_num + ".items." + item_number + ".active";
+		var data = {
+			[`${key_1}`]: 0,
+			[`${key_2}`]:0,
+		}
+		DB.getConnection((err,db)=>{
 			if(err){
-				console.log(err.message)
+				cb(new Error("something went wrong"))
 			}else{
-				file.updateIcount("asdfg",820,1,i_count_1,(err,res)=>{
+				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,res)=>{
 					if(err){
-						console.log(err.message)
+						cb(new Error("something went wrong"))
 					}else{
-						file.getFilecount("asdfg",820,(err,file_count)=>{
-							if(err){
-								console.log(err.message) //cbnew Error(
-							}else{
-								file.uploadFileInfo("asdfg",820,f_id_array,file_count,(err,res)=>{
-									if(err){
-										console.log(err.message)
-									}else{
-										console.log("went Fine")
-									}
-								})
-							}
-						})
-					
+						if(typeof res == "undefined" || res == null){
+							cb(new Error("Invalid Username or User ID"))
+						}else{
+							cb(null,res); // check with this result modified count
+						}
 					}
 				})
 			}
 		})
+
 	}
-})
+
+	delMulFiles(){
+
+	}
+}
+
+// var file = new Files();
+// new file insertion
+// file.getFolderInfo("sriram1234567",89,0,(err,i_count)=>{ //-- done
+// 	if(err){
+// 		console.log(err.message);
+// 	}else{
+// 		file.newFile("sriram1234567",89,0,["file-1","file-2","file-3"],i_count,(err,i_count_1,f_id_array)=>{
+// 			if(err){
+// 				console.log(err.message)
+// 			}else{
+// 				file.updateIcount("sriram1234567",89,0,i_count_1,(err,res)=>{
+// 					if(err){
+// 						console.log(err.message)
+// 					}else{
+// 						file.getFilecount("sriram1234567",89,(err,file_count)=>{
+// 							if(err){
+// 								console.log(err.message) //cbnew Error(
+// 							}else{
+// 								file.uploadFileInfo("sriram1234567",89,f_id_array,file_count,(err,res)=>{
+// 									if(err){
+// 										console.log(err.message)
+// 									}else{
+// 										console.log("went Fine")
+// 									}
+// 								})
+// 							}
+// 						})
+					
+// 					}
+// 				})
+// 			}
+// 		})
+// 	}
+// })
 //get file count
-// file.getFilecount("sriram",2,(err,file_count)=>{
+// file.getFilecount("sriram",13,(err,file_count)=>{
 // 	if(err){
 // 		console.log(err.message)
 // 	}else{
@@ -262,7 +287,7 @@ file.getFolderInfo("asdfg",820,1,(err,i_count)=>{ //-- done
 // 	}
 // })
 //view file 
-// file.getFileInfo("sriram",2,"f-0-8",(err,res)=>{ //--done
+// file.getFileInfo("sriram",13,"f-0-8",(err,res)=>{ //--done
 // 	if(err){
 // 		console.log(err)
 // 	}else{
@@ -302,3 +327,4 @@ file.getFolderInfo("asdfg",820,1,(err,i_count)=>{ //-- done
 	// 		}
 	// 	})
 	// }
+	module.exports = {Files}

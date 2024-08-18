@@ -14,32 +14,12 @@ async function  toolBtn(req,res,next){
 	var tool = req.body.tool;
 	var csrf_token = req.body.csrf_token;
 	var req_device = null; //now it self it is temp and//differentiate the devices and check it is requested from , so we can classify the session
-	var session_token = req.body.session_token; //getting the acces token 
+	var session_token = req.body.session_token ||req.body.access_token; //getting the acces token 
 	var sessionID = req.body.sessionID;
 	if(typeof userID == "undefined" || userID == null && typeof tool == "undefined" || tool == null && typeof session_token == "undefined" || session_token == null || sessionID == null && typeof sessionID =="undefined"){
 		results = { status:0,Error: "Invalid input" }
 		res.send(results)
 	}else{
-		//wrapping a normal funcntion with promise will make async await work
-		// i thought by wrapping a the checking or validaing function in to promise and running with await "will made seperate running function and if it is invalid return and if it is right it passses next [but it fails]" . i found answer for this you have to use reject and catch for this
-		// we can also use OAuth.Authenticate function , unfortunately i used isvalidsessiontoken , so lets go with this here only
-		// OAuth.Authenticate can Automcatically  expires the stuffs
-		await new Promise ( (resolve,reject)=>{
-			validater.isValidSessionToken(userID,session_token,sessionID,(err,result)=>{
-				if(err){
-					res.send({Error:err.message})
-					return;
-				}else{
-					if(result ==   null || typeof result == "undefined"){
-						//new token redirection
-						res.send(JSON.stringify({Error: "Invalid access token"}));
-						return;
-					}else{
-						reject(null);
-					}
-				}
-			})
-		}).catch((rej)=>{})
 		tool_number = tools.indexOf(tool);
 		switch (tool_number) {
 			case 0:
@@ -71,7 +51,7 @@ function xsrf_initialize(userID,sessionID,session_token,tool,res){
 						}else{
 							if(typeof result ==  "undefined" || result == null ){
 								//new token
-								console.log("Failed...")
+								
 								var setToken = xsrf.setToken(f_userID,(err,token)=>{
 									if(err){ //take err as log
 										results = {Error: "something went wrong"}
@@ -97,4 +77,25 @@ function xsrf_initialize(userID,sessionID,session_token,tool,res){
 			}
 		})
 }
-module.exports = {toolBtn: toolBtn}
+module.exports = {toolBtn: toolBtn};
+
+	//wrapping a normal funcntion with promise will make async await work
+		// i thought by wrapping a the checking or validaing function in to promise and running with await "will made seperate running function and if it is invalid return and if it is right it passses next [but it fails]" . i found answer for this you have to use reject and catch for this
+		// we can also use OAuth.Authenticate function , unfortunately i used isvalidsessiontoken , so lets go with this here only
+		// OAuth.Authenticate can Automcatically  expires the stuffs
+		// await new Promise ( (resolve,reject)=>{
+		// 	validater.isValidSessionToken(userID,session_token,sessionID,(err,result)=>{
+		// 		if(err){
+		// 			res.send({Error:err.message})
+		// 			return;
+		// 		}else{
+		// 			if(result ==   null || typeof result == "undefined"){
+		// 				//new token redirection
+		// 				res.send(JSON.stringify({Error: "Invalid access token"}));
+		// 				return;
+		// 			}else{
+		// 				reject(null);
+		// 			}
+		// 		}
+		// 	})
+		// }).catch((rej)=>{})

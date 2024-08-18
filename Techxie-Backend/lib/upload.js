@@ -4,6 +4,7 @@ var fs = require('fs');
 var OAuth = require(__dirname + "/OAuth").OAuth;
 var xsrf_verification_lib = require(__dirname + "/xsrf_verification").xsrf_verification;
 var DB = require('./../config/M_Database');
+const Files = require(__dirname + '/Files.js');
 //check if the parameters are empty - pending
 //token should be validated
 ///upload has more pending works
@@ -22,7 +23,7 @@ class upload{ // check username , token , user is corresponding to theri types l
 				userID = req.body.userID;
 				session_token = req.body.session_token;
 				sessionID =  req.body.sessionID;
-				csrf_token = req.body.csrf_token;
+				csrf_token = req.body.csrf_token || req.body.xsrf_token;
 				var xsrf_verification = new xsrf_verification_lib();
 				if(username == null || typeof username == "undefined" && sessionID == null || typeof sessionID == "undefined" && session_token == null || typeof session_token == "undefined" && csrf_token == null || typeof csrf_token == "undefined" && userID == null || typeof userID == "undefined" ){
 					cb(new Error("Invalid Inputs"))

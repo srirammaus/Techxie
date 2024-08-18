@@ -31,7 +31,7 @@ class pdf_upload{
                 username = req.body.username;
                 u_id =req.body.userID;
                 xsrf_token = req.body.xsrf_token;
-                session_token = req.body.session_token;
+                session_token = req.body.session_token || req.body.access_token;
                 sessionID = req.body.sessionID;
                 if(u_id == null || xsrf_token == null || username == null || sessionID ==null || session_token ==null){
                     cb(new Error("Invalid Input Fields")) // temp

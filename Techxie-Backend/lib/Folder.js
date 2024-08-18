@@ -1,9 +1,21 @@
-// create a folder request
-//if need create a sep lib for del, view , new folder and integrate with this
-// delete folder 
-// view folder
-// rename or update folder
 
+/***
+ * create a folder request, new folder
+ * if need create a sep lib for del, view , new folder and integrate with this
+ * delete folder 
+ * view folder
+ * rename or update
+ * driveinfo - which has each folders and file info ,when created , when mdoified ect..
+ * bucketinfo- location of each folere and file
+ * F-name - folder name
+ * F-id - folder id (eg: F-0)
+ * F-num - folder number , the above and this are same 0
+ * P-F-num - parent F number (not F-id)
+ * item_number -to track , in which index this folder located in their parent folder
+ * active - 1 or 0 , 0 it means its deleted , we not going to del practially we just making it inactive
+ * i_count - i_count is the items within the folder
+ * items:Array
+ */
 var DB =  require('./../config/M_Database');
 var xsrf_verification_lib = require(__dirname + '/xsrf_verification').xsrf_verification;
 var OAuth = require(__dirname + '/OAuth').OAuth;
@@ -43,7 +55,7 @@ class Folder{
 								var F_count = res.F_count ;   //F_count: folder count
 								var i_count = res[F_num].i_count;
 								var active  = res[F_num].active;
-								var P_F_num = res[F_num].P_F_num;
+								var P_F_num = res[F_num].P_F_num; //parent F number
 								var item_number = res[F_num].item_number
 								cb(null,F_count,i_count,active,P_F_num,item_number); // why putting res in last becuase we have to get correct folder's i_count
 
@@ -159,7 +171,7 @@ class Folder{
 	}
 	//in future , if u developed multiple folders in once , then put those F_id in array and put in loop like uploadfileinfo in files.js
 	//i am not changing this even thought for understanding purpose the above documentation is determined by me
-	uploadFolderInfo(username,userID,F_id_array,Description= "This is a default description",cb){
+	uploadFolderInfo(username,userID,F_name,F_id_array,Description= "This is a default description",cb){
 		var query = {username: username,USER_ID: Number(userID)}
 		var key_1 ;
 		var n,i;
@@ -172,8 +184,8 @@ class Folder{
 			F_count_by_f_id_array = Folder_count[1] 
 			key_1 = "Folders." +  F_count_by_f_id_array;
 			data[key_1] = {
-						Foldername: "Foldername",
-						F_name:"F_name",
+						Foldername: F_name.toString(),
+						F_name:F_name.toString(),
 						F_id: F_id_array[i],
 						Folder_size:"Folder_size",
 						Folder_modiFied_date:"Folder_modiFied_date",
@@ -219,7 +231,8 @@ class Folder{
 					if(err){
 						cb(new Error(err.message))
 					}else{
-						cb(null,res[0].Folders);
+						res[0]?.Folders == null || res[0]?.Folders == undefined ?cb(new Error("No results found")):cb(null,res[0]?.Folders);
+						
 					}
 				})
 			}
@@ -369,43 +382,44 @@ var folder = new Folder();
 // 	}
 // })
 //---------------------------------
-folder.checkLastFolderNum("asdfg",820,0,(err,F_count,i_count,active,P_F_num,res)=>{
-	console.log()
-	if(err){ 
-		console.log(err);
-	}else{
-		// this F_count-1 should be used as actual F_num given by the user
 
-		folder.NewFolder("asdfg",820,0,"classroom",F_count,i_count,(err,F_id_array)=>{
-			if(err){
-				console.log(err.message);
-			}else{ // new folder i data created up to this
+// folder.checkLastFolderNum("sriram1234567",89,1,(err,F_count,i_count,active,P_F_num,res)=>{
+// 	console.log()
+// 	if(err){ 
+// 		console.log(err);
+// 	}else{
+// 		// this F_count-1 should be used as actual F_num given by the user
+
+// 		folder.NewFolder("sriram1234567",89,1,"classroom",F_count,i_count,(err,F_id_array)=>{
+// 			if(err){
+// 				console.log(err.message);
+// 			}else{ // new folder i data created up to this
 	
-				folder.updateIcount("asdfg",820,1,i_count,(err,result_)=>{
-					if(err){
-						console.log(err)
-					}else{
-						folder.updateFcount("asdfg",820,F_count,(err,result__)=>{
-							if(err){
-								console.log(err); 
-							}else{
-								folder.uploadFolderInfo("asdfg",820,F_id_array,undefined,(err,res)=>{
-									if(err){
-										console.log(err.message)
-									}else{
-										console.log(res);
-									}
-								}) 
-							}
-						})
-					}
-				})
+// 				folder.updateIcount("sriram1234567",89,1,i_count,(err,result_)=>{
+// 					if(err){
+// 						console.log(err)
+// 					}else{
+// 						folder.updateFcount("sriram1234567",89,F_count,(err,result__)=>{
+// 							if(err){
+// 								console.log(err); 
+// 							}else{
+// 								folder.uploadFolderInfo("sriram1234567",89,F_id_array,undefined,(err,res)=>{
+// 									if(err){
+// 										console.log(err.message)
+// 									}else{
+// 										console.log(res);
+// 									}
+// 								}) 
+// 							}
+// 						})
+// 					}
+// 				})
 					
 				
-			}
-		})
-	} 
-})
+// 			}
+// 		})
+// 	} 
+// })
 //getting folder info
 // folder.getFolderInfo("sriram",2,"F-1",(err,res)=>{
 // 	if(err){
@@ -414,4 +428,6 @@ folder.checkLastFolderNum("asdfg",820,0,(err,F_count,i_count,active,P_F_num,res)
 // 		console.log(res)
 // 	}
 // })
+
+module.exports = {Folder}
 

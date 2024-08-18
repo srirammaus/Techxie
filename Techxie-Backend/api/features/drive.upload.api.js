@@ -20,7 +20,9 @@ function upload_(req,res,next){
 						res.send({Error: errr.message})
 					}
 					else{
-						res.send("Uploaded Successfully"); 
+						// console.log( req?.body?.username + "  user")
+						// res.send("Uploaded Successfully"); 
+						next()
 					}
 				}else{
 					res.send("No Files has been uploaded")
@@ -33,10 +35,7 @@ function upload_(req,res,next){
 		res.send(err.message); ///for temp err , future you should classify
 	}
 }
-function temp(req,res,next){
-	res.send("Yeah got it ");
 
-}
 function getFileInfo(req,cb){
 	var form = formidable({multiples: true});
 	form.parse(req,(err,fields,files)=>{

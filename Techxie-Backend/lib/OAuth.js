@@ -48,6 +48,7 @@ class OAuth{
 		})
 	}
 	//Authenticate is it a valid session token via acccess token
+	//used except in toolBtn, change it ASAP
 	Authenticate(username,access_token,sessionID,cb){ // if not make sure to expire
 		var query = {username:  username, access_token:access_token,sessionID: sessionID};
 		DB.getConnection((err,db)=>{
@@ -59,6 +60,7 @@ class OAuth{
 						cb(new Error("something went wrong"))
 					}else{
 						if(typeof res == "undefined" || res == null){
+						
 							cb(new Error("Invalid session credentials"))
 						}else{
 							if(res.expired == 0){

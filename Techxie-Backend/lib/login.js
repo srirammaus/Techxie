@@ -28,19 +28,26 @@ class login {
 						if(typeof res == "undefined" || res == null ){
 							cb(new Error("Invalid username"));
 						}else{
-							console.log(res.credentials)
-							fetched_userID = res.credentials.USER_ID;
+							// console.log(res.credentials)
+							fetched_userID = res.credentials?.USER_ID;
 							var hashed_pwd = this.createHash(f_password);
-							if(res.credentials.password == hashed_pwd){
-								//now authentication
-								var OAuth =  new OAuth_();
-								OAuth.Authentication(f_username,fetched_userID,callback_url,(err,result)=>{
-									if(err){
-										cb( new Error(err.message));
-									}else{
-										cb(null,result,fetched_userID)
-									}
-								});
+							if(res.credentials?.password == hashed_pwd){
+								if(res?.verified_e == 1){
+									//now authentication
+									var OAuth =  new OAuth_();
+									OAuth.Authentication(f_username,fetched_userID,callback_url,(err,result)=>{
+										if(err){
+											cb( new Error(err.message));
+										}else{
+											cb(null,result,fetched_userID)
+										}
+									});
+
+								}else{
+									//redirect to email verification by sending verification email to client or user
+									cb( new Error("email not verified"));
+								}
+
 							}else{
 								cb(new Error("Invalid password"))
 							}

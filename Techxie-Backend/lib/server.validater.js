@@ -61,6 +61,7 @@ class validater{
 	isValidUserName(cb){ // useful query to get any other contents paced like this - var query = {[`credentials.${'username'}`]:this.getUsername()}
 		var query = {username: this.getUsername()}
 		var flag = 0; //something went wrong
+		let db_userID=null;
 		this.getConnection().getConnection((err,db) =>{
 			if(err){  cb(new Error(err))}
 			else{
@@ -68,19 +69,20 @@ class validater{
 					if(err){cb(new Error("Something Went Wrong"))} // take original error as log
 					else{
 						if( res == null || res == "undefined"){
-							flag = -1;
+							flag = -1; //no such user
 						}else{
-							flag = 1;
+							flag = res?.signup //0 username exist but not singup happened //1 username taken
+							db_userID =  flag == 0? res?.USER_ID:null;
 						}
-						cb(null,flag)
+						cb(null,flag,db_userID)
 					}
 				})
 			}
 		})
 	}
 	isValidUserID(cb){ 
-		var flag = 0;
-		var query = {USER_ID: this.getUserId()}
+		let flag = 0;
+		let query = {USER_ID: this.getUserId()}
 		console.log(this.getUserId() + "user id "); //to check whether the recursion works properly
 		this.getConnection().getConnection((err,db)=>{
 			if(err){ cb(new Error("something went wrong"))}
@@ -103,7 +105,7 @@ class validater{
 	Response(recurse = 0,recursive_array,cb){ //recurse  should be put as internal function because if sometimes any other developer use this , they may not notice the recursion tracker it is//  why the limit should be proper  ? bcaz when need a list it should be somewhat ordered manner so!
 		var tracker,rec;
 		this.createUserId();
-		this.isValidUserName((err,flag) =>{
+		this.isValidUserName((err,flag,db_userID) =>{
 			if(err){ cb(new Error("something went wrong"))}
 			else{
 				if(flag == -1){ // 1st  step done
@@ -135,7 +137,10 @@ class validater{
 							}
 						}
 					})
-				}else{
+				}else if(flag == 0){
+					console.log(db_userID + "   " + this.getUserId());
+					cb(null,{username: this.getUsername(),USER_ID:db_userID,signup:0});
+				}else {
 					cb(new Error("User Exist"))
 				}
 			}

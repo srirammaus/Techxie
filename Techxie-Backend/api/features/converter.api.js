@@ -12,8 +12,8 @@ function convert(req,res,next){ // if non exist user request then pop up to sign
 	var xsrf_verification = new xsrf_verification_lib();
 	var userID = req.body.userID;
 	var username = req.body.username;
-	var csrf_token = req.body.csrf_token;
-	var session_token = req.body.session_token;
+	var csrf_token = req.body.csrf_token || req.body.xsrf_token;
+	var session_token = req.body.session_token || req.body.access_token;
 	var sessionID = req.body.sessionID;
 	var B_name = req.body.B_name
 	var results;
@@ -22,10 +22,6 @@ function convert(req,res,next){ // if non exist user request then pop up to sign
 		res.send(results);
 	}else{
 		//OAuth verification
-		new OAuth().Authenticate(username,session_token,sessionID,(err,result)=>{
-			if(err){
-				res.send({Error:err.message})
-			}else if (result == 1){
 				var f_values = xsrf_verification.filter([userID,csrf_token]);
 				xsrf_verification.setter([f_values[0],f_values[1]]);
 				xsrf_verification.verify((err,flag,result__)=>{
@@ -51,10 +47,6 @@ function convert(req,res,next){ // if non exist user request then pop up to sign
 						}
 					}
 				})
-			}else{
-				res.send({Error: "something went wrong"})
-			}
-		})
 	}
 }
 
