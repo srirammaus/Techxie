@@ -1,0 +1,29 @@
+bugs
+
+ * Bug
+ * we can add folder to deleted folder
+ * we can even del main or root dir by making it inactive
+ * Eror handliinh 
+ * In db files stored as files:array -> obj
+ * if the F_num is accidentally chaged to F-num in uload js , it will thwo nwanted error 
+ * if username is not entered also it makes users in DB
+ * In email.js the verify user is send err like already reisgterd becuase of the USER_ID invalid or res is undefined
+ * in logi API it only shows the err message as email nt verified , but i have to show the status :0
+* This error not only happedn in this file, it is apllicable to all, in changePwd.api.js if u not check for undefined req.body and sent it lib func then it err as "data rg..." but this was shwng in resulting api to frontend. solve that
+* userid should e=be in number but strnig in webpdfconverter data
+* getFIle info having status : 1 even there was no such file error location fetchFile.ks 
+ ---
+ csrf token currently in:-
+
+csrf initiated in toolsbtn (/tools)
+
+token used in pdf upload
+normal upload
+forgot pwwd
+change email
+
+---
+remainder
+raise reddit question that what happen after inital clikc of app in com[uter]
+
+

@@ -20,7 +20,8 @@
 var path = require('path');
 const express = require('express');
 var drive_signup = require('../drive.signup.api.js');
-var xsrf = require('../xsrf.api.js')
+var xsrf = require('../xsrf.api.js');
+var xsrf_verification = require('../xsrf_verification.api.js');
 var login = require('../login.api.js');
 var OAuth = require('../OAuth.api.js');
 var Auth = require('../Auth.api.js');
@@ -29,12 +30,13 @@ var confirmMail = require('../confirmMail.api.js');
 var server_validater = require('../server.validater.api.js');
 var UserPageRoute = require('./UserPageRoute.api.js');
 var HandlePage = require ('../../lib/HandlePageUser.js');
-// var drive_upload =  require('../features/drive.upload.api.js');
 var pdfupload = require('../features/pdf.upload.api.js');
 var toolBtn = require('../features/toolBtn.api.js');
 var convert = require('../features/converter.api.js');
 var UserFolderRoute = require('./UserFolderRoute.api.js');
 var UserFileRoute =require('./UserFileRoute.api.js');
+var changePwd = require('../features/changePwd.api.js');
+
 const { rmSync } = require('fs');
 
 
@@ -45,14 +47,10 @@ router.use(express.static('D:/Techxie'));
 //routerMiddleWare
 
 // router.use(Authentication);
-function testMiddleWare(req,res,next) {
-    console.log(req.body.username + "  test middleware 11")
-    next()
-    
-}
+
 router.use('/page',UserPageRoute) 
-router.use('/folder',UserFolderRoute);//,Auth.AuthMiddleWare,UserFolderRoute)
-router.use('/file',UserFileRoute);
+router.use('/folder',Auth.AuthMiddleWare,UserFolderRoute);//,Auth.AuthMiddleWare,UserFolderRoute)
+router.use('/file',UserFileRoute);  //here you cant because you having multer , you can also sepearte multipart data before it , but it get omplex , becaue i hvae already made oauth niside the multer
 
 router.post('/api/login',login.login,function(req,res){ // OAuth.authentication (new token request)
 
@@ -68,7 +66,7 @@ router.post('/api/signup',drive_signup.signup,function(req,res){
 router.post('/api/UserVerification',server_validater.validater,function(req,res){
 
 }) // used for getting user id before signup
-router.post('/api/verify',xsrf.xsrf,function(req,res){ // i think this for test purpose
+router.post('/api/verify',Auth.AuthMiddleWare,xsrf.xsrf,function(req,res){ // i think this for test purpose
 
 })
 router.post('/api/changeMail',function(req,res){
@@ -79,19 +77,25 @@ router.post('/api/verifyMail',verifyMail.verifyMailMiddleWare,function(req,res){
 }).get('/api/verifyMail/:token',confirmMail.confirmMailMiddleWare,function(req,res){ //confirm mail
 // res.send(req.params.token)
 })
+function testMiddleware (req,res,next) {
 
-router.post('/api/pdfupload',pdfupload.pdf_upload,function (req,res){//pdf upload , it will verify the token
-   
+    next();
+}
+router.post('/api/pdfupload',pdfupload.pdf_upload,testMiddleware,function (req,res){//pdf upload , it will verify the token   
+  
  }) 
 router.post ('/api/tools',Auth.AuthMiddleWare,toolBtn.toolBtn,function(req,res){//if there is already session it wont produce new, else it prduce new session
  
  })
-router.post('/api/convert',Auth.AuthMiddleWare,convert.convert,(req,res)=>{//convert the already uploaded image to pdf, with csrf and OAuth 
+router.post('/api/convert',Auth.AuthMiddleWare,xsrf_verification.xsrf_verificationMiddleware,convert.convert,(req,res)=>{//convert the already uploaded image to pdf, with csrf and OAuth 
  
+ })
+ router.post('/api/changePwd',Auth.AuthMiddleWare,xsrf_verification.xsrf_verificationMiddleware,changePwd.changePwdMiddleWare,function(req,res) {
+    
  })
 
 
-
+// router.use(errHandler)
 // router.post('/api/AuthTest',Auth.AuthMiddleWare,function(req,res){//testing purpose
 //     res.send("The function should reach here")
 // })
@@ -102,7 +106,14 @@ router.post('/api/convert',Auth.AuthMiddleWare,convert.convert,(req,res)=>{//con
 })
 module.exports = router;
 
-/***
- * we can add folder to deleted folder
- * we can even del main or root dir by making it inactive
- *  */
+
+
+/**
+ * Eroor 
+ * ADDR not avil Error
+ * Reference eror by making response to res where the res used as (err,res) =>{...}
+ * typeerror happening and nodemon crashed while router.get(..,fetchFile.test) instead of fetchfile.middleware
+ * 
+ * --- some answers
+ * it having within the promise so it is not catch by express error ahndler
+ */

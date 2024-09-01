@@ -18,11 +18,10 @@ function upload_(req,res,next){
 						res.send({Error:errr.message})
 					}else if(errr){
 						res.send({Error: errr.message})
-					}
-					else{
-						// console.log( req?.body?.username + "  user")
-						// res.send("Uploaded Successfully"); 
-						next()
+					}else{
+						// console.log( req?.body?.username + "user")
+						res.send("Uploaded Successfully"); 
+						// next()
 					}
 				}else{
 					res.send("No Files has been uploaded")

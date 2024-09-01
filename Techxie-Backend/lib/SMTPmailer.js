@@ -29,7 +29,7 @@ class SMTPmailer {
         return new Promise(async function(resolve,reject){
             console.log(link)
             await fs.readFile("D:/Techxie/pages/email.html",function(err,data) {
-                if(err) throw new Error("something wenr wrong while fetching file");
+                if(err) reject("something wenr wrong while fetching file");
                 let parsedHTML = HTMLParser.parse(data.toString());
                 parsedHTML.getElementById("link").innerHTML += `<a href=${link}>  Click Here </a>`;
                 parsedHTML.querySelector("body").setAttribute("style",bodyStyleString)
@@ -41,7 +41,15 @@ class SMTPmailer {
     }
     //"<a href=''></a>"
     async setDoc(link) {
-        this.doc = await this.createDocument(link)
+        try {
+            this.doc = await this.createDocument(link)
+        }catch(err) {
+            /**
+             * This error will be caught by the email.js 
+             */
+            throw new Error(err)
+        }
+        
     }
     getDoc(){
         return this.doc;

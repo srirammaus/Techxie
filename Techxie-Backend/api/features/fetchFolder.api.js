@@ -1,5 +1,5 @@
 //This will fetch data from db collection
-
+var filter = require('../../lib/filter.js');
 const Folder = require('../../lib/Folder.js')
 var result = {
     status:0,
@@ -20,7 +20,10 @@ function setParameters (req){
 }
 function createFolderMiddleware(resolve,reject,req,res,next) {
     //filter and type should evaluated
-    setParameters (req)
+    let properties = ["body"];
+    let requiredParams= ["username","userID","F_num"];
+    filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
+        setParameters (req)
         folder.checkLastFolderNum(username,userID,F_num,(err,F_count,i_count,active,P_F_num,item_number)=>{ //item_number = res
           
             if(err){ 
@@ -62,62 +65,100 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
                 })
             } 
         })
+    }else {
+        next("something went wrong")
+    }}).catch(err=>{
+        next(err)
+    })
+    
   
 
 }
+//csrf needed
 function delFolderMiddleware(resolve,reject,req,response,next){
-    setParameters (req)
-    folder.checkLastFolderNum(username,userID,F_num,(err,F_count,i_count,active,P_F_num,item_number)=>{
-        if(err){
-            reject(err)
-        }else{
-            if(active == 0 ){
-                reject("Folder Already deleted");
+    let properties = ["body"];
+    let requiredParams= ["username","userID","F_num"];
+    filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
+        setParameters (req)
+        folder.checkLastFolderNum(username,userID,F_num,(err,F_count,i_count,active,P_F_num,item_number)=>{
+            if(err){
+                reject(err)
             }else{
-                folder.DeleteFolder(username,userID,F_num,P_F_num,item_number,(err,res)=>{
-                    if(err){
-                        reject(err.message)
-                    }else{
-                        result.status = 1;
-                        result.message = "successfully deleted"
-                        response.send(result)
-                    }
-                })
+                if(active == 0 ){
+                    reject("Folder Already deleted");
+                }else{
+                    folder.DeleteFolder(username,userID,F_num,P_F_num,item_number,(err,res)=>{
+                        if(err){
+                            reject(err.message)
+                        }else{
+                            result.status = 1;
+                            result.message = "successfully deleted"
+                            response.send(result)
+                        }
+                    })
+                }
             }
-        }
+        })
+    }else { 
+        next("something went wrong")
+    }}).catch(err=>{
+        next(err)
     })
+
 }
 function editFolderMiddleware(resolve,reject,req,res,next){ //like Rename
 
 }
-function viewFolderMiddleware(resolve,reject,req,response,next) { //Later plan
-    setParameters (req)
-    folder.viewFolder(username,userID,F_num,(err,res)=>{
-        if(err){
-            reject(err);
-        }else{
-            console.log("Before: ")
-            console.log(res)
-            var filteredresult = folder.viewFolderFilter(res)
-            console.log("After: ")
-            result.message = filteredresult; // check what if here would be a reference error how to caught eg: invalid veriable or splelling mistakei declared here filteredddresult 
-            result.status = 1;
-            response.send(result)
-            
-        }
+function viewFolderMiddleware(resolve,reject,req,response,next) { 
+    /**
+     * This is retirve all the active folders and files in requested folder
+     */
+    let properties = ["body"];
+    let requiredParams= ["username","userID","F_num"];
+    filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
+        setParameters (req)
+        folder.viewFolder(username,userID,F_num,(err,res)=>{
+            if(err){
+                reject(err.message);
+            }else{
+                console.log("Before: ")
+                console.log(res)
+                var filteredresult = folder.viewFolderFilter(res)
+                console.log("After: ")
+    
+                result.message =Object.assign({},filteredresult); // check what if here would be a reference error how to caught eg: invalid veriable or splelling mistakei declared here filteredddresult 
+                result.status = 1;
+                response.send(result)
+                
+            }
+        })
+    }else { 
+        next("something went wrong")
+    }}).catch(err=>{
+        next(err)
     })
+
 }
 function getFolderInfoMiddleWare (resolve,reject,req,response,next) {
-    setParameters(req)
-    folder.getFolderInfo(username,userID,F_id,(err,res)=>{
-        if(err){
-            reject(err.message)
-        }else{
-            result.status = 1;
-            result.message = res;
-            response.send(result);
-        }
+    let properties = ["body"];
+    let requiredParams= ["username","userID","F_id"];
+    filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
+        setParameters(req)
+        folder.getFolderInfo(username,userID,F_id,(err,res)=>{
+            if(err){
+                reject(err.message)
+            }else{
+                result.status = 1;
+                result.message = res;
+                response.send(result);
+            }
+        })
+    }else {
+        next("something went wrong")
+    }}).catch(err=>{
+        next(err)
     })
+
 }
 function MiddleWare(func){
     return (req,res,next) =>{

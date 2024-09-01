@@ -4,6 +4,7 @@ var crypto = require('crypto');
 var DB =  require('./../config/M_Database');
 var xsrf_verification_lib = require(__dirname + '/xsrf_verification').xsrf_verification;
 var OAuth = require(__dirname + '/OAuth').OAuth;
+var filter = require(__dirname + '/filter.js');
 class pdf_upload{
     constructor(){
         var Auth = new OAuth();
@@ -28,46 +29,57 @@ class pdf_upload{
         var xsrf_verification = new xsrf_verification_lib();
         var multer_ =  multer.diskStorage({
             destination: async (req,file,cb)=>{ // filter should be used here
-                username = req.body.username;
-                u_id =req.body.userID;
-                xsrf_token = req.body.xsrf_token;
-                session_token = req.body.session_token || req.body.access_token;
-                sessionID = req.body.sessionID;
-                if(u_id == null || xsrf_token == null || username == null || sessionID ==null || session_token ==null){
-                    cb(new Error("Invalid Input Fields")) // temp
-                }else{ // this verfication can also be done in there [setmulter cb(null,false)]
-                    new OAuth().Authenticate(username,session_token,sessionID,(err,result_)=>{
-                        if(err){
-                            cb(new Error(err.message))
-                        }else if(result_ == 1){
-                            var xsrf_verification_filter = xsrf_verification.filter([req.body.userID,req.body.xsrf_token]);
-                            var xsrf_verification_setter = xsrf_verification.setter([xsrf_verification_filter[0],xsrf_verification_filter[1]]);
-                            xsrf_verification.verify((err,flag,res)=>{
+                let properties = ["body"]
+                let requiredParams = ["username","userID","xsrf_token","session_token","sessionID"]
+                filter.Filter(req,null,null,properties,requiredParams).then(flag=>{
+                    if(flag == 1) {
+                        username = req.body.username;
+                        u_id =req.body.userID;
+                        xsrf_token = req.body.xsrf_token;
+                        session_token = req.body.session_token || req.body.access_token;
+                        sessionID = req.body.sessionID;
+                        if(u_id == null || xsrf_token == null || username == null || sessionID ==null || session_token ==null){
+                            cb(new Error("Invalid Input Fields")) // temp
+                        }else{ // this verfication can also be done in there [setmulter cb(null,false)]
+                            new OAuth().Authenticate(username,session_token,sessionID,(err,result_)=>{
                                 if(err){
                                     cb(new Error(err.message))
-                                }else if(flag == 0){
-                                    cb(new Error("csrf Expired"));
-                                    //redirect to home page , if there is valid session token
-                                }
-                                else{
-                                    f_values = this.filter([u_id,xsrf_token])
-                                    this.setVaribles(f_values[0],f_values[1]);
-                                    this.setBucketName(bucket_data_name)
-                                    this.setBucket(u_id,xsrf_token,(err,dir)=>{
-                                        if(err){ 
-                                            cb(new Error(err.message))}
-                                        else{
-                                            cb(null,dir);
+                                }else if(result_ == 1){
+                                    var xsrf_verification_filter = xsrf_verification.filter([req.body.userID,req.body.xsrf_token]);
+                                    var xsrf_verification_setter = xsrf_verification.setter([xsrf_verification_filter[0],xsrf_verification_filter[1]]);
+                                    xsrf_verification.verify((err,flag,res)=>{
+                                        if(err){
+                                            cb(new Error(err.message))
+                                        }else if(flag == 0){
+                                            cb(new Error("csrf Expired"));
+                                            //redirect to home page , if there is valid session token
                                         }
-                                    });
-                                      // catch the bucket not created error through multer
+                                        else{
+                                            f_values = this.filter([u_id,xsrf_token])
+                                            this.setVaribles(f_values[0],f_values[1]);
+                                            this.setBucketName(bucket_data_name)
+                                            this.setBucket(u_id,xsrf_token,(err,dir)=>{
+                                                if(err){ 
+                                                    cb(new Error(err.message))}
+                                                else{
+                                                    cb(null,dir);
+                                                }
+                                            });
+                                              // catch the bucket not created error through multer
+                                        }
+                                    })
+                                }else{
+                                    cb(new Error("something went wrong"))
                                 }
                             })
-                        }else{
-                            cb(new Error("something went wrong"))
-                        }
-                    })
-                }
+                        }                      
+                    }else {
+                        cb(new Error("something went wrong"))
+                    }
+                }).catch(err=>{
+                    cb(new Error(err))
+                })
+               
             
             },
             filename: (req,file,cb)=>{
@@ -191,6 +203,7 @@ class pdf_upload{
     }
     filter(val){
         for (var i=0;i<val.length;i++){
+            if(typeof val[i]  == "number") continue
             val[i] = val[i].trim();
         }
         return val;

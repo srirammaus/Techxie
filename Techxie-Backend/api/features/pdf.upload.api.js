@@ -3,7 +3,9 @@
 //try
 //CA
 var pdf_upload_lib = require('../../lib/pdf.upload.js').pdf_upload;
+
 function pdf_upload(req,res,next) {
+	console.log("Im the first")
 	var multer = new pdf_upload_lib();
 	//filter
 	//creating bucket
@@ -15,6 +17,7 @@ function pdf_upload(req,res,next) {
 		var mul = multer.setMulter(bucket_data_name); //i think still it is just initialized , 
 		multer_ = mul.array('img',10);
 		multer_(req,res,(err)=>{
+			
 			if(err instanceof multer.getRMulter().MulterError){
 				res.send({Error: err.message})
 			}else if (err) {

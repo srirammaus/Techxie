@@ -20,7 +20,7 @@ class xsrf{
 	    return token;
 	}
 	//creat a event monitor in front-end throught which we can automatically log out if the cookies expired once
-	setToken(userID,cb){ // setting token to db
+	setToken(userID,sessionID,session_token,cb){ // setting token to db
 		var COLLECTION_NAME,token,activated_time,validTime,validTimeMilli,expired; // how we going to expire it ? the anwer is if the conversion over then it should be expired by pdfconverter automatically[for only here if they used expire it] and where this stuffs is used kindle requrest to isvalidtime is working
 		COLLECTION_NAME = 'web_csrf_sessions';
 		token = this.getToken();
@@ -31,8 +31,8 @@ class xsrf{
 		var setData = {
 			USER_ID:userID, // userid
 			token: token, // new csrf token
-			tool:this.tool,
-			session_token: null, // once login activity completed , will do this stuff
+			sessionID:sessionID,
+			session_token: session_token, // once login activity completed , will do this stuff
 			activated_time: activated_time, 
 			validTime: validTime,
 			validTimeMilli: validTimeMilli,
@@ -53,7 +53,7 @@ class xsrf{
 		})
 	}
 	isTokenAvail(userID,sessionID,session_token,cb){ //thx will check csrf token is already there , if it is so then it returns
-		var query = {USER_ID : Number(userID),expired: 1};
+		var query = {USER_ID : Number(userID),sessionID:sessionID,session_token,expired: 1};
 		DB.getConnection((err,db)=>{
 			if(err){
 				cb(new Error("something went wrong"))
@@ -73,6 +73,7 @@ class xsrf{
 	}
 	filter(val){
 		for (var i=0;i<val.length;i++){
+			if(typeof val[i] == "number") continue;
 			val[i] = val[i].trim();
 		}
 		return val;

@@ -46,8 +46,11 @@ class email {
             }
             else {
             // create a db or do something for those email storing
+            console.log("----")    
+            console.log(res)
                 if(res?.verified_e == 0){
-                    // send new token if also have token
+                    // send new token if also have 
+                    console.log("Not registered")
                     let flag = 1;
                     // console.log(res)
                     cb(null,flag)
@@ -66,7 +69,7 @@ class email {
         }
         this.getConnection().getConnection((err,db) =>{
             if(err){
-                throw new Error("something went wrong at line 43")
+                cb(new Error("something went wrong at line 43"))
             }else{
                 DB.UpdateDocument(db,query,null,"USERS",data,(err,res)=>{
                     if(err) {
@@ -92,7 +95,7 @@ class email {
         }
         this.getConnection().getConnection((err,db)=>{
 
-            if(err) throw new Error("something went wrong at line 70");
+            if(err) cb(new Error("something went wrong at line 70"));
             else{
                 DB.UpdateDocument(db,query,null,"USERS",data,(err,res) =>{
                     if(err) {
@@ -116,13 +119,18 @@ class email {
         //setDoc
         //sendemail
         let mailer = new SMTPMailer.SMTPmailer();
-        mailer.setDoc(this.getURL())
-        mailer.sendEmail().catch((err)=>{
-            //err as log
-            cb( new Error("something went"))
-        }).then(()=>{
-            cb(null,1)
-        })
+        try {
+            mailer.setDoc(this.getURL())
+            mailer.sendEmail().catch((err)=>{
+                //err as log
+                cb( new Error("something went"))
+            }).then(()=>{
+                cb(null,1)
+            })    
+        }catch(err) {
+            cb(new Error(err))
+        }
+        
 
     }
     setToken(){

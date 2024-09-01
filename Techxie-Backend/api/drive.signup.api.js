@@ -4,27 +4,34 @@
 var signup__ = require('./../lib/signup.js').signup;
 
 function signupMiddleware(req,res,next){	
-	var name = req.body.name;
-	var userID = req.body.userID;
-	var username = req.body.username;
-	var password = req.body.password;
-	var cpassword = req.body.cpassword;
-	var email = req.body.email;
-	var ph_number = req.body.ph_number;
-	try	{
-		InputCounter(req.body);
-		var signup_  =  new signup__([name,userID,username,password,cpassword,email,ph_number]);
-		signup_.InputValidater([name,userID,username,password,cpassword,email,ph_number])
-		signup_.signup((err,result)=>{
-			if(err){
-				res.send(JSONIFY(["Error","flag"],[err.message, -1]));
-			}else{
-				res.send(JSON.stringify(result))
-			}
-		})
-	}catch(err ){
-		res.send(JSONIFY(["Error","flag"],[err.message, -1]));
-	}
+	 let properties = ["body"];
+    let requiredParams= ["username","password","cpassword","email","ph_number","name"];
+    filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
+		let name = req.body.name;
+		let userID = req.body.userID;
+		let username = req.body.username;
+		let password = req.body.password;
+		let cpassword = req.body.cpassword;
+		let email = req.body.email;
+		let ph_number = req.body.ph_number;
+		try	{
+			InputCounter(req.body);
+			var signup_  =  new signup__([name,userID,username,password,cpassword,email,ph_number]);
+			signup_.InputValidater([name,userID,username,password,cpassword,email,ph_number])
+			signup_.signup((err,result)=>{
+				if(err){
+					res.send(JSONIFY(["Error","flag"],[err.message, -1]));
+				}else{
+					res.send(JSON.stringify(result))
+				}
+			})
+		}catch(err ){
+			res.send(JSONIFY(["Error","flag"],[err.message, -1]));
+		}
+	}else {next("something went wrong")}}).catch(err=>{
+		next(err)
+	})
+
 
 }
 function JSONIFY(keys,values){ //both should be array and same count

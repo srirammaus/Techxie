@@ -5,6 +5,7 @@ var OAuth = require(__dirname + "/OAuth").OAuth;
 var xsrf_verification_lib = require(__dirname + "/xsrf_verification").xsrf_verification;
 var DB = require('./../config/M_Database');
 const Files = require(__dirname + '/Files.js');
+var filter = require(__dirname + '/filter.js');
 //check if the parameters are empty - pending
 //token should be validated
 ///upload has more pending works
@@ -17,46 +18,63 @@ class upload{ // check username , token , user is corresponding to theri types l
 	//if there is no uploads key in request paramter it won't cnosider this as multipart form data request , instead it consider this ias normal request so the file destination,storage won't work
 	initialize(){ // use to initailize
 		var username,file_original_name,userID,sessionID,session_token,csrf_token;
+		var f_names =[];
 		var Multer = multer.diskStorage({
 			destination:(req,file,cb)=>{
-				username = req.body.username;
-				userID = req.body.userID;
-				session_token = req.body.session_token;
-				sessionID =  req.body.sessionID;
-				csrf_token = req.body.csrf_token || req.body.xsrf_token;
-				var xsrf_verification = new xsrf_verification_lib();
-				if(username == null || typeof username == "undefined" && sessionID == null || typeof sessionID == "undefined" && session_token == null || typeof session_token == "undefined" && csrf_token == null || typeof csrf_token == "undefined" && userID == null || typeof userID == "undefined" ){
-					cb(new Error("Invalid Inputs"))
-				}
-				else if(username != "undefined" && this.isValidType(username)){
-					new OAuth().Authenticate(username,session_token,sessionID,(err,result)=>{
-						if(err){
-							cb(new Error(err.message));
-						}else if (result == 1){
-							xsrf_verification.setter([userID,csrf_token]);
-							xsrf_verification.verify((err,flag,result_)=>{
+				let properties = ["body"]
+                let requiredParams = ["username","userID","xsrf_token","session_token","sessionID"]
+
+				filter.Filter(req,null,null,properties,requiredParams).then(flag =>{
+					if(flag == 1){
+						username = req.body.username;
+						userID = req.body.userID;
+						session_token = req.body.session_token;
+						sessionID =  req.body.sessionID;
+						csrf_token = req.body.csrf_token || req.body.xsrf_token;
+						
+						var xsrf_verification = new xsrf_verification_lib();
+						if(username == null || typeof username == "undefined" && sessionID == null || typeof sessionID == "undefined" && session_token == null || typeof session_token == "undefined" && csrf_token == null || typeof csrf_token == "undefined" && userID == null || typeof userID == "undefined" ){
+							cb(new Error("Invalid Inputs"))
+						}
+						else if(username != "undefined" && this.isValidType(username)){
+							new OAuth().Authenticate(username,session_token,sessionID,(err,result)=>{
 								if(err){
 									cb(new Error(err.message));
-								}else if(flag ==0 ){
-									cb(new Error("csrf token expired"))
+								}else if (result == 1){
+									xsrf_verification.setter([userID,csrf_token]);
+									xsrf_verification.verify((err,flag,result_)=>{
+										if(err){
+											cb(new Error(err.message));
+										}else if(flag ==0 ){
+											cb(new Error("csrf token expired"))
+										}else{
+											cb(null,this.getBucket(userID))
+										}
+									})
+									
 								}else{
-									cb(null,this.getBucket(userID))
+									cb(new Error("something went wrong"))
 								}
 							})
 							
-						}else{
-							cb(new Error("something went wrong"))
+						}	 // not uploaded : error handling problem everywhere
+						else{
+							cb( new Error("something went  wrong"))
 						}
-					})
-					
-				}	 // not uploaded : error handling problem everywhere
-				else{
-					cb( new Error("something went  wrong"))
-				}
+					}else {
+						cb(new Error("something went wrong"))
+					}
+				}).catch(err=>{
+					cb (new Error(err))
+				})
+				
 			},
 			filename: (req,file,cb)=>{
 				// check whether filen name already exixts or not ! same file uploaded not a problem .
-				file_original_name = file.originalname
+				let f_name = this.setf_name(file?.originalname);
+				file_original_name = f_name //file.originalname
+				req.body.f_names = f_names
+				f_names.push(f_name)
 				if(file_original_name != "undefined" &&this.isValidType(file_original_name)){
 					cb(null,this.getFileName(file_original_name));
 				}	
@@ -111,6 +129,15 @@ class upload{ // check username , token , user is corresponding to theri types l
 	//a setter inside the callback is a child of multer , that's how we can able to getter that in other lib
 	setFileFlag(flag){
 		this.Flag = 1;
+	}
+	setf_name (original_filename) {
+		var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        var xsrf_token = '';
+        for(var i = 0; i < 15; i++) {
+            xsrf_token += chars[Math.floor(Math.random() * chars.length)];
+        }
+        var f_name = xsrf_token;//original_filename.toString() + '-' +  
+        return f_name; 
 	}
 	getFileFlag(){
 		return this.Flag;

@@ -18,5 +18,17 @@ class UserError extends Error{
 		this.name = "UserError"
 	}
 }
+class ServerError extends  Error {
+	constructor (message) {
+		super(message) 
+		this.name = "Server Error"
+	}
+}
+class InvalidRequest extends Error {
+	constructor(message) {
+		super(message)
+		this.name ="Invalid Request"
+	}
+}
 
 module.exports = {ErrorCode , InvalidError,UserError}

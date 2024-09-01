@@ -51,6 +51,7 @@ class OAuth{
 	//used except in toolBtn, change it ASAP
 	Authenticate(username,access_token,sessionID,cb){ // if not make sure to expire
 		var query = {username:  username, access_token:access_token,sessionID: sessionID};
+		console.log(query)
 		DB.getConnection((err,db)=>{
 			if(err){
 				cb(new Error("something went wrong"));

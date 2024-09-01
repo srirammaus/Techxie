@@ -4,7 +4,7 @@ const validater = require(__dirname +'/validater.js');
 const imgToPDF = require('image-to-pdf');
 var fs = require('fs');
 //this below result name is the directory name or B_name , but this tored in another converted directory
-function converter(dir_files,result_name, cb){   //dir files should be array
+async function converter(dir_files,result_name, cb){   //dir files should be array
     const pages = [];
     var res_name = result_name.split(".");
     if(typeof(dir_files) == "object"){
@@ -12,7 +12,7 @@ function converter(dir_files,result_name, cb){   //dir files should be array
             console.log("converter")
             pages.push(fs.readFileSync(dir_files[file]))   //loop this
         }
-        cb(null,true)
+       
     }else{
         cb(new Error("Args should be in array"));
     }
@@ -22,7 +22,7 @@ function converter(dir_files,result_name, cb){   //dir files should be array
                 cb(new Error(err.message))
             }
         })
-        imgToPDF(pages,imgToPDF.sizes.A4).pipe(fs.createWriteStream(__dirname+"/WebPdfConverted/"+ res_name[0]+".pdf")) //createing stream won't create if there is no directory
+        cb(null,await imgToPDF(pages,imgToPDF.sizes.A4).pipe(fs.createWriteStream(__dirname+"/WebPdfConverted/"+ res_name[0]+".pdf"))) //createing stream won't create if there is no directory
     }catch(err){
         cb(new Error("Something Went Wrong  : "+err.message));
     }
@@ -58,6 +58,9 @@ function getSources_(directory_name){
         }
         return directories;
     }catch(err){
+         /**
+             * This error will be caught by the converter.api.js
+             */
         throw new Error("Invalid directory name")
         // return null; //if false then raise as "invalid directory name input, trynaa hack us?"
     }

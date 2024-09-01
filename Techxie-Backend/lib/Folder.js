@@ -299,12 +299,14 @@ class Folder{
 	//This is used to Filter if there is any inactive folder it will filter them 
 	viewFolderFilter(data){
 		var Items = data.items;
+		console.log(data)
 		var filtered_data = [];
 		for (var i =0; i<Items.length ; i++){
 			if(data.items[i].active == 1){
 				filtered_data.push(data.items[i])
 			}
 		}
+		console.log(filtered_data + "filterd")
 		return filtered_data;
 
 	}

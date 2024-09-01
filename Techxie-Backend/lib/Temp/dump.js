@@ -17,6 +17,8 @@
 // 		this.valid = valid;
 // 		console.log(this.TYPE)
 
+const { resolve } = require("path");
+
 // 	}
 // 	getConnection(){
 // 		return DB;
@@ -305,39 +307,85 @@
 // parsedFile.MAX_LIMIT = 'newVariableValue'
 // fs.writeFileSync('./.env', envfile.stringifySync(parsedFile)) 
 // console.log(envfile.stringifySync(parsedFile))
-var mongoclient = require('mongodb').MongoClient;
-var HOST,USERNAME,PASSWORD,DATABASE_NAME,PORT;
-HOST = "localhost";
-PORT = "27017";
-USERNAME = "";
-PASSWORD = "";
-DATABASE_NAME = "data";
-var myURL = "mongodb://"+ HOST +":" +PORT+"/";
-var ERR;
-function getConnection(cb){
+// var mongoclient = require('mongodb').MongoClient;
+// var HOST,USERNAME,PASSWORD,DATABASE_NAME,PORT;
+// HOST = "localhost";
+// PORT = "27017";
+// USERNAME = "";
+// PASSWORD = "";
+// DATABASE_NAME = "data";
+// var myURL = "mongodb://"+ HOST +":" +PORT+"/";
+// var ERR;
+// function getConnection(cb){
 	
-	mongoclient.connect(myURL,function(err,db_){
-	var db;
-	if(err){
-		ERR = "Connection Failed"; //Take orgina err as log as as how it failed future and send your eror to next
-		cb(new Error(ERR));  // Err =""cand putting in cb is not a best way instead put new Error or new Exceptionhandlers.Errors("somethiing went wrong"); dont throw errors here
-	}else{
-		db = db_.db(DATABASE_NAME);
-		cb(null,db)	
-	}
-	return;
-	})
+// 	mongoclient.connect(myURL,function(err,db_){
+// 	var db;
+// 	if(err){
+// 		ERR = "Connection Failed"; //Take orgina err as log as as how it failed future and send your eror to next
+// 		cb(new Error(ERR));  // Err =""cand putting in cb is not a best way instead put new Error or new Exceptionhandlers.Errors("somethiing went wrong"); dont throw errors here
+// 	}else{
+// 		db = db_.db(DATABASE_NAME);
+// 		cb(null,db)	
+// 	}
+// 	return;
+// 	})
 	
 	
+// }
+// getConnection((err,db)=>{
+// 	if(err) throw err;
+// 	db.collection("USERS").findOne({name:"jancy"},function(err,res){
+// 		if(err){
+// 			throw new Error("Can't find documents something went wrong"); //take errors as log
+// 		}else{
+// 			console.log(res)
+// 		}
+// 		return;
+// 	})
+// }) 
+/**
+ * Current Pormblem im facing is that function throwing randomly reference erorr, call stack etc...
+ * 
+ */
+function func(num) {
+	if(num != 1) {
+		throw new Error("Type mismatched")
+	} 
 }
-getConnection((err,db)=>{
-	if(err) throw err;
-	db.collection("USERS").findOne({name:"jancy"},function(err,res){
-		if(err){
-			throw new Error("Can't find documents something went wrong"); //take errors as log
-		}else{
-			console.log(res)
-		}
-		return;
-	})
-}) 
+function cb1 (cb) {
+	if(1 == 1){
+		cb(null,1)
+	}else{
+		cb(new Error("Error happened"))
+	}
+}
+
+function cb2  () {
+
+}
+function test() {
+
+}
+function returnPromise (){ 
+		setTimeout(function(){
+			throw new Error("Erro")
+		},100)
+}
+async function awaiter () {
+	try{
+		var wait = await returnPromise();
+		console.log(wait + "undeined")
+	}catch(err){ 
+		
+		console.log(err + "err")
+	}
+}
+process.on('uncaughtException', (err) => {
+	console.log('Caught exception: ' + err.message);
+  });
+  awaiter()
+  
+
+
+  
+  

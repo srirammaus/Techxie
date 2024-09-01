@@ -1,4 +1,5 @@
 let Email = require('./../lib/email.js');
+let filter = require("./../lib/filter.js");
 // N
 function confirmMailMiddleWare(req,res,next){
     let email,username,userID;
@@ -6,42 +7,53 @@ function confirmMailMiddleWare(req,res,next){
         status:0,
         message:"something went wrong"
     }
-    username = req.query.username;
-    userID = Number(req.query.userID);
-    email = req.query.email;
-    token = req.params.token;
 
-    let em = new Email.email()
 
-    try{
-        new Promise((resolve,reject) => {
-            em.verifyEmail(username,email,userID,(err,flag)=>{
-                if(err) reject(err)
-                else{
-                    if(flag == 1){
-                        em.verifyToken(username,userID,email,token,(err,flag)=>{
-                            if(err) reject(err);
-                                else{
-                                    result.status = 1;
-                                    result.message = "email verified sucessfully";
-                                    res.send(result)
-                                }
-                            })
-                    }else{
-                        reject(result)
-                    }
-                }
+    let properties = ["query","params"]
+    let requiredParams = [["username","USER_ID","email"],["token"]];
+    filter.Filter(req,res,next,properties,requiredParams).then(flag=>{
+        username = req.query.username;
+        userID = req.query.USER_ID;
+        email = req.query.email;
+        token = req.params.token;
+        if(flag == 1) {
+            try{
+                let em = new Email.email()
+                new Promise((resolve,reject) => {
+                    em.verifyEmail(username,email,userID,(err,flag)=>{
+                        if(err) reject(err)
+                        else{
+                            if(flag == 1){
+                                em.verifyToken(username,userID,email,token,(err,flag)=>{
+                                    if(err) reject(err);
+                                        else{
+                                            result.status = 1;
+                                            result.message = "email verified sucessfully";
+                                            res.send(result)
+                                        }
+                                    })
+                            }else{
+                                reject(result)
+                            }
+                        }
+                    })
+                }).catch((err) =>{
+                    result.status = 0;
+                    result.message= err.message
+                    res.send(result)
             })
-        }).catch((err) =>{
-            result.status = 0;
-            result.message= err.message
-            res.send(result)
+        }catch(err) {   
+                result.status = 0;
+                result.message= err.message
+                res.send(result)
+            }
+        }else {
+            next("something went wrong")
+        }
+    }).catch(err =>{
+        next(err )
     })
-}catch(err) {   
-        result.status = 0;
-        result.message= err.message
-        res.send(result)
-    }
+   
 
 
 }

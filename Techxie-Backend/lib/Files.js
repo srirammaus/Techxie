@@ -8,6 +8,7 @@ class Files{
 	getConnection(){
 		return DB;
 	}
+
 	getFolderInfo(username,userID,F_num,cb){ // checkLastFolderNum in folder.js
 		var query = {username: username,USER_ID: Number(userID)};
 		this.getConnection().getConnection((err,db)=>{
@@ -100,7 +101,12 @@ class Files{
 			if(err){
 				cb(new Error("something went wrong"))
 			}else{
-				DB.UpdateDocument_(db,query,null,"BucketInfo",data,(err,res)=>{
+				/**
+				 * Note:
+				 * I change updateDocument_ to updateDocument !inthis push not used , set used.
+				 * if any problem raises , look here once
+				 */
+				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,res)=>{
 					if(err){
 						cb(new Error(err));
 					}else{ 
@@ -115,7 +121,7 @@ class Files{
 	//it will update the stuffs 
 	//driveInfo [DB]
 	//with set
-	uploadFileInfo(username,userID,f_id_array,file_count,cb){
+	uploadFileInfo(username,userID,filenames,f_name_array,f_id_array,file_count,cb){
 		var query = {username: username,USER_ID: Number(userID)}
 		var key_1,key_2 ;
 		var n,i;
@@ -128,8 +134,8 @@ class Files{
 			// The_Multiplied_File_count = The_Real_F_count * Number(file_count[2]);
 			key_1 = "Files." + file_count;
 			data[key_1] = {
-						filename: "filename",
-						f_name:"f_name",
+						filename: filenames[i],
+						f_name:f_name_array[i],
 						f_id: f_id_array[i],
 						file_size:"file_size",
 						file_modified_date:"file_modified_date",
@@ -170,10 +176,13 @@ class Files{
 	}
 	//getting the file information
 	getFileInfo(username,userID,f_id,cb){
+		/**
+		 * To get the spectfic file info 
+		 * future add it for get All file info
+		 */
 		//var query = {username: username,USER_ID: Number(userID),"0.items.2.0.f_name":"file-name"} // take invalid key recive as log
 		// you can do it in twice of methods by giving th proper key then it will validate whether the stuffs is there or not, but also you can retrive the entirely by getting the data then filter it in our programming[recommended] becuase it is much less information , we are using this information when a folder is opened we will list them thats why we need
 		var key = f_id + ".f_id" ;
-		console.log(key)
 		var query_1= {username: username,USER_ID: Number(userID)}
 		var query_2 = {Files:{$elemMatch:{f_id: f_id}}}; //var query_2 = {Files:{$elemMatch:{[`${key}`]: f_id}}} - working|| element only returning the array based stuffs for example if GeneralInfo in Db contains "color:yellow" then the query_2 is {GeneralInfo:{$elemMatch:{color: "yellow"}}} it then return the wanted stuffs because this generalinfo is array , but not returning obeject
 		this.getConnection().getConnection((err,db)=>{
@@ -184,13 +193,17 @@ class Files{
 					if(err){
 						cb(new Error(err.message))
 					}else{
-						cb(null,res[0].Files);
+						console.log(res[0]?.Files )
+						res[0]?.Files == undefined || res[0]?.Files == null ?cb(new Error("no such files")):cb(null,res[0]?.Files);
 					}
 				})
 			}
 		})
 	}
 	getFilecount(username,userID,cb){
+		/**
+		 * To get overall File count from the users bucket
+		 */
 		var query = {username: username, USER_ID: Number(userID)}
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
@@ -211,7 +224,12 @@ class Files{
 			}
 		})
 	}
-	deleteFile(username,userID,F_num,P_F_num){ // make them as inactive
+	deleteFile(username,userID,F_num,P_F_num){ 
+		/**
+		 * check it is valid
+		 * make it inactive
+		 * 
+		 */
 		var query = {username: username,USER_ID: Number(userID)}
 		var key_1 = F_num + ".active";
 		var key_2 = P_F_num + ".items." + item_number + ".active";
@@ -238,9 +256,39 @@ class Files{
 		})
 
 	}
-
+	viewFileFromBucket(f_name) {
+		
+	}
 	delMulFiles(){
+		/**
+		 * deleting multiple files while using all delete 
+		 */
 
+	}
+	/**
+	 * below codes are used to test error handling techniques
+	 */
+	testcb1(username,userID,f_id,cb){
+	
+		// setTimeout(()=>{
+		// 	this.testcb2((er,fl)=>{		
+		// 			if(er){
+		// 				cb(new Error("went wrong"))
+		// 			}else{
+		// 				setTimeout(()=>{
+		// 					throw new Error("Unncaught Error")
+		// 				},100)
+		// 			}			
+		// 	})
+		// },100)
+	}
+
+	testcb2(cb) {
+		cb(null,1);
+		/**
+		 * If this was setTimeout [async - real ] this aslo show error in server 
+		 * so make sure to alway pass error in next
+		 */
 	}
 }
 

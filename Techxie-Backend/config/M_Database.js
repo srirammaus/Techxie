@@ -25,19 +25,19 @@ function getConnection(cb){
 	
 }
 
-function drop_Database(db){ //use cb
+function drop_Database(db,cb){ //use cb
 	//To drop database using nodejs
 	db.dropDatabase(function(err , res){
-		if(err) throw err;
+		if(err) cb(new Error(err));
 		console.log("Database Deleted"); //soon add it logs
 		closeConnection(db);
 	})
 	
 }
-function drop_Collection(db,collection_name){ //use cb
+function drop_Collection(db,collection_name,cb){ //use cb
 	//droping collection
 	db.dropCollection(collection_name.toString(),(err,resOK)=>{
-							if(err) throw err;
+							if(err) cb(new Error(err));
 							if(resOK) console.log("Collection or Table Deleted"); //soon add it in session log
 							// db.close();
 						})

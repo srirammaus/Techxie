@@ -22,6 +22,10 @@ class signup{
 		return values;
 	}
 	InputValidater(queryArrays){ // to validate the inputs from the request, if the type is properly intialized //it is sort of like two way check if there is unknown key is sent by the user then won't calculate them
+		/**
+		 * Use try catch while using this function
+		 * This error caught by drive.signup.js line 17
+		 */
 		var flag= 0;
 		for (var i=0;i<queryArrays.length;i++){
 			if(typeof(queryArrays[i]) == "string"){
