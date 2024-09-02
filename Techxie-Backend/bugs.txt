@@ -12,6 +12,7 @@ bugs
 * This error not only happedn in this file, it is apllicable to all, in changePwd.api.js if u not check for undefined req.body and sent it lib func then it err as "data rg..." but this was shwng in resulting api to frontend. solve that
 * userid should e=be in number but strnig in webpdfconverter data
 * getFIle info having status : 1 even there was no such file error location fetchFile.ks 
+pdfconverter.js line 67
  ---
  csrf token currently in:-
 

@@ -5,6 +5,8 @@
 //this should also check for the verified email
 var login_lib =  require('./../lib/login.js').login;
 var filter = require('./../lib/filter.js');
+var ExceptionHandler =require('./../lib/ExceptionHandlers.js');
+
 function login(req,res,next){
 	let properties = ["body"];
     let requiredParams= ["username","password"]
@@ -14,18 +16,18 @@ function login(req,res,next){
 		var password = req.body.password;
 		var login_ = new login_lib();
 		if(username == "undefined" || username == null && password == "undefined" || password == null){
-			res.send({Error: "Invalid inputs"})
+			next(new ExceptionHandler.BadRequest("Invalid inputs"))
 		}else{
 			login_.login(username,password,(err,result,fetched_userID)=>{
 				if(err){
-					res.send({Error: err.message})
+					next(err)
 				}else{
 					console.log(fetched_userID)
 					res.send({result: result,userID: fetched_userID})
 				}
 			})
 		}
-	}else {next("something went wrong")}}).catch(err=>{
+	}else {next(new ExceptionHandler.InternalServerError("something went wrong"))}}).catch(err=>{
 		next(err)})
 
 

@@ -23,7 +23,8 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var express = require('express');
 var filter = require('./lib/filter.js')
-var ErrorMiddleware = require('./api/ErrorMiddleware.api.js')
+var ErrorMiddleware = require('./api/ErrorMiddleware.api.js');
+var ExceptionHandler = require('./lib/ExceptionHandlers.js')
 var app =  express();
 
 
@@ -80,7 +81,7 @@ app.get('/email',function(req,res){
    res.sendFile("D:/Techxie/pages/email.html")
 })
 app.get('/errtest',function(req,res,next) {
-   throw new Error("something that went wrong")
+   throw new ExceptionHandler.BadRequest("Error Testing")
 })
 app.post('/filterTest',function(req,res){
   

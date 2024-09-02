@@ -9,7 +9,7 @@ var SMTPMailer = require(__dirname + '/SMTPmailer.js')
  * if change email then change the email and verificaition e to 0
 */
 const dotenv = require('dotenv');
-
+var ExceptionHandler = require("./ExceptionHandlers.js")
 dotenv.config({path:'./config/.env'})
 class email {
     constructor(){
@@ -41,7 +41,7 @@ class email {
 
         validater.isValidEmail(this.username || username,this.email || email,this.userID || userID,null,(err,res)=> {
             if(err) {
-                cb(new Error(err.message))
+                cb(new ExceptionHandler.InternalServerError(err))
 
             }
             else {
@@ -56,7 +56,7 @@ class email {
                     cb(null,flag)
                 }else{
                     //redirect to 404 page
-                    cb(new Error("Already registered email -- 404 Error"))
+                    cb(new ExceptionHandler.NotFound("Already registered email -- 404 Error"))
                 }
             }
         })        
@@ -69,16 +69,16 @@ class email {
         }
         this.getConnection().getConnection((err,db) =>{
             if(err){
-                cb(new Error("something went wrong at line 43"))
+                cb(new ExceptionHandler.InternalServerError("something went wrong "))
             }else{
                 DB.UpdateDocument(db,query,null,"USERS",data,(err,res)=>{
                     if(err) {
-                        cb(new Error(err))
+                        cb(new ExceptionHandler.InternalServerError(err))
                     }
                     else{
                         //check for valid token
                         // console.log(res)
-                        res?.modifiedCount == 1 ? cb(null,flag):cb(new Error("invalid Parameters"))
+                        res?.modifiedCount == 1 ? cb(null,flag):cb(new ExceptionHandler.BadRequest("invalid Parameters"))
                     }
                 })
             }
@@ -95,16 +95,16 @@ class email {
         }
         this.getConnection().getConnection((err,db)=>{
 
-            if(err) cb(new Error("something went wrong at line 70"));
+            if(err) cb(new ExceptionHandler.InternalServerError("something went wrong "));
             else{
                 DB.UpdateDocument(db,query,null,"USERS",data,(err,res) =>{
                     if(err) {
-                        cb(new Error(err.message))
+                        cb(new ExceptionHandler.InternalServerError(err))
                     }
                     else{
                         
                         console.log(res)
-                        res?.modifiedCount == 1? cb(null,flag):cb(new Error("something went wrong"));
+                        res?.modifiedCount == 1? cb(null,flag):cb(new ExceptionHandler.InternalServerError("something went wrong"));
 
                     }
                 })
@@ -123,12 +123,12 @@ class email {
             mailer.setDoc(this.getURL())
             mailer.sendEmail().catch((err)=>{
                 //err as log
-                cb( new Error("something went"))
+                cb( new ExceptionHandler.InternalServerError("something went wrong"))
             }).then(()=>{
                 cb(null,1)
             })    
         }catch(err) {
-            cb(new Error(err))
+            cb(new ExceptionHandler.InternalServerError(err))
         }
         
 

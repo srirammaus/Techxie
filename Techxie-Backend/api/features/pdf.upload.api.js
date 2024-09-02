@@ -3,9 +3,8 @@
 //try
 //CA
 var pdf_upload_lib = require('../../lib/pdf.upload.js').pdf_upload;
-
+var ExcecptionHandler = require('../../lib/ExceptionHandlers.js')
 function pdf_upload(req,res,next) {
-	console.log("Im the first")
 	var multer = new pdf_upload_lib();
 	//filter
 	//creating bucket
@@ -19,26 +18,27 @@ function pdf_upload(req,res,next) {
 		multer_(req,res,(err)=>{
 			
 			if(err instanceof multer.getRMulter().MulterError){
-				res.send({Error: err.message})
+				next(err)
 			}else if (err) {
-				res.send({Error: err.message})
+				next(new ExcecptionHandler.InternalServerError( err))
 			}
 			else{
 				if(checkIfExists(req.files)){
-					if(err){ res.send({Error: err})}
+					if(err){next(new ExcecptionHandler.InternalServerError( err))}
 					else{
 						var B_name = multer.getBucketName();
 						res.send({status: 1, result: "upload success",B_name: B_name})
 					}
 				}else{
-					res.send({status:0, Error:"select a file to upload"});
+					//client error 
+					next(new ExcecptionHandler.BadRequest("select a file to upload"))
 				}
 			}
 				
 			})
 	}
 	catch(err){
-		res.send({Error: err.message})
+		next(err)
 	}
 	next();
 

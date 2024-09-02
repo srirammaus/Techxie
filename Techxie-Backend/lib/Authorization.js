@@ -2,6 +2,7 @@
 //Authorization happen here then acces token provided
 var DB = require('./../config/M_Database');
 var crypto = require('crypto');
+var ExceptionHandler =  require('./ExceptionHandlers.js')
 class Authorization{
 	constructor(){
 
@@ -28,14 +29,14 @@ class Authorization{
 		}
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.FindDocument(db,"web_session_manager",query,(err,result)=>{
 					if(err){
-						cb(new Error("something went wrong"));
+						cb(new ExceptionHandler.InternalServerError("something went wrong"));
 					}else{
 						if(result != null || result != "undefined"){
-							cb("Authorization Failed");
+							cb(new ExceptionHandler.BadRequest("Authorization Failed"));
 						}else{
 							cb(null, true);
 						}
@@ -54,11 +55,11 @@ class Authorization{
 		var data = {refresh_token:new_refresh_token,access_token:new_access_token,expiration:expiration,expired:1};
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"));
+				cb(new ExceptionHandler.InternalServerError("something went wrong"));
 			}else{
 				DB.UpdateDocument(db,query,null,"web_session_manager",data,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"));
+						cb(new ExceptionHandler.InternalServerError("something went wrong"));
 					}else{
 						result = {
 							username: username, // we need session Id here to differentiate
@@ -70,7 +71,7 @@ class Authorization{
 						if(res.modifiedCount == 1 ){
 							cb(null,result)
 						}else{
-							cb(new Error("Invalid Username or GRANT_CODE"))
+							cb(new ExceptionHandler.BadRequest("Invalid Username or GRANT_CODE"))
 						}
 						
 					}
@@ -88,11 +89,11 @@ class Authorization{
 		var data = {refresh_token:new_refresh_token,access_token:new_access_token,expiration:expiration,expired:1};
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"));
+				cb(new ExceptionHandler.InternalServerError("something went wrong"));
 			}else{
 				DB.UpdateDocument(db,query,null,"web_session_manager",data,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"));
+						cb(new ExceptionHandler.InternalServerError("something went wrong"));
 					}else{
 						result = {
 							username: username,
@@ -104,7 +105,7 @@ class Authorization{
 						if(res.modifiedCount == 1 ){
 							cb(null,result)
 						}else{
-							cb(new Error("Invalid Username or GRANT_CODE"))
+							cb(new ExceptionHandler.BadRequest("Invalid Username or GRANT_CODE"))
 						}
 						
 					}

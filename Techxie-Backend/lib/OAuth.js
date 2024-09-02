@@ -1,6 +1,7 @@
 //OAuth -  Authentication
 //parameters of OAuth - username,access_token,refresh_token,grant_code,scopes,client_id,client_secret,expiration,expired,callback url,
-var DB = require('./../config/M_Database')
+var DB = require('./../config/M_Database');
+var ExceptionHandler = require('./ExceptionHandlers.js')
 var dotenv =require('dotenv');
 dotenv.config({path:'./../config/session_params.env'})
 class OAuth{
@@ -34,11 +35,11 @@ class OAuth{
 		}
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.InsertDocument(db,'web_session_manager',OAuth_query,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
 					}else{
 						result = {username: username,grant_code: _grant_code,scope: process.env.scope_1,sessionID: this.getSessionID()}
 						cb(null, result)
@@ -54,25 +55,25 @@ class OAuth{
 		console.log(query)
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"));
+				cb(new ExceptionHandler.InternalServerError("something went wrong"));
 			}else{
 				DB.FindDocument(db,"web_session_manager",query,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
 					}else{
 						if(typeof res == "undefined" || res == null){
 						
-							cb(new Error("Invalid session credentials"))
+							cb(new ExceptionHandler.UnAuthorized("Invalid session credentials"))
 						}else{
 							if(res.expired == 0){
-								cb(new Error("session expired, You will redirected now.."));
+								cb(new ExceptionHandler.UnAuthorized("session expired, You will redirected now..",200));
 							}else{
 								if(this.Expired(res.expiration)){
 									this.ToExpire(username,access_token,(err,result)=>{
 										if(err){
-											cb(new Error("something went wrong"))
+											cb(new ExceptionHandler.InternalServerError("something went wrong"))
 										}else{	
-											cb(new Error("session expired, You will redirected now.."))
+											cb(new ExceptionHandler.InternalServerError("session expired, You will redirected now.."))
 										}
 									})
 								}else{
@@ -109,10 +110,10 @@ class OAuth{
 	}
 	ToExpire(username,access_token,cb){ // to expire the current token
 		DB.getConnection((err,db)=>{
-			if(err){ cb(new Error)}
+			if(err){ cb(new ExceptionHandler.InternalServerError)}
 			else{
 				DB.UpdateDocument(db,{username: username,access_token:access_token},null,"web_session_manager",{expired: 0},(err,res)=>{
-					if(err){ cb(new Error("something went wrong"))} // take error as log
+					if(err){ cb(new ExceptionHandler.InternalServerError("something went wrong"))} // take error as log
 					else{
 						cb(null,1)
 					}

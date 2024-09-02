@@ -1,5 +1,6 @@
 let Email = require('./../lib/email.js');
 let filter = require("./../lib/filter.js");
+var ExceptionHandler = require('./../lib/ExceptionHandlers.js')
 // N
 function confirmMailMiddleWare(req,res,next){
     let email,username,userID;
@@ -38,17 +39,13 @@ function confirmMailMiddleWare(req,res,next){
                         }
                     })
                 }).catch((err) =>{
-                    result.status = 0;
-                    result.message= err.message
-                    res.send(result)
+                    next(err)
             })
-        }catch(err) {   
-                result.status = 0;
-                result.message= err.message
-                res.send(result)
-            }
+        }catch(err) {
+            next(err)
+        }
         }else {
-            next("something went wrong")
+            next(new ExceptionHandler.InternalServerError("something went wrong"))
         }
     }).catch(err =>{
         next(err )

@@ -1,8 +1,9 @@
-// notice: never use throw new Error in cb inside functions and get cb errors properly with cb(err,true)
+// notice: never use throw new ExceptionHandler.InternalServerError in cb inside functions and get cb errors properly with cb(err,true)
 var DB = require('./../config/M_Database.js');
 var ExceptionHandlers = require(__dirname +'/ExceptionHandlers.js');
 var validater = require(__dirname +"/validater.js");
 var crypto = require('crypto');
+var ExceptionHandler = require('./ExceptionHandlers.js')
 var fs = require('fs');
 class signup{
 	constructor(values){
@@ -32,7 +33,7 @@ class signup{
 				flag = 1;
 			}else{
 				console.log(typeof(queryArrays[i]))
-				throw new Error("Invalid Type of Input")
+				throw new ExceptionHandler.BadRequest("Invalid Type of Input")
 			}		
 		}
 		return flag;
@@ -105,19 +106,19 @@ class signup{
 			fs.mkdirSync(dir, {recursive: true});
 			cb(null);
 		}else{
-			cb( new Error("something went wrong")) // it means our userID algorithm fails , Userid already exist so something went wrong 
+			cb( new ExceptionHandler.InternalServerError("something went wrong")) // it means our userID algorithm fails , Userid already exist so something went wrong 
 		}
 	}
 	InsertBucket(cb){
 		this.getConnection().getConnection((err,db)=>{
-			if(err){ cb(new Error(err))}
+			if(err){ cb(new ExceptionHandler.InternalServerError(err))}
 			else{
 				DB.InsertDocument(db,"BucketInfo",this.user_bucket(),(err,res)=>{
-					if(err){ cb(new Error(err))}
+					if(err){ cb(new ExceptionHandler.InternalServerError(err))}
 					else{
 						this.createBucket((err)=>{
 							//bucket creation failed if err, then take them as log
-							if(err){ cb(new Error("Bucket Exist"))}
+							if(err){ cb(new ExceptionHandler.ConflictError("Bucket Exist"))}
 							else{ // make a check here
 								cb(null,true);	
 							}
@@ -132,10 +133,10 @@ class signup{
 		var query = {USER_ID: Number(this.getUserId())};
 		var update = this.signature();
 		this.getConnection().getConnection((err,db)=>{
-			if(err){ cb(new Error(err))} // something went put that later , for developing purpose we should know wwhat is happe
+			if(err){ cb(new ExceptionHandler.InternalServerError(err))} // something went put that later , for developing purpose we should know wwhat is happe
 			else{
 				DB.UpdateDocument(db,query,null,"USER_IDS",update,(err,result)=>{
-					if(err){cb(new Error(err))}
+					if(err){cb(new ExceptionHandler.InternalServerError(err))}
 					else{
 						cb(null,true);
 					}
@@ -151,11 +152,11 @@ class signup{
 		var signature = null;
 		var query = {USER_ID: Number(this.getUserId()),username: this.getUsername()}
 		this.getConnection().getConnection((err,db)=>{
-			if(err){ cb(new Error("something went wrong"))}
+			if(err){ cb(new ExceptionHandler.InternalServerError("something went wrong"))}
 			else{
 				DB.FindDocument(db,"USER_IDS",query,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
 					}else{
 						if( res == null || res == "undefined"){
 							flag = -1;
@@ -178,11 +179,11 @@ class signup{
 		}
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
-				cb(new Error(err.message))
+				cb(new ExceptionHandler.InternalServerError(err))
 			}else{
 				DB.InsertDocument(db,"driveInfo",query,(err,res)=>{
 					if(err){
-						cb(new Error(err.message))
+						cb(new ExceptionHandler.InternalServerError(err))
 					}else{ //make a check here too
 						cb(null,1)
 					}
@@ -195,27 +196,27 @@ class signup{
 		if(this.isvalidpwd()){
 			this.setHashPwd();
 			this.getConnection().getConnection((err,db) =>{
-				if(err){ cb(new Error(err))}
+				if(err){ cb(new ExceptionHandler.InternalServerError(err))}
 				else{
 					this.isValidUserID((err,flag) =>{
-						if(err){ cb(new Error(err))}
+						if(err){ cb(new ExceptionHandler.InternalServerError(err))}
 						else{
 							if(flag[0] == 1 && flag[1] == 0){	//if user exist get the username from there
 								this.getConnection().getConnection((err,db)=>{
-									if(err){ cb(new Error(err))}
+									if(err){ cb(new ExceptionHandler.InternalServerError(err))}
 									else{
 										DB.InsertDocument(db,"USERS",this.user_details(),(err,db)=>{ // the actual signup
-											if(err){ cb(new Error(err.message))}
+											if(err){ cb(new ExceptionHandler.InternalServerError(err))}
 											else{
 												this.UpdateSignupSignature((err,results)=>{
-													if(err){ cb(new Error(err))}
+													if(err){ cb(new ExceptionHandler.InternalServerError(err))}
 													else{
 														this.driveInfo((err,res)=>{
 															if(err){
-																cb(new Error(err.message)) //error
+																cb(new ExceptionHandler.InternalServerError(err)) //error
 															}else{
 																this.InsertBucket((err,res)=>{ //what if already exist? 
-																	if(err){ cb (new Error(err))}
+																	if(err){ cb (new ExceptionHandler.InternalServerError(err))}
 																	else{
 																		var result = this.getResults(this.getUsername(),this.getUserId(),null)
 																		cb(null,result);
@@ -230,17 +231,17 @@ class signup{
 									}
 								})	
 							}else if(flag[0] == 1 && flag[1] == 1){
-								cb( new Error("Already signed up"))
+								cb( new ExceptionHandler.ConflictError("Already signed up"))
 							}
 							else{
-								cb(new Error("Signup Failed , Invalid User ID"))
+								cb(new ExceptionHandler.BadRequest("Signup Failed , Invalid User ID"))
 							}
 						}
 					})
 				}
 			})
 		}else{
-			cb(new Error("Password and Confirm Password incorrect"))
+			cb(new ExceptionHandler.BadRequest("Password and Confirm Password incorrect"))
 		}
 	}
 	createToken(){ // general token for some future purpose
@@ -282,13 +283,13 @@ module.exports = {signup}
 // {
 // 	signup_.signup((err,res)=>{
 // 		if(err){
-// 			console.log(err.message)
+// 			console.log(err)
 // 		}else{
 // 			console.log(res);
 // 		}
 // 	})
 // }catch(err ){
-// 	console.log(err.message)
+// 	console.log(err)
 // }
 
 
@@ -332,7 +333,7 @@ module.exports = {signup}
 // 			cb(null,this.confirm_pwd)
 // 		}else{
 // 			console.log(this.password + ": " +this.cpassword);
-// 			cb(new Error("Passwords didn't match")) //1 //we've to change the stufs like this
+// 			cb(new ExceptionHandler.InternalServerError("Passwords didn't match")) //1 //we've to change the stufs like this
 
 // 		}
 // 		return cb;  //putting cb or not  is not a prblm
@@ -387,17 +388,17 @@ module.exports = {signup}
 // 		const createBucket_ = (username,cb) =>{return this.createBucket(username,cb)}
 // 		const getUsername_ = () => {return this.getUsername()}
 // 		this.getUser(function(err,flag){
-// 			if(err) { cb(new Error(err))}
+// 			if(err) { cb(new ExceptionHandler.InternalServerError(err))}
 // 			else{
 // 				if (flag == 0) {
 // 					isValidPwd_((err,pwd)=>{
 // 						if(err){
-// 							cb(new Error(err));
+// 							cb(new ExceptionHandler.InternalServerError(err));
 // 						}else{
 // 							CreateHash_(pwd);
 // 							createBucket_(getUsername_(),(err)=>{
 // 								if(err){
-// 									cb(new Error(err))
+// 									cb(new ExceptionHandler.InternalServerError(err))
 // 								}else{
 // 									getConnection_().getConnection(function(err,db){   // we can also use DB.getconnection()... but writing in professionl way is good
 // 										DB.InsertDocument(db,"USERS",UserDetails_(),(err,res)=>{
@@ -414,7 +415,7 @@ module.exports = {signup}
 // 					})
 					
 // 				}else{
-// 					cb(new Error("User Already Exist"))
+// 					cb(new ExceptionHandler.InternalServerError("User Already Exist"))
 // 				}
 // 			}
 // 		})
@@ -429,13 +430,13 @@ module.exports = {signup}
 // 		var dir = __dirname + '/uploads/' + username;
 // 		this.createBucketInfo((err,res)=>{
 // 			if(err){
-// 				cb(new Error(err))
+// 				cb(new ExceptionHandler.InternalServerError(err))
 // 			}else{
 // 				if(!fs.existsSync(dir)){ //this is synchronous method so we can't get cb errors
 // 					fs.mkdirSync(dir,{recursive: true});
 // 					cb(null)
 // 				}else{
-// 					cb(new Error("User Bucket exist"));
+// 					cb(new ExceptionHandler.InternalServerError("User Bucket exist"));
 // 				}
 // 			}
 // 		})
@@ -448,7 +449,7 @@ module.exports = {signup}
 // 		this.getConnection().getConnection((err,db)=>{
 // 			DB.InsertDocument(db,COLLECTION_NAME,BucketInfo,(err,res)=>{
 // 				if(err){
-// 					cb(new Error(err));
+// 					cb(new ExceptionHandler.InternalServerError(err));
 // 				}else{
 // 					cb(null,res);
 // 				}
@@ -463,7 +464,7 @@ module.exports = {signup}
 // 		var results, flag;
 // 		validater.isValidUsername(this.username,null,null,function(err,res){
 // 			if(err){
-// 				cb(new Error(err))
+// 				cb(new ExceptionHandler.InternalServerError(err))
 // 			}else{
 // 				results = res; //credentials.username
 // 				if(results == null || results == "undefined"){
@@ -499,13 +500,13 @@ module.exports = {signup}
 // {
 // 	signup_.signup((err,res)=>{
 // 		if(err){
-// 			console.log(err.message)
+// 			console.log(err)
 // 		}else{
 // 			console.log(res);
 // 		}
 // 	})
 // }catch(err ){
-// 	console.log(err.message)
+// 	console.log(err)
 // }
 
 

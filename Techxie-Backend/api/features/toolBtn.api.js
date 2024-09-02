@@ -5,6 +5,7 @@
 var xsrf_lib  = require('../../lib/xsrf.js').xsrf;
 var validater = require('../../lib/validater.js') // to validate user id
 var filter  = require("../../lib/filter.js");
+var ExceptionHandler =require('../../lib/ExceptionHandlers.js')
 var results = {
 	status:0,
 	message:"something went wrong"
@@ -23,8 +24,7 @@ async function  toolBtn(req,res,next){
 			var tool = req.body.tool;
 			
 			if(typeof userID == "undefined" || userID == null && typeof tool == "undefined" || tool == null ){
-				results = { status:0,Error: "Invalid input" }
-				res.send(results)
+				next(new ExceptionHandler.BadRequest("Invalid input",200))
 			}else{
 				tool_number = tools.indexOf(tool);
 				switch (tool_number) {
@@ -41,15 +41,15 @@ async function  toolBtn(req,res,next){
 						res.send(results)
 						break;	
 					default:
-						res.send({Error: "unknown tool"})
+						next(new ExceptionHandler.BadRequest("unknown tool",200))
 						break;
 				}
 			}			
-		}else{next("something went wrong")}}).catch(err=>{
+		}else{next(new ExceptionHandler.InternalServerError("something went wrong"))}}).catch(err=>{
 			next(err)})
 	
 	}catch(err) {
-		next("something went wrong")
+		next(new ExceptionHandler.InternalServerError("something went wrong"))
 	}
 
 

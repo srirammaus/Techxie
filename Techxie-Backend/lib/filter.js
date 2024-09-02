@@ -1,6 +1,7 @@
 //filter
 
 const { isValidUsername } = require("./validater");
+var ExceptionHandler = require('./ExceptionHandlers.js')
 var result = {
     status:0,
     message:"something went wrong"
@@ -45,7 +46,7 @@ function Filter(req,res,next,properties,requiredParams){
                     for(let key of newRequiredParams){
                         //check indexof
                         if(key in req[prop] ==false ) {
-                            reject("Invalid Input")
+                            reject(new ExceptionHandler.BadRequest ("Invalid Input"))
                         }else {
                             let keyType = typeof key;
                             let changedKey ;
@@ -55,12 +56,12 @@ function Filter(req,res,next,properties,requiredParams){
                                     changedKey <= 0 || changedKey >= 0 ? req[prop][key] = changedKey : reject("something went went wrong") ;
                                 }   
                            }else {
-                                reject("Invalid values passed")
+                                reject(new ExceptionHandler.BadRequest ("Invalid values passed"))
                            }
                         }
                     }            
                 }else {
-                    reject("Invalid Inputss")
+                    reject(new ExceptionHandler.BadRequest ("Invalid Inputss"))
                 }
             }
             resolve(1);

@@ -1,5 +1,6 @@
 let Email = require('./../lib/email.js');
 let filter = require('./../lib/filter.js');
+var ExceptionHandler = require('./../lib/ExceptionHandlers.js')
 //N
 function verifyMailMiddleWare(req,res,next) { // use it for change mail
     //check auth at starting  ,csrf --doubt
@@ -22,7 +23,6 @@ function verifyMailMiddleWare(req,res,next) { // use it for change mail
                         if(err){
                             reject(err);
                         }else{
-                            console.log(em.getToken())
                             em.setTokentoDB((err,flag)=>{
                                 if(err){
                                     reject(err);
@@ -38,7 +38,7 @@ function verifyMailMiddleWare(req,res,next) { // use it for change mail
                                         
                                     } 
                                     else{
-                                        reject("something went wrong")
+                                        reject(new ExceptionHandler.InternalServerError("something went wrong"))
                 
                                     }
                                 }
@@ -46,19 +46,17 @@ function verifyMailMiddleWare(req,res,next) { // use it for change mail
                         }
                     })
                 }).catch((err) =>{
-                    result.status = 0;
-                    result.message= err?.message || err
-                    res.send(result)
+                    next(err)
                 })
     
     
         }
         catch(err) {
-            res.send({Error:err.message,flag:-1})
+            next(err)
             // console.log(err.message)
         }
         }else {
-            next("something went wrong")
+            next(new ExceptionHandler.InternalServerError("something went wrong"))
         }
     }).catch(err=>{
         next(err)

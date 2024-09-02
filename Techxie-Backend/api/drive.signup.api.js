@@ -2,7 +2,7 @@
 //order =>name,userID,username,password,cpassword,email,ph_number
 // N
 var signup__ = require('./../lib/signup.js').signup;
-
+var ExceptionHandler = require('./../lib/ExceptionHandlers.js');
 function signupMiddleware(req,res,next){	
 	 let properties = ["body"];
     let requiredParams= ["username","password","cpassword","email","ph_number","name"];
@@ -20,15 +20,17 @@ function signupMiddleware(req,res,next){
 			signup_.InputValidater([name,userID,username,password,cpassword,email,ph_number])
 			signup_.signup((err,result)=>{
 				if(err){
-					res.send(JSONIFY(["Error","flag"],[err.message, -1]));
+					next(err)
+					// res.send(JSONIFY(["Error","flag"],[err.message, -1]));
+
 				}else{
 					res.send(JSON.stringify(result))
 				}
 			})
 		}catch(err ){
-			res.send(JSONIFY(["Error","flag"],[err.message, -1]));
+			next(err)
 		}
-	}else {next("something went wrong")}}).catch(err=>{
+	}else {next(new ExceptionHandler.InternalServerError("something went wrong"))}}).catch(err=>{
 		next(err)
 	})
 
@@ -47,10 +49,10 @@ function InputCounter(Input){
 	if(len == 7){
 		return;
 	}else if(len < 7){
-		throw  new Error("Input Limit Not Reached")
+		throw  new ExceptionHandler.BadRequest("Input Limit Not Reached")
 	}
 	else{
-		throw new Error("Input limit Exceeded")
+		throw new ExceptionHandler.BadRequest("Input limit Exceeded")
 	}
 
 }

@@ -2,6 +2,7 @@
 var DB=  require('./../config/M_Database');
 var OAuth_ = require(__dirname + '/OAuth.js').OAuth; //OAuth.auth initialize
 var crypto = require('crypto')
+var ExceptionHandler = require("./ExceptionHandlers.js")
 class login {
 	constructor(){
 
@@ -19,14 +20,14 @@ class login {
 		// var query = {credentials:{ $elemMatch: {username: "jessy"}}};
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"));
+				cb(new ExceptionHandler.InternalServerError("something went wrong"));
 			}else{
 				DB.FindDocument(db,'USERS',query,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"));
+						cb(new ExceptionHandler.InternalServerError("something went wrong"));
 					}else{
 						if(typeof res == "undefined" || res == null ){
-							cb(new Error("Invalid username"));
+							cb(new ExceptionHandler.BadRequest("Invalid username"));
 						}else{
 							// console.log(res.credentials)
 							fetched_userID = res.credentials?.USER_ID;
@@ -37,7 +38,7 @@ class login {
 									var OAuth =  new OAuth_();
 									OAuth.Authentication(f_username,fetched_userID,callback_url,(err,result)=>{
 										if(err){
-											cb( new Error(err.message));
+											cb( new ExceptionHandler.InternalServerError(err));
 										}else{
 											cb(null,result,fetched_userID)
 										}
@@ -45,11 +46,11 @@ class login {
 
 								}else{
 									//redirect to email verification by sending verification email to client or user
-									cb( new Error("email not verified"));
+									cb( new ExceptionHandler.UnAuthorized("email not verified"));
 								}
 
 							}else{
-								cb(new Error("Invalid password"))
+								cb(new ExceptionHandler.UnAuthorized("Invalid password"))
 							}
 						}
 					}

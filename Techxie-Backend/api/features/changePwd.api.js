@@ -27,23 +27,22 @@ async function changePwdMiddleWare (req,res,next) {
             changePwd_.changePwdThroughOld(username,currentPass,newPass).then((flag)=>{
                 if(flag == 1) {
                     result.status = 1;
-                    result.message = "password updated succesfully"
+                    result.message = "password updated succesfully";
                     res.send(result);
                 }
                 
             }).catch(err=>{
-                result.message = err?.message || err || "something went wrong";
-                res.send(result)
+                next(err)
             })
            
             
         }catch(err) {
-            console.log(err?.message || err);
-            next(err?.message || err)
+           
+            next( err)
         }
     }).catch(err=>{
-        console.log("I am culprit")
-        next(err?.message || err)
+      
+        next( err)
     })
 
 }

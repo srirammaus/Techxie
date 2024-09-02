@@ -1,6 +1,6 @@
 //files
 var DB = require('./../config/M_Database');
-
+var ExceptionHandler  =require('./ExceptionHandlers.js')
 class Files{
 	constructor(){
 
@@ -13,14 +13,14 @@ class Files{
 		var query = {username: username,USER_ID: Number(userID)};
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.FindDocument(db,"BucketInfo",query,(err,res)=>{
 					if(err){
-						cb(new Error("somthing went wrong"))
+						cb(new ExceptionHandler.InternalServerError("somthing went wrong"))
 					}else{
 						if(typeof res == "undefined"|| res == null ){
-							cb(new Error("Invalid Username recived, something went wrong"))
+							cb(new ExceptionHandler.UnAuthorized("Invalid Username recived, something went wrong"))
 						}else{
 							//icount - 1 is the actual items in folder, i count is just to track
 							//i_count ,items,if the folder is active then give the stuffs to them
@@ -28,13 +28,13 @@ class Files{
 								var i_count = res[F_num].i_count; //got i_count
 								var active = res[F_num].active; //got active status
 								if(active == 0){
-									cb(new Error("Already Deleted"))
+									cb(new ExceptionHandler.NotFound("Already Deleted",200))
 								}else{
 									console.log(res)
 									cb(null,i_count)
 								}
 							}else{
-								cb(new Error("you trynaa hack me by entering diff folder number"))
+								cb(new ExceptionHandler.BadRequest("you trynaa hack me by entering diff folder number"))
 							}
 						}
 
@@ -52,11 +52,11 @@ class Files{
 		}
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"));
+						cb(new ExceptionHandler.InternalServerError("something went wrong"));
 					}else{ 
 						console.log(res)//make a check here by modified count
 						cb(null,1);
@@ -99,7 +99,7 @@ class Files{
 		// var data = out_data;
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				/**
 				 * Note:
@@ -108,7 +108,7 @@ class Files{
 				 */
 				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,res)=>{
 					if(err){
-						cb(new Error(err));
+						cb(new ExceptionHandler.InternalServerError(err));
 					}else{ 
 						console.log(res)//make a check here by modified count
 						cb(null,i_count,f_id_array); //give this i_count to the next updateicount
@@ -160,12 +160,12 @@ class Files{
 		// }
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
-				cb( new Error(err.message))
+				cb( new ExceptionHandler.InternalServerError(err))
 			}else{
 				//For push , the field name in or key name in db mst be type of array 
 				DB.UpdateDocument(db,query,null,"driveInfo",data,(err,res)=>{
 					if(err){
-						cb(new Error(err.message))
+						cb(new ExceptionHandler.InternalServerError(err))
 					}else{ //get an acknowledgement
 						console.log(res)
 						cb(null,true)
@@ -187,11 +187,11 @@ class Files{
 		var query_2 = {Files:{$elemMatch:{f_id: f_id}}}; //var query_2 = {Files:{$elemMatch:{[`${key}`]: f_id}}} - working|| element only returning the array based stuffs for example if GeneralInfo in Db contains "color:yellow" then the query_2 is {GeneralInfo:{$elemMatch:{color: "yellow"}}} it then return the wanted stuffs because this generalinfo is array , but not returning obeject
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
-				cb(new Error(err.message))
+				cb(new ExceptionHandler.InternalServerError(err))
 			}else{//make  the below code in to library function, it may need somewhere
 				db.collection("driveInfo").find(query_1).project(query_2).toArray((err,res)=>{
 					if(err){
-						cb(new Error(err.message))
+						cb(new ExceptionHandler.InternalServerError(err))
 					}else{
 						console.log(res[0]?.Files )
 						res[0]?.Files == undefined || res[0]?.Files == null ?cb(new Error("no such files")):cb(null,res[0]?.Files);
@@ -207,14 +207,14 @@ class Files{
 		var query = {username: username, USER_ID: Number(userID)}
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
-				cb(new Error(err.message))
+				cb(new ExceptionHandler.InternalServerError(err))
 			}else{
 				DB.FindDocument(db,"driveInfo",query,(err,res)=>{
 					if(err){
-						cb(new Error(err.message))
+						cb(new ExceptionHandler.InternalServerError(err))
 					}else{
 						if(typeof res == "undefined" || res == null){
-							cb(new Error("Invalid inputs supplied"))
+							cb(new ExceptionHandler.BadRequest("Invalid inputs supplied",200))
 						}else{
 							var file_count = res.file_count
 							cb(null,file_count)
@@ -239,14 +239,14 @@ class Files{
 		}
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
 					}else{
 						if(typeof res == "undefined" || res == null){
-							cb(new Error("Invalid Username or User ID"))
+							cb(new ExceptionHandler.UnAuthorized("Invalid Username or User ID"))
 						}else{
 							cb(null,res); // check with this result modified count
 						}

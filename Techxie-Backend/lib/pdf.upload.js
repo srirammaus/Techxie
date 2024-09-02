@@ -5,6 +5,7 @@ var DB =  require('./../config/M_Database');
 var xsrf_verification_lib = require(__dirname + '/xsrf_verification').xsrf_verification;
 var OAuth = require(__dirname + '/OAuth').OAuth;
 var filter = require(__dirname + '/filter.js');
+var ExceptionHandler = require('./ExceptionHandlers.js')
 class pdf_upload{
     constructor(){
         var Auth = new OAuth();
@@ -39,19 +40,19 @@ class pdf_upload{
                         session_token = req.body.session_token || req.body.access_token;
                         sessionID = req.body.sessionID;
                         if(u_id == null || xsrf_token == null || username == null || sessionID ==null || session_token ==null){
-                            cb(new Error("Invalid Input Fields")) // temp
+                            cb(new ExceptionHandler.BadRequest ("Invalid Input Fields")) // temp
                         }else{ // this verfication can also be done in there [setmulter cb(null,false)]
                             new OAuth().Authenticate(username,session_token,sessionID,(err,result_)=>{
                                 if(err){
-                                    cb(new Error(err.message))
+                                    cb(new ExceptionHandler.InternalServerError(err.message))
                                 }else if(result_ == 1){
                                     var xsrf_verification_filter = xsrf_verification.filter([req.body.userID,req.body.xsrf_token]);
                                     var xsrf_verification_setter = xsrf_verification.setter([xsrf_verification_filter[0],xsrf_verification_filter[1]]);
                                     xsrf_verification.verify((err,flag,res)=>{
                                         if(err){
-                                            cb(new Error(err.message))
+                                            cb(new ExceptionHandler.InternalServerError(err.message))
                                         }else if(flag == 0){
-                                            cb(new Error("csrf Expired"));
+                                            cb(new ExceptionHandler.UnAuthorized("csrf Expired"));
                                             //redirect to home page , if there is valid session token
                                         }
                                         else{
@@ -60,7 +61,7 @@ class pdf_upload{
                                             this.setBucketName(bucket_data_name)
                                             this.setBucket(u_id,xsrf_token,(err,dir)=>{
                                                 if(err){ 
-                                                    cb(new Error(err.message))}
+                                                    cb(new ExceptionHandler.InternalServerError(err.message))}
                                                 else{
                                                     cb(null,dir);
                                                 }
@@ -69,15 +70,15 @@ class pdf_upload{
                                         }
                                     })
                                 }else{
-                                    cb(new Error("something went wrong"))
+                                    cb(new ExceptionHandler.InternalServerError("something went wrong"))
                                 }
                             })
                         }                      
                     }else {
-                        cb(new Error("something went wrong"))
+                        cb(new ExceptionHandler.InternalServerError("something went wrong"))
                     }
                 }).catch(err=>{
-                    cb(new Error(err))
+                    cb(new ExceptionHandler.InternalServerError(err))
                 })
                
             
@@ -104,7 +105,7 @@ class pdf_upload{
                                 console.log(u_id);
                                 console.log(xsrf_token)
                                 if(u_id == null || xsrf_token == null){
-                                    cb(new Error("undefined values")) // temp
+                                    cb(new ExceptionHandler.BadRequest("undefined values")) // temp
                                 }else{// return the bucket name here
                                     cb(null,true);       
                                 }
@@ -124,7 +125,7 @@ class pdf_upload{
             if(!fs.existsSync(dir)){
                 this.setFileData(u_id,xsrf_token,dir,(err,flag)=>{
                     if(err){
-                        cb(new Error(err.message))
+                        cb(new ExceptionHandler.InternalServerError(err))
                     }else{
                         fs.mkdirSync(dir,{recursive: true}); 
                         cb(null,dir);
@@ -134,7 +135,7 @@ class pdf_upload{
                 cb(null,dir);
             }
         }catch(err){
-            cb(new Error(err.message))
+            cb(new ExceptionHandler.InternalServerError(err))
             console.log("upload to session log")// get orginal err to log
         }
         
@@ -174,11 +175,11 @@ class pdf_upload{
 
         }
         DB.getConnection((err,db)=>{
-            if(err){cb( new Error("Something went wrong"))}
+            if(err){cb( new ExceptionHandler.InternalServerError("Something went wrong"))}
             else{
                 DB.InsertDocument(db,"WebPdfConverter_Data",Data,(err,res)=>{
                     if(err){
-                        cb(new Error("something went wrong"))
+                        cb(new ExceptionHandler.InternalServerError("something went wrong"))
                     }else{
                         cb(null,true);
                     }

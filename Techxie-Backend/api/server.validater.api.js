@@ -3,6 +3,7 @@
 //userverification
 var VL = require("./../lib/server.validater.js").validater;
 var filter = require('./../lib/filter.js');
+var ExceptionHandler= require('./../lib/ExceptionHandlers.js';)
 function ValidateServerMiddleware(req,res,next){
 	let properties = ["body"];
     let requiredParams= ["username"]
@@ -12,23 +13,22 @@ function ValidateServerMiddleware(req,res,next){
 			try{
 				var validater  = new VL(username);
 				var resp = validater.Response(0,[],(err,result)=>{ //recurse shuld be zero
-					if(err){ res.send(JSONIFY(["Error"],[err.message]))}
+					if(err){ next(err)}
 					else{
+						// throw new ReferenceError("This is reference error")
 						res.send(JSON.stringify(result))
 					}
 				})
 			}
 			catch(err){
-				res.send(JSONIFY(["Error"],[err.message]));
+				next(err);
 			}
-			
-	
 		}
 		else{
-			res.send({Error: "key undefined"})
+			next(new ExceptionHandler.BadRequest("undefined Key"))
 		}
 	}else {
-		next("something went wrong")
+		next(new ExceptionHandler.InternalServerError("something went wrong"))
 	}}).catch(err=>{
 		next(err)
 	})

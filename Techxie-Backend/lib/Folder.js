@@ -19,6 +19,7 @@
 var DB =  require('./../config/M_Database');
 var xsrf_verification_lib = require(__dirname + '/xsrf_verification').xsrf_verification;
 var OAuth = require(__dirname + '/OAuth').OAuth;
+var ExceptionHandler = require('./ExceptionHandlers.js')
 class Folder{
 	constructor(){
 
@@ -38,19 +39,19 @@ class Folder{
 		var query = {username: username,USER_ID: Number(userID)}
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.FindDocument(db,"BucketInfo",query,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"));
+						cb(new ExceptionHandler.InternalServerError("something went wrong"));
 					}else{
 						if(typeof res == "undefined"|| res == null ){
-							cb(new Error("Invalid Username recived, something went wrong"))
+							cb(new ExceptionHandler.UnAuthorized("Invalid Username recived, something went wrong"))
 						}else{
 							if(typeof res == "undefined" || res == null){
-								cb(new Error("Invalid Username or USER_ID"))
+								cb(new ExceptionHandler.UnAuthorized("Invalid Username or USER_ID"))
 							}else if(typeof res[F_num] == "undefined" || res[F_num] == null){
-								cb(new Error("Invalid Folder number"))
+								cb(new ExceptionHandler.BadRequest("Invalid Folder number"))
 							}else{
 								var F_count = res.F_count ;   //F_count: folder count
 								var i_count = res[F_num].i_count;
@@ -79,11 +80,11 @@ class Folder{
 		var data = {F_count: F_count}
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
 					}else{
 						console.log(res) // pending:check this via modified count 
 						cb(null, 1)
@@ -107,11 +108,11 @@ class Folder{
 		}
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,res)=>{
 					if(err){
-						cb(new Error(err.message))
+						cb(new ExceptionHandler.InternalServerError(err))
 					}else{
 						console.log(res) // pending:check this via modified count 
 						cb(null, 1)
@@ -156,11 +157,11 @@ class Folder{
 		F_id_array[0] = F_id;
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,result)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
 					}else{
 						console.log(result); //check this via modified count
 						cb(null,F_id_array)
@@ -202,12 +203,12 @@ class Folder{
 		// }
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
-				cb( new Error(err.message))
+				cb( new ExceptionHandler.InternalServerErrorr(err))
 			}else{
 				//For push , the field name in or key name in db mst be type of array 
 				DB.UpdateDocument(db,query,null,"driveInfo",data,(err,res)=>{
 					if(err){
-						cb(new Error(err.message))
+						cb(new ExceptionHandler.InternalServerError(err))
 					}else{ //get an acknowledgement
 						console.log(res)
 						cb(null,true)
@@ -225,13 +226,13 @@ class Folder{
 		var query_2 = {Folders:{$elemMatch:{F_id: F_id}}}; //var query_2 = {Files:{$elemMatch:{[`${key}`]: F_id}}} - working|| element only returning the array based stuffs for example if GeneralInfo in Db contains "color:yellow" then the query_2 is {GeneralInfo:{$elemMatch:{color: "yellow"}}} it then return the wanted stuffs because this generalinfo is array , but not returning obeject
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
-				cb(new Error(err.message))
+				cb(new ExceptionHandler.InternalServerError(err))
 			}else{//make  the below code in to library function, it may need somewhere
 				db.collection("driveInfo").find(query_1).project(query_2).toArray((err,res)=>{
 					if(err){
-						cb(new Error(err.message))
+						cb(new ExceptionHandler.InternalServerError(err))
 					}else{
-						res[0]?.Folders == null || res[0]?.Folders == undefined ?cb(new Error("No results found")):cb(null,res[0]?.Folders);
+						res[0]?.Folders == null || res[0]?.Folders == undefined ?cb(new ExceptionHandler.NotFound("No results found",200)):cb(null,res[0]?.Folders);
 						
 					}
 				})
@@ -255,11 +256,11 @@ class Folder{
 		}
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.UpdateDocument(db,query,null,"BucketInfo",Out_data,(err,result)=>{
 					if(err){
-						cb(new Error(err.message))
+						cb(new ExceptionHandler.InternalServerError(err))
 					}else{
 						console.log("Changed " + JSON.stringify(result)); //check this via modified count
 						cb(null,1)
@@ -274,17 +275,17 @@ class Folder{
 		var query = {username: username, USER_ID: Number(userID)}
 		DB.getConnection((err,db) =>{
 			if(err){
-				cb( new Error("something went wrong"));
+				cb( new ExceptionHandler.InternalServerError("something went wrong"));
 			}else{
 				DB.FindDocument(db,"BucketInfo",query,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
 					}else{
 						if(typeof res == "undefined" ||  res == null){
-							cb(new Error("Invalid Username or User ID"))
+							cb(new ExceptionHandler.UnAuthorized("Invalid Username or User ID"))
 						}else{
 							if(typeof res[F_num] == "undefined" ||  res[F_num] == null){
-								cb(new Error("Folder Deleted"))
+								cb(new ExceptionHandler.NotFound("Folder Deleted",200))
 							}else{
 								cb(null,res[F_num]);
 							}
@@ -324,14 +325,14 @@ class Folder{
 		}
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
 					}else{
 						if(typeof res == "undefined" || res == null){
-							cb(new Error("Invalid Username or User ID"))
+							cb(new ExceptionHandler.UnAuthorized("Invalid Username or User ID"))
 						}else{
 							cb(null,res); // check with this result modified count
 						}

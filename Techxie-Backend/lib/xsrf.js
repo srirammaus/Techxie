@@ -4,6 +4,8 @@
 //reset expire while going back page 
 // include all tools here.
 var DB = require('./../config/M_Database');
+var ExecptionHandler = require("./ExceptionHandlers.js");
+
 class xsrf{
 	constructor(){
 		var xsrf,validater; // because we gonna , passs this through cookies
@@ -40,11 +42,11 @@ class xsrf{
 		}
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error(err.message));
+				cb(new ExecptionHandler.InternalServerError(err));
 			}
 			else{
 				DB.InsertDocument(db,COLLECTION_NAME,setData,(err,res)=>{
-					if(err){ cb (new Error(err.message))}
+					if(err){ cb (new ExecptionHandler.InternalServerError(err))}
 					else{
 						cb(null,token) // 1 is flag  -- i remove flag as 1 instead i add here token
 					}
@@ -56,11 +58,11 @@ class xsrf{
 		var query = {USER_ID : Number(userID),sessionID:sessionID,session_token,expired: 1};
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExecptionHandler.InternalServerError("something went wrong"))
 			}else{
 				DB.FindDocument(db,'web_csrf_sessions',query,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExecptionHandler.InternalServerError("something went wrong"))
 					}else{
 						cb (null,res)
 					}

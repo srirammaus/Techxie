@@ -2,6 +2,7 @@
  * This is a middleware which should check for csrf validation**/
 var xsrf_verification_lib = require('../lib/xsrf_verification.js').xsrf_verification;
 var filter = require('../lib/filter.js');
+var ExecptionHandler = require('../lib/ExceptionHandlers.js');
 var results = {
     status:0,
     message:"something went wrong"
@@ -22,14 +23,14 @@ function xsrf_verificationMiddleware(req,res,next) {
                     if(err){
                         next(err)
                     }else if(flag == 0){
-                        next("csrf token expired , login again to get new")
+                        next(new ExecptionHandler.UnAuthorized("csrf token expired , login again to get new"))
                     }else{
                         //success
                         next();
                     }
                 })
             }else {
-                next("something went wrong")
+                next(new ExecptionHandler.InternalServerError("something went wrong"))
             }
         }).catch(err => {
             next(err)

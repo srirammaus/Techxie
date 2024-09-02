@@ -12,6 +12,7 @@
 var xsrf_lib = require('./../lib/xsrf').xsrf;
 var validater =  require('./../lib/validater.js') // to validate user id
 var filter = require('./../lib/filter.js');
+var ExecptionHandler = require('../lib/ExceptionHandlers.js');
 var results = {
 	status:0,
 	message:"soemthing went wrong"
@@ -33,20 +34,19 @@ function xsrf(req,res,next){
 			var filter = xsrf.filter([userID]);
 			var f_userID = Number(filter[0]); // converted
 			validater.isValidUserID(f_userID,(err,flag)=>{ // instead check here valid session + user id which is correcponding the session, nowitself it is enough to check only user id
-					if(err){ res.send({Error: "something went wrong"})}
+					if(err){ next(new ExecptionHandler.InternalServerError("something went wrong"))}
 					else{
 						if(flag == 1){
 							xsrf.isTokenAvail(userID,sessionID,session_token,(err,result)=>{
 								if(err){
-									results = {Error: err.message}
-									res.send(results);
+									next(err)
 								}else{
 									if(typeof result ==  "undefined" || result == null ){
 											//token may be expired , so new token
 											//new token
 											var setToken = xsrf.setToken(f_userID,sessionID,session_token,(err,token)=>{
 											if(err){ //take err as log
-												res.send(results);
+												next(err)
 											}else{
 												results.status = 1;
 												results.message = "Token generated succesfully";
@@ -59,7 +59,7 @@ function xsrf(req,res,next){
 										})
 									}else{
 										//check the expiration time ad stuffs
-										let token = result?.token || next("something went wrong");
+										let token = result?.token || next(new ExecptionHandler.InternalServerError("something went wrong"));
 										var expires =  new Date(Date.now() + 10000000)
 										res.cookie("token",token,{expires: expires}); //  new Date(Date.now() + 900000) this is the only accepted format, then only expire parameter works 
 										results.status = 1;
@@ -70,12 +70,11 @@ function xsrf(req,res,next){
 								}
 							})
 						}else{
-							results.message = "Invalid User ID or not signed up";
-							res.send(results);
+							next(new ExecptionHandler.UnAuthorized("Invalid User ID or not signed up"))
 						}
 					}
 				})
-		}else{next("something went wrong")}}).catch(err=>{next(err)})
+		}else{next(new ExecptionHandler.InternalServerError("something went wrong"))}}).catch(err=>{next(err)})
 		
 	}catch(err) {
 		next(err)

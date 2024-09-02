@@ -11,6 +11,7 @@
 //when pdfconverter tool button clicked 
 //xsrf validate //  where to use ? ans: where crsf token need // don't forget expire this , the expiry function is here use this 
 var DB = require('./../config/M_Database')
+var ExecptionHandler = require("./ExceptionHandlers.js");
 class xsrf_verification{
 	constructor(){
 	}
@@ -22,13 +23,13 @@ class xsrf_verification{
 	verify(cb){ // requested to use the same error as here in ur api
 		var query = {USER_ID:Number(this.userID),token:this.xsrf_token}
 		DB.getConnection((err,db)=>{
-			if(err){ cb(new Error("something went wrong"))} // take error as log
+			if(err){ cb(new ExecptionHandler.InternalServerError("something went wrong"))} // take error as log
 			else{
 				DB.FindDocument(db,'web_csrf_sessions',query,(err,res)=>{
-					if(err){ cb(new Error("something went wrong"))}
+					if(err){ cb(new ExecptionHandler.InternalServerError("something went wrong"))}
 					else{
 						if(res == null){
-							cb(new Error("Invalid User ID or Token"));
+							cb(new ExecptionHandler.BadRequest("Invalid User ID or Token"));
 						}else{
 							var Expiry = res.expired;
 							var v_time_milli = res.validTimeMilli;
@@ -38,7 +39,7 @@ class xsrf_verification{
 								}else{
 									//redirect to home page
 									this.ToExpire((err,flag)=>{
-										if(err){ cb(new Error(err.message))}
+										if(err){ cb(new ExecptionHandler.InternalServerError(err.message))}
 										else{
 											cb(null,0)
 										}
@@ -64,10 +65,10 @@ class xsrf_verification{
 	}
 	ToExpire(cb){ // to expire the current token
 		DB.getConnection((err,db)=>{
-			if(err){ cb(new Error)}
+			if(err){ cb(new ExecptionHandler.InternalServerError)}
 			else{
 				DB.UpdateDocument(db,{USER_ID: Number(this.userID),token: this.xsrf_token},null,"web_csrf_sessions",{expired: 0},(err,res)=>{
-					if(err){ cb(new Error("something went wrong"))} // take error as log
+					if(err){ cb(new ExecptionHandler.InternalServerError("something went wrong"))} // take error as log
 					else{
 						console.log("Working");
 						cb(null,1)

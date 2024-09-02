@@ -6,6 +6,7 @@
 //N
 var Auth_ = require('./../lib/Authorization').Auth;
 var filter = require('./../lib/filter.js')
+var ExceptionHandler = require('./../lib/ExceptionHandlers.js')
 function OAuth(req,res,next){
 	let properties = ["body"];
     let requiredParams= ["username","userID","request","sessionID"]; // grant code and refresh _token checked later
@@ -20,8 +21,7 @@ function OAuth(req,res,next){
 			if(typeof request == "undefined" || request == null && username == "undefined" || username == null && sessionID == null || typeof sessionID == "undefined" && userID == null || typeof userID == "undefined"){
 				
 				// console.log(req.body)
-				def_result = {Error: "Invalid request"}
-				res.send(def_result);
+				next(new ExceptionHandler.BadRequest("Invalid Request"))
 			}else if(request == "GRANT_CODE"){
 				//authorization via grant code
 				// creation of new session
@@ -30,19 +30,17 @@ function OAuth(req,res,next){
 					var f_grant_code = Number(grant_code);
 					var new_session = Auth.newSession(userID,username.trim(),f_grant_code,sessionID,(err,result)=>{
 						if(err){
-							def_result = {Error: err.message}
-							res.send(def_result);
+							next(err)
 						}else{
 							if(result == null || typeof result == "undefined"){
-								def_result = {Error: "Invalid username or  grant_code"} //NOTE
+								next( new ExceptionHandler.UnAuthorized ("Invalid username or  grant_code")) 
 							}else{
 								res.send(result);
 							}
 						}
 					})
 				}else{
-					def_result = {Error: "Invalid inputs"}
-					res.send(def_result)
+					next(new ExceptionHandler.BadRequest("Invalid Inputs"))
 				}
 			}else if(request == "REFRESH"){
 				//authorization via refresh token
@@ -51,21 +49,18 @@ function OAuth(req,res,next){
 				if(refresh_token != null ||  typeof refresh_token != "undefined" ){
 					var refresh_session =  Auth.refreshSession(userID,username,refresh_token,sessionID,(err,result)=>{
 						if(err){
-							def_result = {Error: err.message}
-							res.send(def_result);
+							next(err)
 						}else{
 							res.send(result)
 						}
 					})
 				}else{
-					def_result = {Error: "Invalid inputs"}
-					res.send(def_result)
+					next(new ExceptionHandler.BadRequest("Invalid Inputs"))
 				}
 			}else{
-				def_result = {Error:"something went wrong"}
-				res.send(def_result)
+				next(new ExceptionHandler.InternalServerError("something went wrong"))
 			}
-		}else {next("something went wrong")}}).catch(err=>{next(err)})
+		}else {next(new ExceptionHandler.InternalServerError("something went wrong"))}}).catch(err=>{next(err)})
 	
 	}catch(err) {
 		next(err)

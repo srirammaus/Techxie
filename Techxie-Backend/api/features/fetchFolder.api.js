@@ -1,6 +1,7 @@
 //This will fetch data from db collection
 var filter = require('../../lib/filter.js');
 const Folder = require('../../lib/Folder.js')
+var ExceptionHandler =  require('../../lib/ExceptionHandlers.js');
 var result = {
     status:0,
     message:"something went wrong",
@@ -33,7 +34,7 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
         
                 folder.NewFolder(username,userID,F_num,F_name,F_count,i_count,(err,F_id_array)=>{
                     if(err){
-                        reject(err.message);
+                        reject(err);
                     }else{ // new folder i data created up to this
             
                         folder.updateIcount(username,userID,F_num,i_count,(err,result_)=>{
@@ -46,7 +47,7 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
                                     }else{
                                         folder.uploadFolderInfo(username,userID,F_name,F_id_array,undefined,(err,results)=>{
                                             if(err){
-                                                reject(err.message)
+                                                reject(err)
                                             }else{
                                                 result.status = 1;
                                                 result.message = "folder created succesfully",
@@ -66,7 +67,7 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
             } 
         })
     }else {
-        next("something went wrong")
+        next(new ExceptionHandler.InternalServerError("something went wrong"))
     }}).catch(err=>{
         next(err)
     })
@@ -89,7 +90,7 @@ function delFolderMiddleware(resolve,reject,req,response,next){
                 }else{
                     folder.DeleteFolder(username,userID,F_num,P_F_num,item_number,(err,res)=>{
                         if(err){
-                            reject(err.message)
+                            reject(err)
                         }else{
                             result.status = 1;
                             result.message = "successfully deleted"
@@ -100,7 +101,7 @@ function delFolderMiddleware(resolve,reject,req,response,next){
             }
         })
     }else { 
-        next("something went wrong")
+        next(ExceptionHandler.InternalServerError("something went wrong"))
     }}).catch(err=>{
         next(err)
     })
@@ -119,7 +120,7 @@ function viewFolderMiddleware(resolve,reject,req,response,next) {
         setParameters (req)
         folder.viewFolder(username,userID,F_num,(err,res)=>{
             if(err){
-                reject(err.message);
+                reject(err);
             }else{
                 console.log("Before: ")
                 console.log(res)
@@ -133,7 +134,7 @@ function viewFolderMiddleware(resolve,reject,req,response,next) {
             }
         })
     }else { 
-        next("something went wrong")
+        next( ExceptionHandler.InternalServerError("something went wrong"));
     }}).catch(err=>{
         next(err)
     })
@@ -146,7 +147,7 @@ function getFolderInfoMiddleWare (resolve,reject,req,response,next) {
         setParameters(req)
         folder.getFolderInfo(username,userID,F_id,(err,res)=>{
             if(err){
-                reject(err.message)
+                reject(err)
             }else{
                 result.status = 1;
                 result.message = res;
@@ -154,7 +155,7 @@ function getFolderInfoMiddleWare (resolve,reject,req,response,next) {
             }
         })
     }else {
-        next("something went wrong")
+        next(ExceptionHandler.InternalServerError("something went wrong"));
     }}).catch(err=>{
         next(err)
     })
@@ -176,16 +177,14 @@ function MiddleWare(func){
                     case 5:
                         return getFolderInfoMiddleWare(resolve,reject,req,res,next) // get info from drive info
                     default:
-                        reject("something went wrong")
+                        reject(new ExceptionHandler.InternalServerError("something went wrong"))
                 }
             }catch(err) {
-                result.message = err + " custom  error";
-                res.send(result)
+               next(err)
             }
          }).catch(err=>{
-            result.message = err;
-            res.send(result)
-         })
+            next(err)
+        })
     }
   
 
@@ -198,7 +197,7 @@ module.exports = { MiddleWare}
 //     return new Promise((resolve,reject)=>{
 
 //     }).catch(err=>{
-//         result.message = err.message;
+//         result.message = err;
 //         res.send(result)
 //     })
 // } catch (error) {

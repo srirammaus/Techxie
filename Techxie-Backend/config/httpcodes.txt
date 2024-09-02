@@ -1,0 +1,54 @@
+1xx Informational Responses
+100 Continue - The initial part of the request has been received and the client should continue with the request 2
+101 Switching Protocols - The client has asked the server to switch protocols and the server is acknowledging that it will do so 2
+
+2xx Successful Responses
+200 OK - The request has succeeded 2
+201 Created - The request has been fulfilled and resulted in a new resource being created 2
+202 Accepted - The request has been accepted for processing, but the processing has not been completed 2
+
+3xx Redirection Messages
+301 Moved Permanently - The target resource has been assigned a new permanent URI 2
+302 Found - The target resource resides temporarily under a different URI 2
+303 See Other - The server is redirecting the user agent to a different resource 2
+304 Not Modified - Indicates that the resource has not been modified since the version specified by the request headers If-Modified-Since or If-None-Match 2
+
+4xx Client Errors
+400 Bad Request - The server could not understand the request due to invalid syntax 2
+401 Unauthorized - The client must authenticate itself to get the requested response 2
+403 Forbidden - The client does not have access rights to the content 2
+404 Not Found - The server can not find the requested resource 2
+405 Method Not Allowed - The method received in the request-line is known by the origin server but not supported by the target resource 2
+
+5xx Server Errors
+500 Internal Server Error - The server has encountered a situation it doesn't know how to handle 2
+501 Not Implemented - The server does not support the functionality required to fulfill the request 2
+502 Bad Gateway - This error response means that the server, while working as a gateway to get a response needed to handle the request, got an invalid response 2
+503 Service Unavailable - The server is currently unable to handle the request due to temporary overloading or maintenance of the server 2
+
+
+
+Error handling
+
+currently we have https status code , 
+
+Internal server error - 500 or 501 or 502
+    types of Error nin javascript
+    Reference Error
+    Type Error
+    syntax Error
+    Runtime Error
+    URI Error
+    Range Error
+    unknown error [....]
+    uncaught Excception
+client Error - 400 to 405
+    bad request like wise
+
+
+
+    -----
+     * so put err everywhere not err.message
+     * then pass it next() atlast  then it wil filter for what type of errror and filter it
+     * next should contain the status code according to the err
+     * if cb() --- cb( new Reference Error ...) this was the example

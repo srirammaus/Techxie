@@ -4,6 +4,7 @@
  * 
  */
 var DB = require('./../config/M_Database');
+var ExceptionHandler = require('./ExceptionHandlers.js')
 var crypto = require('crypto')
 class changePwd{
     constructor () {
@@ -61,17 +62,17 @@ class changePwd{
         function changePass (resolve,reject,newPwd){ 
             getConn.getConnection((err,db)=>{
                 if(err){
-                    reject(new Error("something went  wrong"));
+                    reject(new ExceptionHandler.ServerError("something went  wrong"));
                 }else{
                     DB.UpdateDocument(db,query,null,"USERS",data,(err,res)=>{
                         if(err) {
-                            reject(err)
+                            reject(new ExceptionHandler.ServerError(err))
                         }else{
                             if(res?.modifiedCount == 1) {
                                 resolve(1)  //flag
                                 // reject("something went wrong ")
                             } else {
-                                reject("something went  wrong ")
+                                reject(new ExceptionHandler.ServerError("something went  wrong"));
                             }
                            
                         }
@@ -83,17 +84,16 @@ class changePwd{
         return new Promise ((resolve,reject) =>{
 
             if(this.checkItisSamePwd(currentPwd,newPwd)) {
-                console.log("came here")
                 getConn.getConnection((err,db)=>{
                     if(err){
-                        reject(new Error("something went  wrong"));
+                        reject(new ExceptionHandler.ServerError("something went  wrong"));
                     }else{
                         DB.FindDocument(db,'USERS',query,(err,res)=>{
                             if(err){
-                                reject(new Error("something went  wrong"));
+                                reject(new ExceptionHandler.ServerError("something went  wrong"));
                             }else{
                                 if(typeof res == "undefined" || res == null ){
-                                    reject(new Error("Invalid username"));
+                                    reject(new ExceptionHandler.UnAuthorized("Invalid username"));
                                 }else{
                                     // console.log(res.credentials)
                                     let fetched_userID = res.credentials?.USER_ID;
@@ -104,11 +104,11 @@ class changePwd{
                                             changePass(resolve,reject,newPwd)
                                         }else{
                                             //redirect to email verification by sending verification email to client or user
-                                            reject( new Error("email not verified"));
+                                            reject( new ExceptionHandler.UnAuthorized("email not verified"));
                                         }
         
                                     }else{
-                                        reject(new Error("Invalid password"))
+                                        reject(new ExceptionHandler.UnAuthorized("Invalid password"))
                                     }
                                 }
                             }
@@ -116,7 +116,7 @@ class changePwd{
                     }
                 })
             }else {
-                reject("current passwword and new password should nnot be same")
+                reject(new ExceptionHandler.UnAuthorized("current passwword and new password should nnot be same"));
             }
             
         })

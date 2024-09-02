@@ -5,7 +5,7 @@ var filter = require('../../lib/filter.js');
 const dotenv = require('dotenv');
 const { createTestAccount } = require('nodemailer');
 dotenv.config({path:'../../config/.env'})
-
+var ExecptionHandler = require('../../lib/ExceptionHandlers.js');
 
 var result = {
     status:0,
@@ -37,13 +37,13 @@ function getFilecountMiddleware(resolve,reject,req,res,next){
     filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
         file.getFilecount("sriram",2,(err,file_count)=>{
             if(err){
-                console.log(err.message)
+                console.log(err)
             }else{
                 console.log(file_count)
             }
         })
     }else {
-        next("something went wrong")
+        next(new ExecptionHandler.InternalServerError("something went wrong"))
     }}).catch(err=>{
         next(err)
     })
@@ -64,11 +64,11 @@ function getFileInfoMiddleWare(resolve,reject,req,response,next) {
         file.getFileInfo(username,userID,f_id,function(err,res){
             let URL = process.env.baseURL + `User/file/viewFile/${userID}/`
             if(err){
-                reject (err.message) 
+                reject (err) 
             }  else{
                 let f_name = res[0]?.f_name 
                 if(f_name  == undefined || f_name == null){
-                    reject("invalid request")
+                    reject(new ExecptionHandler.BadRequest("Invalid request",200))
                 }else{
                     //Bugs
                     let URI = URL + `${f_name}`
@@ -83,7 +83,7 @@ function getFileInfoMiddleWare(resolve,reject,req,response,next) {
             }
         })
     }else {
-        next("something went wrong")
+        next(new ExecptionHandler.InternalServerError("something went wrong"))
     }}).catch(err=>{
         next(err)
     })
@@ -165,23 +165,23 @@ function uploadFileMiddleware(resolve,reject,req,response,next) {
 
         file.getFolderInfo(username,userID,F_num,(err,i_count)=>{ //-- done
             if(err){
-                reject(err.message);
+                reject(err);
             }else{
                 file.newFile(username,userID,F_num,filenames,i_count,(err,i_count_1,f_id_array)=>{
                     if(err){
-                        reject(err.message)
+                        reject(err)
                     }else{
                         file.updateIcount(username,userID,F_num,i_count_1,(err,res)=>{
                             if(err){
-                                reject(err.message)
+                                reject(err)
                             }else{
                                 file.getFilecount(username,userID,(err,file_count)=>{
                                     if(err){
-                                        reject(err.message) //cbnew Error(
+                                        reject(err) //cbnew Error(
                                     }else{
                                         file.uploadFileInfo(username,userID,filenames,f_names,f_id_array,file_count,(err,res)=>{
                                             if(err){
-                                                reject(err.message)
+                                                reject(err)
                                             }else{
                                                 result.status = 1;
                                                 result.message = "uploaded sucessfully"
@@ -212,7 +212,7 @@ function test(resolve,reject,req,response,next) {
   
     //             let URL = process.env.baseURL + `User/file/viewFile/${userID}/`
     //             if(err){
-    //                 reject (err.message) 
+    //                 reject (err) 
     //             }  else{
     //                 result.status = 1;
     //                 result.message = "great work";
@@ -251,16 +251,14 @@ function MiddleWare(func){
                             // res.send(ans)
                             break;
                         default:
-                            reject("something went wrong")
+                            reject(new ExecptionHandler.InternalServerError("something went wrong"))
                     }
                 }catch(err) {
-                    result.message = err.message;
-                    res.send(result)
+                   next(err)
                 }
              }).catch(err=>{
     
-                result.message = err;
-                res.send(result)
+                next(err)
              }).then(data =>{
                 res.send(data)
              })

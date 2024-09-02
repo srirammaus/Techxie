@@ -2,6 +2,7 @@
 //try
 //CA
 var xsrf_verification_lib = require('../../lib/xsrf_verification').xsrf_verification;
+var ExceptionHandler = require('../../lib/ExceptionHandlers.js')
 var pdfconverter = require('../../lib/pdfconverter');
 var OAuth = require('../../lib/OAuth').OAuth;
 var filter = require('../../lib/filter.js');
@@ -25,33 +26,32 @@ async function convert(req,res,next){ // if non exist user request then pop up t
 			var B_name = req.body.B_name
 		
 			if(userID == null || B_name == null ||  username == null ){
-				results = {Error: "Invalid Inputs"};
-				res.send(results);
+				next(new ExceptionHandler.BadRequest ("Invalid Inputs"))
 			}else{
 				
 								try{
 									var source = pdfconverter.getSources_(B_name);
 									var convert = await pdfconverter.converter(source,B_name,(err,result)=>{
 										if(err){
-											res.send({Error:err.message})
+											next(err)
 										}else{
 											if(result  != null || result != undefined){
 												results.status = 1;
 												results.message = result;
 												res.send(results)
 											}else {
-												res.send(results)
+												next(new ExceptionHandler.InternalServerError ("something went wrong"))
 											}
 							
 										}
 									})
 		
 								}catch(err){
-									res.send({Error: err.message})
+									next(new ExceptionHandler.InternalServerError(err))
 								}
 						
 			}
-		}else {next("something went wrong")}}).catch(err=>{
+		}else {next(new ExceptionHandler.InternalServerError("something went wrong"))}}).catch(err=>{
 			next(err)
 		})
 	}catch(err) {

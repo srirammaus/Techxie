@@ -3,7 +3,7 @@ const fs = require('fs');
 const HTMLParser = require('node-html-parser');
 const createHTML = require('create-html');
 const { resolve } = require("path");
-
+var ExceptionHandler = require('./ExceptionHandlers.js')
 const dotenv = require('dotenv');
 dotenv.config({path:'./../config/.env'})
 //you can also use cheerio to maipulte stuuffs of HTML
@@ -47,7 +47,7 @@ class SMTPmailer {
             /**
              * This error will be caught by the email.js 
              */
-            throw new Error(err)
+            throw new ExceptionHandler.InternalServerError(err)
         }
         
     }

@@ -6,6 +6,7 @@ var xsrf_verification_lib = require(__dirname + "/xsrf_verification").xsrf_verif
 var DB = require('./../config/M_Database');
 const Files = require(__dirname + '/Files.js');
 var filter = require(__dirname + '/filter.js');
+var ExceptionHandler =require('./ExceptionHandlers.js');
 //check if the parameters are empty - pending
 //token should be validated
 ///upload has more pending works
@@ -34,7 +35,7 @@ class upload{ // check username , token , user is corresponding to theri types l
 						
 						var xsrf_verification = new xsrf_verification_lib();
 						if(username == null || typeof username == "undefined" && sessionID == null || typeof sessionID == "undefined" && session_token == null || typeof session_token == "undefined" && csrf_token == null || typeof csrf_token == "undefined" && userID == null || typeof userID == "undefined" ){
-							cb(new Error("Invalid Inputs"))
+							cb(new ExceptionHandler.BadRequest("Invalid Inputs"))
 						}
 						else if(username != "undefined" && this.isValidType(username)){
 							new OAuth().Authenticate(username,session_token,sessionID,(err,result)=>{
@@ -46,26 +47,26 @@ class upload{ // check username , token , user is corresponding to theri types l
 										if(err){
 											cb(new Error(err.message));
 										}else if(flag ==0 ){
-											cb(new Error("csrf token expired"))
+											cb(new ExceptionHandler.UnAuthorized("csrf token expired"))
 										}else{
 											cb(null,this.getBucket(userID))
 										}
 									})
 									
 								}else{
-									cb(new Error("something went wrong"))
+									cb(new ExceptionHandler.InternalServerError("something went wrong"))
 								}
 							})
 							
 						}	 // not uploaded : error handling problem everywhere
 						else{
-							cb( new Error("something went  wrong"))
+							cb( new ExceptionHandler.InternalServerError("something went  wrong"))
 						}
 					}else {
-						cb(new Error("something went wrong"))
+						cb(new  ExceptionHandler.InternalServerError("something went wrong"))
 					}
 				}).catch(err=>{
-					cb (new Error(err))
+					cb (err)
 				})
 				
 			},
@@ -99,7 +100,7 @@ class upload{ // check username , token , user is corresponding to theri types l
 						this.setFileFlag(1);
 						console.log("Here: " + this.getFileFlag())
 						if(!this.isValidFile(file.mimetype)){
-							return cb(null,false,new Error("Upload a valid File"));
+							return cb(null,false,new ExceptionHandler.BadRequest("Upload a valid File"));
 						}else{
 							cb(null,true);
 						}
@@ -114,7 +115,7 @@ class upload{ // check username , token , user is corresponding to theri types l
 	updateBucket(cb){
 		DB.getConnection((err,db)=>{
 			if(err){
-				cb(new Error("something went wrong"))
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
 			}else{
 				return;
 			}
