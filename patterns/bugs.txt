@@ -1,0 +1,44 @@
+bugs
+
+ * Bug
+ * set nothing to see as 404 page not found
+ * we can add folder to deleted folder
+ * we can even del main or root dir by making it inactive
+ * Eror handliinh 
+ * In db files stored as files:array -> obj
+ * if the F_num is accidentally chaged to F-num in uload js , it will thwo nwanted error 
+ * if username is not entered also it makes users in DB
+ * In email.js the verify user is send err like already reisgterd becuase of the USER_ID invalid or res is undefined
+ * in logi API it only shows the err message as email nt verified , but i have to show the status :0
+* This error not only happedn in this file, it is apllicable to all, in changePwd.api.js if u not check for undefined req.body and sent it lib func then it err as "data rg..." but this was shwng in resulting api to frontend. solve that
+* userid should e=be in number but strnig in webpdfconverter data
+* getFIle info having status : 1 even there was no such file error location fetchFile.ks 
+* in db driveinfo , after creating new folder at the very first first time the Folder: null, then second is obj , sometimes the obj is fifth time
+pdfconverter.js line 67
+* if username containing space the usernma is not trimmmed in userverification
+ ---
+ csrf token currently in:-
+
+csrf initiated in toolsbtn (/tools)
+
+token used in pdf upload
+normal upload
+forgot pwwd
+change email
+
+---
+remainder
+raise reddit question that what happen after inital clikc of app in com[uter]
+
+
+
+------
+frontend:
+in Techxie html file , do process.uncaught exception and check if (TypeErr) then ignore , because we built like that
+make form box disabled while sending request in signup login everything
+check for invalid email eror [like intentionally put invalid email , i need ot check what err thrown]
+login has some pending works
+
+in description when the description content get overload its behaviing different in file description
+
+

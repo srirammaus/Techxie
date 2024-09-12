@@ -1,0 +1,12 @@
+Protocols of techxie
+
+check for the username verificaion first
+then signup
+after the succesfull signup , create a three temporary folder [Pictures,videos,documents]
+unless untill the user verify the email , dont let him in
+once tries to log in , then if not verified , dont let him in
+after succesful login csrf should be initiated 
+dont make twice authentication like if the webdrive authencated once then dont for homepage , but if the home directly calls by the client then there should authentication
+maximu 150 is screen stack limit
+for api's- put data using fetch
+for pages-  get data from session management

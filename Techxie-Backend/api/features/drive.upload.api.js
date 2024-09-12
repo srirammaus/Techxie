@@ -21,8 +21,8 @@ function upload_(req,res,next){
 						next(err)
 					}else{
 						// console.log( req?.body?.username + "user")
-						res.send("Uploaded Successfully"); 
-						// next()
+						// res.send("Uploaded Successfully"); 
+						next()
 					}
 				}else{
 					next( new ExceptionHandler.InternalServerError("No Files has been uploaded"))

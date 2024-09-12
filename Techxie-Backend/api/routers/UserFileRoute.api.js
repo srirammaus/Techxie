@@ -39,16 +39,6 @@ router.post('/errtest',fetchFile.MiddleWare(6),function(req,res,next) {
     
 })
 router.use(errHandler)
-// router.post('/createFile',fetchFile.MiddleWare(1),function(req,res){ 
-    
-// })
-
-// router.post('/delFile',fetchFile.MiddleWare(3),function(req,res){ //del File
-    
-// })
-// router.post('/getFileInfo',fetchFile.MiddleWare(5),function(req,res){ //get File info 
-    
-// })
 
 
 module.exports = router

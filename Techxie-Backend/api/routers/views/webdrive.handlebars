@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>WebDrive</title>
+<!-- font-family: 'Fugaz One', sans-serif;
+font-family: 'Lemon', serif;
+font-family: 'Roboto', sans-serif; -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&family=Lemon&family=Poppins:wght@200&family=Roboto:ital,wght@1,100;1,300&display=swap" rel="stylesheet">
+
+<!-- Need to optmize bcaz this render like WebFont , so it take time and reduce web perfomance -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/WebDrive.css">
+</head>
+
+
+<body>
+
+
+	<!-- Flexbox - container -->
+	<section class="header">
+	<!-- devices - mobile , tablet , computer , Big Screen <img src="assets/svg/header_wave.png"> -->
+	<!-- <div class="wave">
+		<object class="wave-obj"data="assets/svg/header_wave.svg" type="image/svg+xml" ></object>		
+  
+	</div> -->
+	    <div class="header-container" >
+	    	
+	    	<div class="profile">
+	    		<!-- <div class="profile-icon-container"><i class="mdi mdi-account"></i></div> -->
+	    		<div class="profile-icon-container"><img src="/assets/images/profile.jpg" ></div>
+	    		<!-- below is for larger screens -->
+	  			<div class="profile-dropdown" style="display: none;"></div>
+	    	</div>
+	    	<div class="search">
+	    			<div class="search-icon-1"></div>
+	    			<div class="search-bar">
+	    				<div class="wrapper">
+		    				<input attr='search-bar-input' name="search-bar-input" placeholder="Search Techxie">
+		    				<div class="search-icon-2"><i class="mdi mdi-magnify"></i></div>
+		    			</div>
+	    				<div class="search-dropdown">
+	    					<div class="dropdown-wrapper">
+	    						
+	    						<div class="search-suggestion"><a>1something in search box.This line go along</a></div>
+	    						<div class="search-suggestion"><a>2something in search box.This line go along</a></div>
+	    						<div class="search-suggestion"><a>3something in search box.This line go along</a></div>
+	    						<div class="search-suggestion"><a>4something in search box.This line go along</a></div>
+	    						<div class="search-suggestion"><a>5something in search box.This line go along</a></div>
+	    						<div class="search-suggestion"><a>5something in search box.This line go along</a></div>
+	    						<div class="search-suggestion"><a>6something in search box.This line go along</a></div>
+	    						<div class="search-suggestion"><a>something in search box.This line go along</a></div>
+	    					</div>
+	    				</div>
+	    			</div>
+	    	</div>
+	    </div>
+	</section>
+	<section class="main" >
+		<div class="nav-drawer">
+			<div class="nav-profile">
+				<!-- account name with gmail below -->
+				<div class="nav-profile-container" attr="cont-1">
+									<!-- icon and img -->
+					<div class="nav-profile-icon-container"><!-- <i class="mdi mdi-account"></i> --><img src="/assets/images/profile.jpg" ></div>
+				</div>
+				<div class="nav-profile-container" attr="cont-2">
+					<div attr=user><a>Sriram Mariappan</a></div>
+					<div attr=email><a>srirammaus@gmail.com</a></div>
+				</div>
+				<div class="nav-profile-container" attr="cont-3">
+					<i class="mdi mdi-close"></i>
+				</div>
+			</div>
+			<div class="nav-items" >
+				<div class="nav-item" attr="Account-settings">
+					<div attr='icon'><i class="mdi mdi-account-settings"></i></div>
+					<div attr='icon-names'><a >Accounts Settings </a></div>
+				</div>
+				<div class="nav-item" attr="Trash">
+					<div attr='icon'><i class="mdi mdi-delete-sweep"></i></div>
+					<div attr='icon-names'><a>Trash</a></div>
+				</div>
+				<div class="nav-item" attr="Recents">
+					<div attr='icon'><i class="mdi mdi-backup-restore"></i></div>
+					<div attr='icon-names'><a>Recents</a></div>
+				</div>
+				<!-- disable for less than 800 -->
+				<div class="nav-item" attr="storage">
+					<div attr='icon'><i class="mdi mdi-soundcloud"></i></div>
+				<div attr='icon-names'><a >Storage </a><a attr=description>To buy storage click here</a>
+					<div attr="storage-slider"><div attr="storage-slider-colored"></div></div></div>
+				</div>
+
+			</div>
+		</div>
+		<div class="main-frame-wrapper">
+		<div class="Folder-map">
+			<!-- <div class="Home"><i class="mdi mdi-home"></i></div> -->
+			<div class="Back"><i class="mdi mdi-backburger"></i></div>
+			<div class="Folder-wrapper">
+				<div class="fm-icon" id="home-icon"><i class="mdi mdi-home-variant"></i></div>
+				<div class="fm-Fname"><a>Folder name</a></div>
+			</div>
+			
+
+		</div>
+		<div class="large-frame-items">
+				<div class="Recents"></div>
+				<div class="Folder"></div>
+				<div class="Videos"></div>
+				<div class="Photo"></div>
+				<div class="others"></div>
+		</div>
+		<!-- Note this place, this source should contact through URL if SSR  -->
+		<iframe id="iframe-doc" src="/User/page/home" ></iframe>
+					<div class="page-btn">
+			<div class="page-back-btn"><div attr=pg-wrapper><i class="mdi mdi-chevron-left"></i></div></div>
+		<div class="page-front-btn"><div attr="pg-wrapper"><i class="mdi mdi-chevron-right"></i></div></div></div>
+
+	</section>
+	<section class="footer"></section>
+	<script type="module" src="/scripts/WebDrive.js" ></script>
+	<script type="module" src="/scripts/pages/pageFunc.js" defer></script>
+	<!-- <script type="module" src="/scripts/Test/test.js"></script> -->
+
+	<!-- <script type="text/javascript" src="/scripts/WebDrive-2.js" > -->		
+		<!-- <script id="script-1" type="module" async src="/scripts/WebDrive-1.js" ></script>
+		<script id="script-2" type="module" async src="/scripts/WebDrive-2.js" ></script> -->
+
+</body>
+</html>
+
+
+<!--
+below is a good idea , but now we cant touch the already working stuff so lets make this below all to CSR
+so here after the frontend pages should be build with SSR template engine [handlebars]
+CSR -pages
+    login
+    signup
+    pdfviewer
+    videoplayer
+    Webdrive -- the search engine should update so .
+SSR - pages
+    Home 
+    settings
+    Recents
+    Trash
+
+---
+No idea 
+Techxie - content
+    projet
+    links -->

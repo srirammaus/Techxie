@@ -2,7 +2,7 @@ import apiConfig from "../utils/apiConfig.js";
 const signupURL = apiConfig.signupAPI;
 const verificationURL = apiConfig.userVerificationAPI;
 
-const emailVerificationURL = "";
+const emailVerificationURL = apiConfig.emailVerificationURL;
 const phoneVerificationURL = "";
 
 const phase1 = document.querySelector('.phase-1');
@@ -14,6 +14,7 @@ const verifyUsernameBtn = document.querySelector('.phase-1 button');
 const nextBtn = document.querySelector('.phase-2 button');
 const verifyOtpBtn = document.querySelector('.phase-3 button');
 const em = document.querySelector(".em");
+const redAlert = document.querySelector(".red-alert");
 
 var currentPhase = phase1; //default
 
@@ -146,24 +147,28 @@ async function userVerification () {
 
     for(let key of formData.keys()){
         if(!formData.filter(key)){
-    
+            //pop the please fill up the form
+            redAlert.innerHTML = "*Please fill the requested field"
+            redAlert.style.setProperty("display","block")
             return false;
         }
     }
-    console.log("This should print")
+    redAlert.style.setProperty("display","none");
     let response = await fetch (verificationURL,{
         method: 'POST',
         body: new URLSearchParams(formData) ,
     });
     var result = await response.json();
     console.log(result)
-    if(result?.USER_ID){
-        setCurrentUser(result)
+    if(result?.message?.USER_ID){
+        setCurrentUser(result.message)
        currentPhase.style.setProperty("display","none");
        phase2.style.setProperty("display","flex");
        currentPhase = phase2;
+
             //should be valid untilyl signup happens
     }else{
+
         console.log(result);
     }
     
@@ -214,7 +219,7 @@ function signup () {
         return response.json()
     }).then(commits =>{
         console.log(commits)
-        if(commits?.flag == 1) {
+        if(commits?.message?.flag == 1) {
             setCurrentUser(commits)
             currentPhase.style.setProperty("display","none");
             // phase3.style.setProperty("display","flex");
@@ -247,6 +252,25 @@ function emailVerification () {
     //phone voip [plivo,twillio]
 
     em.querySelector("a").innerHTML = getCurrentUser().email;
+    let email,username, userID;
+    let data = {
+        email : getCurrentUser().email,
+        userID :  getCurrentUser().userID,
+        username  : getCurrentUser().username,
+    }
+    console.log(data)
+
+    fetch(emailVerificationURL,{
+        method:"POST",
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+        body: JSON.stringify(data)
+    }).then(data=>{
+        console.log("Email sent successfully")
+    }).catch(err=>{
+        //response should be in UI
+    })
 
 }
 function phoneVerification () {
@@ -254,6 +278,6 @@ function phoneVerification () {
 }
 
 // setTimeout(()=>{
-//     signup();
+//     signup(),
 // },5000)
 //possiblites

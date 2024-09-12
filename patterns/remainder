@@ -36,3 +36,16 @@
 * we will make check mate by adding signed variable in db 0 first and then the user id used once to signup then put 1 there
 * create like sep server for creating bucket
 * env varible working good but they are not[env variable] saved permanently
+
+
+
+routing 
+error management
+session management
+pagination
+caching 
+perfomance 
+responsiveness
+ create contact api techxie home page
+ add try again btn in verification mail
+add home btn in login page redirection btn in verification mail box or create a auto redirection by maintainng connection

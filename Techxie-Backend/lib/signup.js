@@ -17,7 +17,8 @@ class signup{
 		this.ph_number = val[6];
 	}
 	filter(values){ 
-		for(var i=0;i<values.length;i++){ 
+		for(var i=0;i<values.length;i++){
+			if(typeof values[i] == "number") continue;
 			values[i] = values[i].trim();
 		}
 		return values;
@@ -27,15 +28,16 @@ class signup{
 		 * Use try catch while using this function
 		 * This error caught by drive.signup.js line 17
 		 */
-		var flag= 0;
-		for (var i=0;i<queryArrays.length;i++){
-			if(typeof(queryArrays[i]) == "string"){
-				flag = 1;
-			}else{
-				console.log(typeof(queryArrays[i]))
-				throw new ExceptionHandler.BadRequest("Invalid Type of Input")
-			}		
-		}
+		var flag= 1; // old is 0
+		// for (var i=0;i<queryArrays.length;i++){
+		// 	if(typeof(queryArrays[i]) == "string"){
+		// 		flag = 1;
+				
+		// 	}else{
+		// 		console.log(typeof(queryArrays[i]))
+		// 		throw new ExceptionHandler.BadRequest("Invalid Type of Input")
+		// 	}		
+		// }
 		return flag;
 	}
 	getConnection(){
@@ -231,17 +233,17 @@ class signup{
 									}
 								})	
 							}else if(flag[0] == 1 && flag[1] == 1){
-								cb( new ExceptionHandler.ConflictError("Already signed up"))
+								cb( new ExceptionHandler.ConflictError("User Exist"),1) //flag denotes , this message can be passed directly to client
 							}
 							else{
-								cb(new ExceptionHandler.BadRequest("Signup Failed , Invalid User ID"))
+								cb(new ExceptionHandler.BadRequest("Signup Failed , Invalid User ID"),1) ///flag denotes , this message can be passed directly to client
 							}
 						}
 					})
 				}
 			})
 		}else{
-			cb(new ExceptionHandler.BadRequest("Password and Confirm Password incorrect"))
+			cb(new ExceptionHandler.BadRequest("Password and Confirm Password incorrect"),1) //flag denotes , this message can be passed directly to client
 		}
 	}
 	createToken(){ // general token for some future purpose
@@ -269,7 +271,7 @@ class signup{
 	getResults(user,user_id,token = null){
 		var results = {
 			username:user,
-			user_id: user_id,
+			userID: user_id,
 			email:this.email,
 			flag:1,
 		}

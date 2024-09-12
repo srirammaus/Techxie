@@ -1,8 +1,14 @@
 //signup api
 //order =>name,userID,username,password,cpassword,email,ph_number
 // N
+var results = {
+	status:0,
+	message:"something went wrong"
+}
 var signup__ = require('./../lib/signup.js').signup;
 var ExceptionHandler = require('./../lib/ExceptionHandlers.js');
+var filter = require('./../lib/filter.js');
+var util = require('./../lib/util.js')
 function signupMiddleware(req,res,next){	
 	 let properties = ["body"];
     let requiredParams= ["username","password","cpassword","email","ph_number","name"];
@@ -19,12 +25,17 @@ function signupMiddleware(req,res,next){
 			var signup_  =  new signup__([name,userID,username,password,cpassword,email,ph_number]);
 			signup_.InputValidater([name,userID,username,password,cpassword,email,ph_number])
 			signup_.signup((err,result)=>{
-				if(err){
+				if(err && result == 1){
+				
+					results.message = err.message ;
+					res.send(results);
+				}
+				else if(err){
 					next(err)
 					// res.send(JSONIFY(["Error","flag"],[err.message, -1]));
 
 				}else{
-					res.send(JSON.stringify(result))
+					util.sendValidRes(res,1,result)
 				}
 			})
 		}catch(err ){
@@ -43,6 +54,7 @@ function JSONIFY(keys,values){ //both should be array and same count
 	}
 	return JSON.stringify(result);
 }
+
 function InputCounter(Input){
 	var len = Object.keys(Input).length
 	console.log(len)

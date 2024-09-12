@@ -3,10 +3,10 @@ const WindowLimit = parent.matchMedia("(min-width:800px)");
 function Match () {
 	console.log(WindowLimit.matches)
 	if(WindowLimit.matches){
-		var path = "assets/WebDrive-1.css";
+		var path = "/assets/WebDrive-1.css";
 		loadCss(path,"first");
 	}else{
-		var path = "assets/WebDrive-2.css";
+		var path = "/assets/WebDrive-2.css";
 		loadCss(path,"second")
 	}
 }

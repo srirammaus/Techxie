@@ -18,7 +18,11 @@ function ErrorMiddleware (err,req,res,next) {
     /***
      * Nowitself it is only sending error msg thrrough json , later send HTML accodingly
      */
+    console.log(err)
     switch (true) {
+        case err instanceof ExceptionHandler.PageError:
+            res.sendFile("D:/Techxie/pages/Error.html");
+            break;
         case err instanceof ReferenceError: //Internale server Error code
             //logs
             send(res,500)
@@ -35,16 +39,31 @@ function ErrorMiddleware (err,req,res,next) {
             //logs
             send(res,500)
             break;
+ 
+        case err instanceof ExceptionHandler.BadGateway:
+            result.message = err?.message || "something went wrong";
+            send(res,err.code);
+            break;
+        case err instanceof ExceptionHandler.ConflictError:
+            result.message = err?.message || "something went wrong";
+            send(res,err.code);
+            break;
+        case err instanceof ExceptionHandler.UnAuthorized:
+            console.log("I not" + err.code)
+            result.message = err?.message || "something went wrong"
+            send(res,err.code);
+            break;
         case err instanceof ExceptionHandler.ServerError: // 500
             send(res,err.code)
             break;
-        case err instanceof ExceptionHandler.ClientError: // 400 to 405
-            //logs
-            //err instance of BadRequest is example
-            send(res,err.code)
+        case err instanceof ExceptionHandler.ClientError:
+            console.log("I am")
+            result.message = err?.message || "something went wrong";
+            send(res,err.code);
             break;
         case err instanceof Error:
             //logs
+            console.log(err)
             send(res,500)
             break;
         default:

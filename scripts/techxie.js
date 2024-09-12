@@ -60,7 +60,6 @@ class techxie_{
 		var in_nav_list = this.#nav_list; //in -  denotes the name of the variable we declared inside the function
 		var in_dropdown_content = this.#dropdown_content;
 		this.#nav_bar_btn.addEventListener("click", function(){
-			alert("i'm happening ")
 			// in_nav_list.style= {"display":" block"}
 			in_nav_list.style.width = "100%";
 			in_nav_list.style.overflow = "hidden";
@@ -81,7 +80,7 @@ class techxie_{
 	async tools_lst_(){ //get it through cdn , lets create that today iteself
 		var resp = await fetch(apiConfig.tool_lstAPI);
 		var tools_lst = await resp.json();
-		alert(tools_lst)
+		console.log(tools_lst)
 	}
 	project_container(n_project_cards) { // get the n number of cards through cdn
 		var btn,btn_1_x_y, btn_2_x_y, clicks;
@@ -231,6 +230,13 @@ class techxie_{
 	
 }
 new techxie_();
+
+process.on("uncaughtException",(err,src)=>{
+	console.log(err)
+	if(err instanceof TypeError) {
+		console.log("This is TypeError")
+	}
+})
 // for (let i in project_Thumbnail){
 // 			project_card_Desc_container = document.createElement("div")
 // 			project_card_Desc = document.createElement("p");

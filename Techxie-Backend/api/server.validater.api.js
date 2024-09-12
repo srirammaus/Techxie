@@ -3,7 +3,8 @@
 //userverification
 var VL = require("./../lib/server.validater.js").validater;
 var filter = require('./../lib/filter.js');
-var ExceptionHandler= require('./../lib/ExceptionHandlers.js';)
+var ExceptionHandler= require('./../lib/ExceptionHandlers.js');
+var util = require('./../lib/util.js')
 function ValidateServerMiddleware(req,res,next){
 	let properties = ["body"];
     let requiredParams= ["username"]
@@ -16,7 +17,8 @@ function ValidateServerMiddleware(req,res,next){
 					if(err){ next(err)}
 					else{
 						// throw new ReferenceError("This is reference error")
-						res.send(JSON.stringify(result))
+						// JSON.stringify
+						util.sendValidRes( res,1,result)
 					}
 				})
 			}
@@ -35,6 +37,7 @@ function ValidateServerMiddleware(req,res,next){
 
 
 }
+
 function JSONIFY(keys,values){ //both should be array and same count
 	var result = {};
 	for(var i=0;i<keys.length;i++){

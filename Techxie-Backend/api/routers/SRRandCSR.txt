@@ -1,0 +1,34 @@
+below is a good idea , but now we cant touch the already working stuff so lets make this below all to CSR
+so here after the frontend pages should be build with SSR template engine [handlebars]
+
+
+CSR -pages
+    The static page also come under this category , becaus we gonna put route(/something,fn(req,res){res.render(something.html)})
+        login
+        signup
+        settings
+    Mostly they are fetched through api and rendered in frontend
+        pdfviewer
+        videoplayer
+        Webdrive -- the search engine should update so .
+SSR - pages
+    Home -  from fetched folder data
+    Recents - from recent db
+    Trash -- from not active
+
+-----------------------------------------------------------------
+Basic handlebars syntax
+layout is simple html wrapper which contain {{{body}}} like html.....body ..../html --just {{{body}}}
+{{{body}}} -for layout
+{{}}
+#each /each
+#with /with
+#if /if
+
+you can add else to above all fn ive mentioned
+unless - this is inverse to #if
+
+option.fn- compiled template
+
+-------------------------------------------------
+

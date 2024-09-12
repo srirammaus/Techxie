@@ -8,13 +8,14 @@ var result = {
     message:"soemthing went wrong"
 }
 function AuthMiddleWare (req,res,next) {
-     let properties = ["body"];
+     let properties = ["cookies"];
     let requiredParams= ["username","userID","session_token","sessionID"]
+    console.log(req.cookies.username +   "something..")
     filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
-        let sessionID = req.body.sessionID;
-        let session_token = req.body.session_token || req.body.access_token;
-        let username = req.body.username;
-        let userID = req.body.userID;
+        let sessionID = req.cookies.sessionID;
+        let session_token = req.cookies.session_token || req.cookies.access_token;
+        let username = req.cookies.username;
+        let userID = req.cookies.userID;
     
         if(userID == null || username == null || session_token == null || sessionID == null){
             next(new ExceptionHandler.BadRequest("Invalid inputs",200))

@@ -4,7 +4,9 @@
 //this gets for userverification
 
 var DB = require('./../config/M_Database.js');
-var fs = require('fs')
+var fs = require('fs');
+var ExceptionHandler = require('./ExceptionHandlers.js');
+
 var dotenv = require('dotenv'); //initalize dotenv 
 dotenv.config({path:"./config/limit.env"}) // initalize path //why lib is used here? because they are start working from REST.api, so!
 class validater{
@@ -47,10 +49,10 @@ class validater{
 	InsertUserId(cb){
 		var query = {username: this.getUsername(),USER_ID: this.getUserId(),signup:0} //USER_ID caps everywhere
 		this.getConnection().getConnection((err,db)=>{
-			if(err){ cb(new Error("something went wrong"))}
+			if(err){ cb(new ExceptionHandler.InternalServerError("something went wrong"))}
 			else{
 				DB.InsertDocument(db,"USER_IDS",query,(err,res)=>{
-					if(err){ cb(new Error("something went wrong"))}
+					if(err){ cb(new ExceptionHandler.InternalServerError("something went wrong"))}
 					else{
 						cb(null,res); //LATER: check confimation
 					}
@@ -63,10 +65,10 @@ class validater{
 		var flag = 0; //something went wrong
 		let db_userID=null;
 		this.getConnection().getConnection((err,db) =>{
-			if(err){  cb(new Error(err))}
+			if(err){  cb(new ExceptionHandler.InternalServerError(err))}
 			else{
 				DB.FindDocument(db,"USER_IDS",query,(err,res) =>{
-					if(err){cb(new Error("Something Went Wrong"))} // take original error as log
+					if(err){cb(new ExceptionHandler.InternalServerError("Something Went Wrong"))} // take original error as log
 					else{
 						if( res == null || res == "undefined"){
 							flag = -1; //no such user
@@ -85,11 +87,11 @@ class validater{
 		let query = {USER_ID: this.getUserId()}
 		console.log(this.getUserId() + "user id "); //to check whether the recursion works properly
 		this.getConnection().getConnection((err,db)=>{
-			if(err){ cb(new Error("something went wrong"))}
+			if(err){ cb(new ExceptionHandler.InternalServerError("something went wrong"))}
 			else{
 				DB.FindDocument(db,"USER_IDS",query,(err,res)=>{
 					if(err){
-						cb(new Error("something went wrong"))
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
 					}else{
 						if( res == null || res == "undefined"){
 							flag = -1;
@@ -106,15 +108,15 @@ class validater{
 		var tracker,rec;
 		this.createUserId();
 		this.isValidUserName((err,flag,db_userID) =>{
-			if(err){ cb(new Error("something went wrong"))}
+			if(err){ cb(new ExceptionHandler.InternalServerError("something went wrong"))}
 			else{
 				if(flag == -1){ // 1st  step done
 					this.isValidUserID((err,flag_)=>{
-						if(err){ cb(new Error("something went wrong"))}
+						if(err){ cb(new ExceptionHandler.InternalServerError("something went wrong"))}
 						else{
 							if(flag_ == -1){ // valid 
 								this.InsertUserId((err,res)=>{
-									if(err){ cb(new Error("something went Wrong"))}
+									if(err){ cb(new ExceptionHandler.InternalServerError("something went Wrong"))}
 									else{
 										cb(null,{username: this.getUsername(),USER_ID: this.getUserId(),signup:0});
 									}
@@ -141,7 +143,7 @@ class validater{
 					console.log(db_userID + "   " + this.getUserId());
 					cb(null,{username: this.getUsername(),USER_ID:db_userID,signup:0});
 				}else {
-					cb(new Error("User Exist"))
+					cb(new ExceptionHandler.UnAuthorized("User Exist"))
 				}
 			}
 

@@ -40,13 +40,22 @@ class login {
 										if(err){
 											cb( new ExceptionHandler.InternalServerError(err));
 										}else{
-											cb(null,result,fetched_userID)
+											result.userID= fetched_userID
+											cb(null,result)
 										}
 									});
 
-								}else{
+								}else if(res?.verified_e == 0){
 									//redirect to email verification by sending verification email to client or user
-									cb( new ExceptionHandler.UnAuthorized("email not verified"));
+									//retrive user's email and userID 
+									let EmailRes = {
+										userID:res.credentials.USER_ID,
+										username:res.credentials.username,
+										email:res.email,
+									};
+									cb( new ExceptionHandler.UnAuthorized("email not verified"),EmailRes); // this flag denotes this email not verified
+								}else {
+									cb(new ExceptionHandler.UnAuthorized("Invalid Inputs "))
 								}
 
 							}else{

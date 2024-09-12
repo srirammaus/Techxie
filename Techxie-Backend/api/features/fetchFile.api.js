@@ -154,20 +154,24 @@ function uploadFileMiddleware(resolve,reject,req,response,next) {
         setParameters(req);
         let filenames = [];
         let f_names = [];
-        
+        let fileTypes = [];
+        let thumbanailsDir = []; // for now this is empty , chane it later
+        console.log(req.body.fileExt + "This")
         for(let obj in req.files){
             filenames.push(req.files[obj].originalname || req.files[obj].filename)
         }
-        console.log(req.body?.f_names)
+        // console.log(req.body?.f_names)
         for(let f_name of req.body?.f_names){
             f_names.push(f_name)
         }
+        fileTypes = file.classifiedFileType(req?.body?.fileExt);
 
         file.getFolderInfo(username,userID,F_num,(err,i_count)=>{ //-- done
             if(err){
                 reject(err);
             }else{
-                file.newFile(username,userID,F_num,filenames,i_count,(err,i_count_1,f_id_array)=>{
+                
+                file.newFile(username,userID,F_num,filenames,fileTypes,thumbanailsDir,i_count,(err,i_count_1,f_id_array)=>{
                     if(err){
                         reject(err)
                     }else{

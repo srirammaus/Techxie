@@ -1,0 +1,17 @@
+
+/*.navigation {
+	display: none;
+}
+.side-nav {
+	display: none;
+}
+
+.pdf-viewer {
+	overflow: visible;
+	width: auto;
+	height: auto;
+}*/
+
+@page {
+	background: yellow;
+}

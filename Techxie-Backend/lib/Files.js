@@ -69,7 +69,7 @@ class Files{
 	//here the f_name is  array
 	//F_count denotes the entire folder count which will keep track of the folder number
 	//F_num + i_countwhich denotes items in the folder , the all items in the folder should be consider as file eventhough it is a file
-	newFile(username,userID,F_num,f_name,i_count,cb){ //This should stored withing the folders
+	newFile(username,userID,F_num,f_name,f_types,f_thumbnail_dir,i_count,cb){ //This should stored withing the folders
 		var query = {username: username,USER_ID:Number(userID)};
 		var key_1 = F_num + ".items."   ; // the actual i_count we got from the db first
 		var key_2 = F_num + ".i_count" ;
@@ -87,6 +87,8 @@ class Files{
 						// this is only used to retive the file what he choose while using our apllication, the other DATAS are store somewhere else
 						f_name: f_name[i], //file name // this is only used to retive the file what he choose while using our apllication, the other DATAS are store somewhere else
 						f_id:f_id,
+						f_desc:"This is default description",
+						f_thumbnail_dir:f_thumbnail_dir[i] || `/assets/svg/${f_types[i]}.svg`,
 						active: 1,
 			}
 			f_id_array[i] = f_id;
@@ -167,6 +169,7 @@ class Files{
 					if(err){
 						cb(new ExceptionHandler.InternalServerError(err))
 					}else{ //get an acknowledgement
+						console.log("The acknolegement")
 						console.log(res)
 						cb(null,true)
 					}
@@ -255,6 +258,24 @@ class Files{
 			}
 		})
 
+	}
+	classifiedFileType(args) { //the args should be array
+		let typeLst = [];
+		for(let ext of args) {
+			switch (ext) {
+				case "png" || "jpeg" || "jpg":
+					typeLst.push("image");
+					break;
+				case "pdf":
+					typeLst.push("pdf");
+				case "mp4":
+					typeLst.push("audio")
+				default:
+					typeLst.push("image"); // default chnage it to unknow file
+					break;
+			}
+		}
+		return typeLst
 	}
 	viewFileFromBucket(f_name) {
 		

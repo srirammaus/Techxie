@@ -22,7 +22,7 @@ function setParameters (req){
 function createFolderMiddleware(resolve,reject,req,res,next) {
     //filter and type should evaluated
     let properties = ["body"];
-    let requiredParams= ["username","userID","F_num"];
+    let requiredParams= ["username","userID","F_num","F_name"];
     filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
         setParameters (req)
         folder.checkLastFolderNum(username,userID,F_num,(err,F_count,i_count,active,P_F_num,item_number)=>{ //item_number = res
@@ -116,7 +116,7 @@ function viewFolderMiddleware(resolve,reject,req,response,next) {
      */
     let properties = ["body"];
     let requiredParams= ["username","userID","F_num"];
-    filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
+    filter.Filter(req,response,next,properties,requiredParams).then(flag=>{if(flag == 1){
         setParameters (req)
         folder.viewFolder(username,userID,F_num,(err,res)=>{
             if(err){

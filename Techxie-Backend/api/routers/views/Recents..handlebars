@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Recents</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- font-family: 'Fugaz One', sans-serif;
+	font-family: 'Lemon', serif;
+	font-family: 'Roboto', sans-serif; -->
+	<link rel="stylesheet" type="text/css" href="assets/default.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&family=Lemon&family=Poppins:wght@200&family=Roboto:ital,wght@1,100;1,300&display=swap" rel="stylesheet">
+
+	<!-- Need to optmize bcaz this render like WebFont , so it take time and reduce web perfomance -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
+
+</head>
+<body>
+
+		<div class="small-frame-items">
+			{{#each Folders}}
+			<div class="small-Folder">
+				<div attr="small-Folder-icon"><i class="mdi mdi-folder"></i></div>
+				<div attr = "small-Folder-name"><a>{{ this.F_name}}</a><a attr="description" ></a></div>
+				<div attr="small-Folder-more" data="more-box"><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant"></i><a>info</a></div></div></div>
+			</div>
+			{{/each}}
+			 {{!-- <div class="small-Folder">
+				<div attr="small-Folder-icon"><i class="mdi mdi-folder"></i></div>
+				<div attr = "small-Folder-name"><a>No Folder</a><a attr="description" >Description</a></div>
+				<div attr="small-Folder-more" data="more-box"><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant"></i><a>info</a></div></div></div>
+			</div>--}}
+			{{#each Files}}
+				<div class="small-File">
+					{{#if this.f_thumbnail_dir }}
+					<div attr=small-File-icon><img src= {{this.f_thumbnail_dir}}></div>
+					{{else}}
+					<div attr=small-File-icon><img src= "/assets/svg/{{this.type}}.svg"></div>
+					{{/if}}
+					<div attr="small-File-name"><a>{{this.f_name}}</a><a attr="description" >{{this.description}}</a></div>
+					<div attr="small-File-more" data="more-box"><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant"></i><a>info</a></div></div></div>
+				</div>
+			{{/each}}
+		</div>
+		<script type="module" src="/scripts/pages/Ifr//IfrPageFunc.js"></script>
+		<script type="text/javascript" src="/scripts/pages/MediaSettings.js">
+		</script>
+	</body>
+</html>

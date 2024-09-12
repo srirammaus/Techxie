@@ -20,6 +20,7 @@ class upload{ // check username , token , user is corresponding to theri types l
 	initialize(){ // use to initailize
 		var username,file_original_name,userID,sessionID,session_token,csrf_token;
 		var f_names =[];
+		var fileExt = [];
 		var Multer = multer.diskStorage({
 			destination:(req,file,cb)=>{
 				let properties = ["body"]
@@ -32,7 +33,6 @@ class upload{ // check username , token , user is corresponding to theri types l
 						session_token = req.body.session_token;
 						sessionID =  req.body.sessionID;
 						csrf_token = req.body.csrf_token || req.body.xsrf_token;
-						
 						var xsrf_verification = new xsrf_verification_lib();
 						if(username == null || typeof username == "undefined" && sessionID == null || typeof sessionID == "undefined" && session_token == null || typeof session_token == "undefined" && csrf_token == null || typeof csrf_token == "undefined" && userID == null || typeof userID == "undefined" ){
 							cb(new ExceptionHandler.BadRequest("Invalid Inputs"))
@@ -73,9 +73,13 @@ class upload{ // check username , token , user is corresponding to theri types l
 			filename: (req,file,cb)=>{
 				// check whether filen name already exixts or not ! same file uploaded not a problem .
 				let f_name = this.setf_name(file?.originalname);
+				let fExt = file.mimetype.split('/')[1];
 				file_original_name = f_name //file.originalname
-				req.body.f_names = f_names
-				f_names.push(f_name)
+		
+				f_names.push(f_name);
+				fileExt.push(fExt);
+				req.body.f_names = f_names;
+				req.body.fileExt = fileExt
 				if(file_original_name != "undefined" &&this.isValidType(file_original_name)){
 					cb(null,this.getFileName(file_original_name));
 				}	
@@ -98,7 +102,7 @@ class upload{ // check username , token , user is corresponding to theri types l
 		var upload = multer({
 					fileFilter: (req,file,cb)=>{
 						this.setFileFlag(1);
-						console.log("Here: " + this.getFileFlag())
+						// console.log("Here: " + this.getFileFlag())
 						if(!this.isValidFile(file.mimetype)){
 							return cb(null,false,new ExceptionHandler.BadRequest("Upload a valid File"));
 						}else{

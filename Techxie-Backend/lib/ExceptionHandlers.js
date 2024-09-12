@@ -86,7 +86,13 @@ class ConflictError extends ClientError {// tokens or Username or user id or ema
 		this.code = code;
 	}
 }
-
+class PageError extends ClientError  {
+	constructor(message,code = 404) {
+		super(message)
+		this.name = "Not found";
+		this.code = 404;
+	}
+}
 class UnAuthorized extends ClientError {// tokens or Username or user id or email error
 	constructor(message,code =401) {
 		super(message);
@@ -114,6 +120,7 @@ module.exports = {
 	Forbidden,
 	UnAuthorized,
 	ConflictError,
-	UserError,
+	PageError,
+	
 
 }

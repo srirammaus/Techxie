@@ -1,0 +1,39 @@
+pagination:-
+
+params we have for pages is 
+    F_num
+    F-id
+    f_num
+    f-id
+
+our file structure:-
+    Bucket info
+
+        * By default there is F_count =1 , so it is the main folder  or  F_num 0 &&F-id is 0
+        * any folder containing active = 1 means they are not deleted . there is one bug that main folder's active acan be changed
+        * so the F_count increased it means overall folders in the users bucket
+        * i_count means which is within the folder . that denotes the how many items within the folder , which include both folders and file*
+        *  P_F_num - parent folder number,item_number-this contained by the folders it denotes , what the index of this folder in parent folder
+        * even though the folder is a type of folder it shoudl be consider as file and assigned with f-id within the Folder, its actual F-id is eg: F-3 , f-id in folder is like f-0-7
+        * check last folder : returns the current i_count,F_count,active,P_F_num,item_number : params - username,userID,F_num
+        * view folder: find document and if not deleted , it will send list of all data within it : params-username,userID,F_num
+        * New folder creation: check  for last folder :params- username,userID,F_num,F_name
+        * delete folder: it wil first check for checkLAstFoldere and get the paraent F_num and delete it properly:params-username,userID,F_num
+        * edit folder: null
+
+    driveInfo:- 
+        * getFolderInfo is the api which fetch for particular folder's info
+        * getFileInfo is the api which fetch for particular file's info
+
+        * This contains Folders and File info
+
+
+-----
+* The session storage should contain the username,userID,F_num to get the next page [which use the view folder to get the page]
+
+* when new folder clicked the new folder request sent along with username,userID,F_name,F_num
+
+caching:-
+*  http caching , (cacheAPI service workers), localstorage,indexdb, sessionstorage,cookies,
+* we can also use service workers [the proxy] but it only works on https
+* lets go for sessionStorage

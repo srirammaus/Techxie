@@ -75,7 +75,7 @@ export class WebDrive {
 			};
 
 			const svgObj = {
-			  data: "assets/svg/header_wave.svg",
+			  data: "/assets/svg/header_wave.svg",
 			  class: "wave-obj",
 			  type: "image/svg+xml",
 			};
