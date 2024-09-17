@@ -22,7 +22,7 @@
 		
 		<div class="small-frame-items">
 			{{#each Folders}}
-			<div class="small-Folder">
+			<div class="small-Folder" id={{this.F_id}}>
 				<div attr="small-Folder-icon"><i class="mdi mdi-folder"></i></div>
 				<div attr = "small-Folder-name"><a>{{ this.F_name}}</a><a attr="description" ></a></div>
 				<div attr="small-Folder-more" data="more-box"><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant"></i><a>info</a></div></div></div>
@@ -34,7 +34,7 @@
 				<div attr="small-Folder-more" data="more-box"><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant"></i><a>info</a></div></div></div>
 			</div>--}}
 			{{#each Files}}
-				<div class="small-File">
+				<div class="small-File" id={{this.f_id}}>
 					{{#if this.f_thumbnail_dir }}
 					<div attr=small-File-icon><img src= {{this.f_thumbnail_dir}}></div>
 					{{else}}
@@ -52,9 +52,9 @@
 		</div>
 		<!-- to display info and are you sure want to delete , this is completely dynamic[javascript], you can also use it for right click-->
 		<div id="mainPopBox" class="main-pop-box"></div>
-		<script type="module" src="/scripts/pages/Ifr//IfrPageFunc.js"></script>
-		<script type="module" src="/scripts/pages/Ifr//IfrStyle.js"></script>
-		<script type="text/javascript" src="/scripts/pages/MediaSettings.js">
+		<script type="module" src="/scripts/pages/Ifr/IfrPageFunc.js"></script>
+		<script type="module" src="/scripts/pages/Ifr/IfrStyle.js"></script>
+		<script type="text/javascript" src="/scripts/pages/Ifr/MediaSettings.page.js">
 		</script>
 </body>
 </html>

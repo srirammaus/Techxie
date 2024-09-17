@@ -1,4 +1,6 @@
-import Elements from '/scripts/lib/Elements.js';
+import Elements from '/scripts/lib/Elements.lib.js';
+import * as driveFunc from "/scripts/lib/webdrive.lib.js";
+import * as Weblib from "/scripts/lib/webdrive.lib.js";
 // export 
 
 export class WebDrive {
@@ -47,7 +49,11 @@ export class WebDrive {
 	}
 	OnLoad () {
 		window.addEventListener('load',()=>{
-			WebDrive.iframe_();
+			this.homePage()
+			Weblib.fetchPage(Elements.iframe_element,0).then((flag) => {
+				WebDrive.iframe_();
+				
+			})
 
 		})
 	}
@@ -102,9 +108,20 @@ export class WebDrive {
 
 
 	}
+		/**
+	 * The lib function must be promise or async await
+	 * This  function sets with and height for the iframe , first this verified whether iframe is alive or not
+	 */
+	homePage () { // default
+		//we can also use srcdoc but it is not gauranteed , because browser compactibility
+		driveFunc.fetchPage(Elements.iframe_element,0);
+	
+	}
 	static iframe_() {
+		
 		Elements.iframe_ ().then(function(elem) {	
 			if(elem[0] === true){
+				console.log("reached here")
 				elem[1].style.setProperty('height',(80/100 * window.screen.height) +'px');
 				elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
 			}
@@ -114,6 +131,9 @@ export class WebDrive {
 	reload() {
 		window.location.reload()
 	}
+	/**
+	 * For the Orientation
+	 */
 	HandleViewerport() {
 		var WL = window.matchMedia("(orientation: landscape) ")
 		WL.addEventListener("change",function(){

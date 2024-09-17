@@ -16,7 +16,23 @@ bugs
 * in db driveinfo , after creating new folder at the very first first time the Folder: null, then second is obj , sometimes the obj is fifth time
 pdfconverter.js line 67
 * if username containing space the usernma is not trimmmed in userverification
+* if i uncomment req.body.folder in userpageroute /home then it will throw error as reference error ,so it sends {status:0msg...} but it was a page request i dont sne dlike that 
+* when uncaught exception caught for page requet ,it resposnd like api err message
  ---
+ hack:-
+    if the next is in the 
+        for(let i of item) {
+            switch(conf):
+                cas
+
+                cas 2
+
+                defa: 
+                    next()
+                    break;
+            }
+
+        the loop continues , the 1st next sends to errrormidlleare  but also the loop continues, so it cause real erro
  csrf token currently in:-
 
 csrf initiated in toolsbtn (/tools)

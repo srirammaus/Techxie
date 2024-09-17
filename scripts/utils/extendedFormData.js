@@ -49,7 +49,7 @@ export default class extendedFormData extends FormData {
                         if(val.split(" ").length > 1 ) throw new Error("Username should not consist space in between");
                         if(val.length > 25) throw new Error ("email input limit exceeded")
                         this.set(type,emailValue.trim())
-                        
+                        return true;
                     }
                     
                 case types[2]:
@@ -75,8 +75,9 @@ export default class extendedFormData extends FormData {
                         return false
                     }
                     if(val.length > 40) throw new Error ("password limit exceeded")
+                    
                     this.set(type,val.trim());
-                    break;
+                    return true;
                 case types[4]:
                         var val = this.get(type);
                         
@@ -86,7 +87,7 @@ export default class extendedFormData extends FormData {
                         }
                         if(val.length > 40) throw new Error ("password limit exceeded")
                         this.set(type,val.trim());
-                        break;
+                        return true;
                 case types[5]:
                     var val = Number(this.get(type));
                     console.log(this.get(type))
@@ -95,7 +96,7 @@ export default class extendedFormData extends FormData {
                     }
                     if(typeof val != "number") throw new Error("Invalid Input field")
                     if(val.length < 15 && val.length >= 10)  throw new Error ("Number input limit not reached")
-                    break;
+                    return true;
                 default:
                    break;
                 

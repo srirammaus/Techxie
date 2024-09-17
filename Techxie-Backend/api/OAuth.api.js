@@ -8,6 +8,7 @@ var Auth_ = require('./../lib/Authorization').Auth;
 var filter = require('./../lib/filter.js')
 var ExceptionHandler = require('./../lib/ExceptionHandlers.js')
 var util = require('./../lib/util.js');
+
 function OAuth(req,res,next){
 	console.log(req.cookies)
 	console.log('-----')
@@ -67,8 +68,9 @@ function OAuth(req,res,next){
 							
 						]
 								util.delCookie(res,erasingCookie)
-								util.setCookie(res,cookieArr)
-								res.send(result);
+								util.setCookie(res,cookieArr);
+								util.sendValidRes(res,1,"succesfully verified");
+								
 							}
 						}
 					})

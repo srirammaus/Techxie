@@ -86,13 +86,7 @@ class ConflictError extends ClientError {// tokens or Username or user id or ema
 		this.code = code;
 	}
 }
-class PageError extends ClientError  {
-	constructor(message,code = 404) {
-		super(message)
-		this.name = "Not found";
-		this.code = 404;
-	}
-}
+
 class UnAuthorized extends ClientError {// tokens or Username or user id or email error
 	constructor(message,code =401) {
 		super(message);
@@ -101,6 +95,73 @@ class UnAuthorized extends ClientError {// tokens or Username or user id or emai
 	}
 }
 class Forbidden extends ClientError {
+	constructor(message) {
+		super(message);
+		this.name = "Forbidden"
+		this.code = 403;
+	}
+}
+// From this page error
+class PageError extends Error  { // 500
+	constructor(message,code = 500) {
+		super(message)
+		this.name = "Server Error";
+		this.code = code;
+	}
+}
+
+class PageServiceUnavailable extends PageError {
+	constructor(message) {
+		super(message);
+		this.name = "Service Unavailable"; 
+		this.code = 503 ;
+	}
+}
+class PageBadGateway extends PageError {
+	constructor(message) {
+		super(message);
+		this.name = "BadGateway"; 
+		this.code =502 ;
+	}
+}
+/**
+ * Client Error
+ */
+
+class PageBadRequest extends PageError { // Invalid input keys or 
+	constructor(message,code = 400) {
+		super(message)
+		this.name ="Invalid Request";
+		this.code = code;
+	}
+}
+/**
+ * If 200 then dont have to redirect in Error page
+ */
+class PageNotFound extends PageError { // Invalid input keys or 
+	constructor(message,code = 404) {
+		super(message)
+	
+		this.name ="Not found";
+		this.code = code; // default 404
+	}
+}
+class PageConflictError extends PageError {// tokens or Username or user id or email error
+	constructor(message,code = 409) {
+		super(message);
+		this.name = "Conflict Error";
+		this.code = code;
+	}
+}
+
+class PageUnAuthorized extends PageError {// tokens or Username or user id or email error
+	constructor(message,code =401) {
+		super(message);
+		this.name = "UnAuthozied"
+		this.code = code;
+	}
+}
+class PageForbidden extends PageError {
 	constructor(message) {
 		super(message);
 		this.name = "Forbidden"
@@ -121,6 +182,14 @@ module.exports = {
 	UnAuthorized,
 	ConflictError,
 	PageError,
+	PageBadGateway,
+	PageBadRequest,
+	PageConflictError,
+	PageForbidden,
+	PageNotFound,
+	PageServiceUnavailable,
+	PageUnAuthorized,
+
 	
 
 }

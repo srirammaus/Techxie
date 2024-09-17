@@ -432,6 +432,8 @@ input[attr= 'search-bar-input'] {
     width: 33%;
     height: 100%;
     font-size: 150%;
+    cursor: pointer;
+
     /*color:#00000070;*/
     color: #000000a6;
     align-items: center;

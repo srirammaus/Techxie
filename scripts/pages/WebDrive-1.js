@@ -1,6 +1,7 @@
 
 import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
-import Elements from '/scripts/lib/Elements.js';
+import Elements from '/scripts/lib/Elements.lib.js';
+import * as Weblib from "/scripts/lib/webdrive.lib.js";
 /**
  * my category
  * onload
@@ -40,23 +41,27 @@ export class WebDrive {
 
 
 	}
-	OnContentloaded() {
+	OnContentloaded() { //before asets download
 		window.addEventListener('DOMContentLoaded',()=>{
 
 		})
 		
 		
 	}
-	OnLoad(){
+	OnLoad(){ //after assets download
 		window.addEventListener('load',()=>{ 
 			this.header();
 			this.mainFunc();
-			WebDrive.iframe_()
+			Weblib.fetchPage(Elements.iframe_element,0).then((ifr) => {
+			
+					WebDrive.iframe_();				
+				
+			})
 			
 		})
 
 	}
-	OnResize(){
+	OnResize(){ //while resizing..
 		
 		window.addEventListener('resize',()=>{
 			if(window.innerWidth > 800) {
@@ -67,7 +72,7 @@ export class WebDrive {
 
 
 	
-	header (){
+	header (){ 
 	
 		if(!document.querySelector(".wave-obj")){
 			const waveContainerObj = {
@@ -117,16 +122,23 @@ export class WebDrive {
 	
 		
 	}
-	//The lib function must be promise or async await
+
+	/**
+	 * The lib function must be promise or async await
+	 * This  function sets with and height for the iframe , first this verified whether iframe is alive or not
+	 */
 	static iframe_() {
+
 		Elements.iframe_ ().then(function(elem) {	
-			
-			if(elem[0] === true) {
+	
+			if(elem[0] == true) {
 				elem[1].style.setProperty('height',(80/100 * window.screen.height) +'px');
 				elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
+			}else {
+
+				console.log("Reached here")
 			}
 		})
-
 	}
 
 }

@@ -387,6 +387,8 @@ input[attr= 'search-bar-input'] {
     display: inline-flex;
     height: 100%;
     width:23%;
+    cursor: pointer;
+
     /*color:#00000070;*/
     color: #000000a6;
     align-items: center;

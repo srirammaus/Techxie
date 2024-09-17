@@ -49,3 +49,4 @@ responsiveness
  create contact api techxie home page
  add try again btn in verification mail
 add home btn in login page redirection btn in verification mail box or create a auto redirection by maintainng connection
+set a deault loading page before the home loads

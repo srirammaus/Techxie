@@ -1,4 +1,4 @@
-import IfrElements from '/scripts/lib/IfrElements.js';
+import IfrElements from '/scripts/lib/IfrElements.lib.js';
 
 //main-pop-box include del , right click ,info box
 function mainPopBox () {
@@ -81,7 +81,7 @@ function delFrameStyles () { //right clikc and info disabled when delFrame is en
 
     del_frame.style.cssText = Object.keys(del_frame_style).map(key => `${key}: ${del_frame_style[key]}`).join('; ');
     IfrElements.mainPopBox.appendChild(del_frame)
-    console.log(IfrElements.mainPopBox)
+    // console.log(IfrElements.mainPopBox)
 }
 function rightClickStyles () {
 

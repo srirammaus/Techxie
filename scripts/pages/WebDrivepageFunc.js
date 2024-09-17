@@ -2,7 +2,9 @@ import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
 
 import * as webdrive_1 from "/scripts/pages/WebDrive-1.js";
 import * as webdrive_2 from "/scripts/pages/WebDrive-2.js";
-import Elements from '/scripts/lib/Elements.js';
+
+
+import Elements from '/scripts/lib/Elements.lib.js';
 /**
  * 1.event listner[all in order]
  * 2.corresponding fuctions[all in order]
@@ -12,14 +14,15 @@ function GeneralEventListeners(){
 		Elements.search_dropdown.style.display = 'block'
 	})
 
-Elements.search_bar_input.addEventListener('focusout',()=>{
-	setTimeout(function(){
-        Elements.search_dropdown.style.display = "none"
-    },100)
-})
-Elements.homeIcon.addEventListener("click",function() {
-    Elements.toRedirectIfr(3)
-})
+    Elements.search_bar_input.addEventListener('focusout',()=>{
+        setTimeout(function(){
+            Elements.search_dropdown.style.display = "none"
+        },100)
+    })
+    Elements.homeIcon.addEventListener("click",function() {
+        Elements.toRedirectIfr(3)
+    })
+    
 
 }
 

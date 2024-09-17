@@ -11,11 +11,11 @@ function xsrf_verificationMiddleware(req,res,next) {
 
     try {
         let xsrf_verification =  new xsrf_verification_lib()
-        let properties = ["body"];
-        let requiredParams= ["xsrf_token","userID"]
+        let properties = ["cookies"];
+        let requiredParams= ["csrf_token","userID"]
         filter.Filter(req,res,next,properties,requiredParams).then(flag =>{
-            let userID = req.body.userID;
-            let xsrf_token = req.body.xsrf_token || req.body.csrf_token;
+            let userID = req.cookies.userID;
+            let xsrf_token = req.cookies.xsrf_token || req.cookies.csrf_token;
             if(flag == 1) {
                 var f_values = xsrf_verification.filter([userID,xsrf_token]);
                 xsrf_verification.setter([f_values[0],f_values[1]]);

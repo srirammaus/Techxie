@@ -26,17 +26,18 @@ var xsrf = require('../xsrf.api.js');
 var xsrf_verification = require('../xsrf_verification.api.js');
 var login = require('../login.api.js');
 var OAuth = require('../OAuth.api.js');
-var Auth = require('../Auth.api.js');
+var AuthApi = require('../Auth.api.js');
+var AuthPage = require('../Auth.page.js')
 var verifyMail = require('../verifyMail.api.js');
 var confirmMail = require('../confirmMail.api.js');
 var server_validater = require('../server.validater.api.js');
-var UserPageRoute = require('./UserPageRoute.api.js');
+var UserPageRoute = require('./PageRouters/UserPageRoute.api.js');
 var HandlePage = require ('../../lib/HandlePageUser.js');
 var pdfupload = require('../features/pdf.upload.api.js');
 var toolBtn = require('../features/toolBtn.api.js');
 var convert = require('../features/converter.api.js');
-var UserFolderRoute = require('./UserFolderRoute.api.js');
-var UserFileRoute =require('./UserFileRoute.api.js');
+var UserFolderRoute = require('./ApiRouters/UserFolderRoute.api.js');
+var UserFileRoute =require('./ApiRouters/UserFileRoute.api.js');
 var changePwd = require('../features/changePwd.api.js');
 var tools_lst = require('../features/tools.lst.api.js')
 const { rmSync } = require('fs');
@@ -51,8 +52,8 @@ router.use(express.static('D:/Techxie'));
 
 // router.use(Authentication);
 
-router.use('/page',Auth.AuthMiddleWare,UserPageRoute) 
-router.use('/folder',Auth.AuthMiddleWare,UserFolderRoute);//,Auth.AuthMiddleWare,UserFolderRoute)
+router.use('/page',AuthPage.AuthMiddleWare,UserPageRoute) 
+router.use('/folder',AuthApi.AuthMiddleWare,UserFolderRoute);//,AuthApi.AuthMiddleWare,UserFolderRoute)
 router.use('/file',UserFileRoute);  //here you cant because you having multer , you can also sepearte multipart data before it , but it get omplex , becaue i hvae already made oauth niside the multer
 
 router.post('/api/UserVerification',server_validater.validater,function(req,res){
@@ -76,7 +77,7 @@ router.post('/api/OAuth',OAuth.OAuth,function(req,res){ //OAuth.authorization (n
 }) // new session req: username, grant_code, request_type//refresh session
 
 
-router.post('/api/verify',Auth.AuthMiddleWare,xsrf.xsrf,function(req,res){ 
+router.post('/api/verify',AuthApi.AuthMiddleWare,xsrf.xsrf,function(req,res){ 
 
 })//generate csrf 
 
@@ -87,10 +88,10 @@ router.post('/api/pdfupload',pdfupload.pdf_upload,testMiddleware,function (req,r
   
  }) // it is used to upload the pdf file and store it in bucket
 
-router.post('/api/convert',Auth.AuthMiddleWare,xsrf_verification.xsrf_verificationMiddleware,convert.convert,(req,res)=>{
+router.post('/api/convert',AuthApi.AuthMiddleWare,xsrf_verification.xsrf_verificationMiddleware,convert.convert,(req,res)=>{
  
  })//convert the already uploaded image to pdf, with csrf and OAuth 
- router.post('/api/changePwd',Auth.AuthMiddleWare,xsrf_verification.xsrf_verificationMiddleware,changePwd.changePwdMiddleWare,function(req,res) {
+ router.post('/api/changePwd',AuthApi.AuthMiddleWare,xsrf_verification.xsrf_verificationMiddleware,changePwd.changePwdMiddleWare,function(req,res) {
     
  })//change passsword api  it has multiple ways , but right now we have old and new password option
 
@@ -99,7 +100,7 @@ router.post('/api/changeMail',function(req,res){ //Not created yet
 })
 //-------------------
 //No need 
-router.post ('/api/tools',Auth.AuthMiddleWare,toolBtn.toolBtn,function(req,res){//if there is already session it wont produce new, else it prduce new session
+router.post ('/api/tools',AuthApi.AuthMiddleWare,toolBtn.toolBtn,function(req,res){//if there is already session it wont produce new, else it prduce new session
  
 })//This will redirect the respected tool page
 //------------------------
@@ -109,7 +110,7 @@ function testMiddleware (req,res,next) {
 }
 
 // router.use(errHandler)
-// router.post('/api/AuthTest',Auth.AuthMiddleWare,function(req,res){//testing purpose
+// router.post('/api/AuthTest',AuthApi.AuthMiddleWare,function(req,res){//testing purpose
 //     res.send("The function should reach here")
 // })
  

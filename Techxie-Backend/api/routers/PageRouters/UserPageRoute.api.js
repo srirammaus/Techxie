@@ -1,11 +1,13 @@
 //pages
 
 const express = require('express');//try
-var ExceptionHandler = require('../../lib/ExceptionHandlers.js')
+var ExceptionHandler = require('../../../lib/ExceptionHandlers.js')
 var Handlebars = require("express-handlebars");
 var path = require('path');
 const { helpers } = require('handlebars');
-var homeMiddleware = require('./pageMiddlewares/home.Middleware.js');
+var homeMiddleware = require('../pageMiddlewares/home.Middleware.js');
+const { FORMERR } = require('dns');
+
 
 const router = express.Router();
 /**
@@ -77,16 +79,17 @@ router.get('/settings',function(req,res){
    res.render('webdrive',{layout:false})
 })
 //for now test it , later alter the homemiddleware, because it asking for username, userid ,everything .. once session management plan creted change it
- router.get('/home',homeMiddleware.homeMiddleware,function(req,res){ // In pages it should show internal server error as page and 404 not found page too
+ router.post('/home',homeMiddleware.homeMiddleware,function(req,res){ // In pages it should show internal server error as page and 404 not found page too
    let Folders = req.body.Folders;
    let Files = req.body.Files;
+ 
    res.render('home',{layout:false,Folders:Folders,Files:Files})
 })
-router.get('/Recents',function(req,res){
+router.post('/Recents',function(req,res){
    res.render('Recents',{layout:false})
 
 })
-router.get('/Trash',function(req,res){
+router.post('/Trash',function(req,res){
    res.render('Trash',{layout:false})
 
 })
@@ -97,7 +100,7 @@ router.get("/playground",function(req,res) {
 
 
 router.all('*',function(req,res,next){
-    next(new ExceptionHandler.PageError("Page Not found",404))
+   next(new ExceptionHandler.PageNotFound("Page Not found",404))
 })
 
 module.exports = router;

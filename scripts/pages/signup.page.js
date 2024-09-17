@@ -1,3 +1,8 @@
+/**
+ * Error should be in red alrert
+ * invalidusername invalid inputs, password mismatach,user exist,,something went wrong ,try again later - it the last one happen del the cookies currently we  have and make del a session delete request but not in await and dont wait for any resp
+ * 
+ */
 import apiConfig from "../utils/apiConfig.js";
 const signupURL = apiConfig.signupAPI;
 const verificationURL = apiConfig.userVerificationAPI;
@@ -13,8 +18,10 @@ const usernameInput = document.querySelector('#username');
 const verifyUsernameBtn = document.querySelector('.phase-1 button');
 const nextBtn = document.querySelector('.phase-2 button');
 const verifyOtpBtn = document.querySelector('.phase-3 button');
-const em = document.querySelector(".em");
-const redAlert = document.querySelector(".red-alert");
+const em = document.querySelector(".em"); //phase -3
+const em_p = em.querySelector(".em p")
+const UserRedAlert = phase1.querySelector(".red-alert");
+const FormRedAlert = phase2.querySelector(".red-alert");
 
 var currentPhase = phase1; //default
 
@@ -141,38 +148,65 @@ async function userVerification () {
      * disable current phase
      * make enter button enable 
      */
+    try {
+        let formData = new FormData(phase1.querySelector("form"));
 
+        for(let key of formData.keys()){
+            if(!formData.filter(key)){
+                //pop the please fill up the form
+                UserRedAlert.innerHTML = "*Please fill the requested field"
+                UserRedAlert.style.setProperty("display","block")
+                return false;
+            }
+        }
+        UserRedAlert.innerHTML = "*";
+        UserRedAlert.style.setProperty("display","none");
 
-    let formData = new FormData(phase1.querySelector("form"));
-
-    for(let key of formData.keys()){
-        if(!formData.filter(key)){
-            //pop the please fill up the form
-            redAlert.innerHTML = "*Please fill the requested field"
-            redAlert.style.setProperty("display","block")
+        let response = await fetch (verificationURL,{
+            method: 'POST',
+            body: new URLSearchParams(formData) ,
+        });
+        let result = await response.json();
+        // console.log(result)
+        if(result?.message?.USER_ID){
+            /**
+             * @param userID 
+             * @param username
+             * @param signup - 0 or 1
+             * log everything
+             * setting the current phase to display none
+             * change the current phase to signup form and display them as flex
+             */
+            setCurrentUser(result.message)
+            currentPhase.style.setProperty("display","none");
+            phase2.style.setProperty("display","flex");
+            currentPhase = phase2;
+               
+        }else if(result.status == 0) {
+            /**
+             * @param status - if the status said to be zero it should display the respected error it recived
+             * log everything 
+            */
+            UserRedAlert.innerHTML += result.message || "something went wrong,try again";
+            UserRedAlert.style.setProperty("display","block")
+            return false;     
+        }
+        else{
+            UserRedAlert.innerHTML += "Something went wrong,try again"
+            UserRedAlert.style.setProperty("display","block")
             return false;
         }
+              
+    } catch (error) {
+        //log
+        UserRedAlert.innerHTML += "Something went wrong,try again"
+        UserRedAlert.style.setProperty("display","block")
+        return false;
     }
-    redAlert.style.setProperty("display","none");
-    let response = await fetch (verificationURL,{
-        method: 'POST',
-        body: new URLSearchParams(formData) ,
-    });
-    var result = await response.json();
-    console.log(result)
-    if(result?.message?.USER_ID){
-        setCurrentUser(result.message)
-       currentPhase.style.setProperty("display","none");
-       phase2.style.setProperty("display","flex");
-       currentPhase = phase2;
 
-            //should be valid untilyl signup happens
-    }else{
-
-        console.log(result);
-    }
     
-    //possiblity
+    
+
 
 }  
 verifyUsernameBtn.addEventListener("click",function(e){
@@ -191,47 +225,64 @@ function signup () {
      * number limit
      * email check 
      */
-    let formData =  new FormData(phase2.querySelector("form"));
+    try {
+        let formData =  new FormData(phase2.querySelector("form"));
 
-    for(const pair of Array.from(formData.entries())){ //chaning the current to Array 
-        formData.changeKeyName(pair[0],pair[0].split('-')[1],pair[1])
-
-    }
-    formData.append("username",getCurrentUser().username);
-    formData.append("userID",getCurrentUser().USER_ID);
-    for(let key of formData.keys()){
-        console.log(key)
-        if(formData.filter(key) == false){
-            // console.log(formData.filter(key))
-            return false;
+        for(const pair of Array.from(formData.entries())){ //chaning the current to Array 
+            formData.changeKeyName(pair[0],pair[0].split('-')[1],pair[1])
         }
-    }
-    let DATA = new URLSearchParams(formData);
-
-    fetch(signupURL,{
-        //i think by default is  urlencoded !
-        method:"POST",
-        body:DATA,
-        // headers: defaultHeaders(),
-        // body:JSON.stringify(DATA),
-       
-    }).then(response=>{
-        return response.json()
-    }).then(commits =>{
-        console.log(commits)
-        if(commits?.message?.flag == 1) {
-            setCurrentUser(commits)
-            currentPhase.style.setProperty("display","none");
-            // phase3.style.setProperty("display","flex");
-            em.style.setProperty("display","flex")
-            currentPhase = em;
-            emailVerification();
+        formData.append("username",getCurrentUser().username);
+        formData.append("userID",getCurrentUser().USER_ID);
+        for(let key of formData.keys()){
+            console.log(key)
+            if(formData.filter(key) == false){
+                // console.log(formData.filter(key))
+                return false;
+            }
         }
-        else{
+        FormRedAlert.style.setProperty("display","none")
+        FormRedAlert.innerHTML = "*";
+        let DATA = new URLSearchParams(formData);
+        console.log(signupURL)
+
+      
+        fetch(signupURL,{
+            //i think by default is  urlencoded !
+            method:"POST",
+            body:DATA,
+            // headers: defaultHeaders(),
+            // body:JSON.stringify(DATA),
+           
+        }).then(response=>{
+            return response.json()
+        }).then(result =>{
+            console.log(result)
             
-        }
-        
-    })
+            if(result?.message?.flag == 1) {
+                setCurrentUser(result.message)
+                currentPhase.style.setProperty("display","none");
+                // phase3.style.setProperty("display","flex");
+                em.style.setProperty("display","flex")
+                currentPhase = em;
+                emailVerification();
+            }else if(result?.status == 0) {
+                FormRedAlert.innerHTML += result.message || "something went wrong,try again";
+                FormRedAlert.style.setProperty("display","block")
+                return false;     
+            }
+            else{
+                FormRedAlert.innerHTML += result.message || "something went wrong,try again";
+                FormRedAlert.style.setProperty("display","block")
+                return false;     
+            }
+            
+        })      
+    } catch (error) {
+        FormRedAlert.innerHTML += result.message || "something went wrong,try again";
+        FormRedAlert.style.setProperty("display","block")
+        return false;     
+    }
+
 
 }
 nextBtn.addEventListener("click",function(e){
@@ -247,30 +298,44 @@ nextBtn.addEventListener("click",function(e){
 
 // })
 function emailVerification () {
-    //email and phone
-    //smtp
-    //phone voip [plivo,twillio]
 
-    em.querySelector("a").innerHTML = getCurrentUser().email;
-    let email,username, userID;
-    let data = {
-        email : getCurrentUser().email,
-        userID :  getCurrentUser().userID,
-        username  : getCurrentUser().username,
+    /**
+     * email and phone
+     * phone voip [plivo,twillio]
+     * smtp
+     */
+    try{
+        em.querySelector("a").innerHTML = getCurrentUser().email;
+        let email,username, userID;
+        let data = {
+            email : getCurrentUser().email,
+            userID :  getCurrentUser().userID,
+            username  : getCurrentUser().username,
+        }
+        console.log(data)
+    
+        fetch(emailVerificationURL,{
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+            body: JSON.stringify(data)
+        }).then(resp =>{
+            return resp.json();
+        })
+        .then(data=>{
+            if(data.status == 0) {
+                em_p.innerHTML =  "something went wrong"
+            }
+        }).catch(err=>{
+            //response should be in UI
+            console.log(err?.message  )
+            em_a.innerHTML = "something went wrong"
+        })
+    }catch(error){
+       em_a.innerHTML = "something went wrong"
     }
-    console.log(data)
-
-    fetch(emailVerificationURL,{
-        method:"POST",
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-          },
-        body: JSON.stringify(data)
-    }).then(data=>{
-        console.log("Email sent successfully")
-    }).catch(err=>{
-        //response should be in UI
-    })
+   
 
 }
 function phoneVerification () {

@@ -1,3 +1,6 @@
+/**
+ * This media settings shoul decides which css loads to webdrive first
+ */
 const WindowLimit = parent.matchMedia("(min-width:800px)");
 
 function Match () {
@@ -16,11 +19,8 @@ function loadCss(path,class_) {
 
 		if(class_ == "first") {
 			document.querySelector("link[class=second]")?.remove();
-			console.log("This Should happen 1")
 		}else{
-
 			document.querySelector("link[class=first]")?.remove();
-			console.log("This Should happen 2")
 		}
 
 		var link =  document.createElement('link');

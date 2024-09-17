@@ -18,10 +18,35 @@ function ErrorMiddleware (err,req,res,next) {
     /***
      * Nowitself it is only sending error msg thrrough json , later send HTML accodingly
      */
+    console.log(err + "printed here")
     console.log(err)
     switch (true) {
-        case err instanceof ExceptionHandler.PageError:
-            res.sendFile("D:/Techxie/pages/Error.html");
+
+        case err instanceof ExceptionHandler.PageBadGateway: //badgateway
+           res.sendFile("D:/Techxie/pages/errPages/BadGateway.html");
+            break;
+        case err instanceof ExceptionHandler.PageBadRequest: //badgateway
+           res.sendFile("D:/Techxie/pages/errPages/BadGateway.html");
+            break;
+        case err instanceof ExceptionHandler.PageConflictError: //Server error
+           res.sendFile("D:/Techxie/pages/errPages/ServerErr.html");
+            break;
+        case err instanceof ExceptionHandler.PageForbidden: //malformed request  //bad gateway
+               res.sendFile("D:/Techxie/pages/errPages/BadGateway.html");
+            break;
+        case err instanceof ExceptionHandler.PageNotFound: //pagenotfound
+            console.log("I should caught")
+            res.sendFile("D:/Techxie/pages/errPages/NotFound.html");
+            console.log("I should caught 2")
+            break;
+        case err instanceof ExceptionHandler.PageServiceUnavailable: // serviceunable
+           res.sendFile("D:/Techxie/pages/errPages/ServiceUnavailable.html");
+            break;
+        case err instanceof ExceptionHandler.PageUnAuthorized: //service unavail
+           res.sendFile("D:/Techxie/pages/errPages/ServiceUnavailable.html");
+            break;
+        case err instanceof ExceptionHandler.PageError: //server erro
+            res.sendFile("D:/Techxie/pages/errPages/ServerErr.html");
             break;
         case err instanceof ReferenceError: //Internale server Error code
             //logs
@@ -29,6 +54,7 @@ function ErrorMiddleware (err,req,res,next) {
             break;
         case err instanceof TypeError: //Internale server Error code
             //logs
+            result.message = "something went wrong";
             send(res,500)
             break;
         case err instanceof SyntaxError: //Internale server Error code
@@ -39,7 +65,6 @@ function ErrorMiddleware (err,req,res,next) {
             //logs
             send(res,500)
             break;
- 
         case err instanceof ExceptionHandler.BadGateway:
             result.message = err?.message || "something went wrong";
             send(res,err.code);
@@ -49,7 +74,6 @@ function ErrorMiddleware (err,req,res,next) {
             send(res,err.code);
             break;
         case err instanceof ExceptionHandler.UnAuthorized:
-            console.log("I not" + err.code)
             result.message = err?.message || "something went wrong"
             send(res,err.code);
             break;
@@ -57,16 +81,16 @@ function ErrorMiddleware (err,req,res,next) {
             send(res,err.code)
             break;
         case err instanceof ExceptionHandler.ClientError:
-            console.log("I am")
             result.message = err?.message || "something went wrong";
             send(res,err.code);
             break;
         case err instanceof Error:
             //logs
-            console.log(err)
+            result.message ="something went wrong"
             send(res,500)
             break;
         default:
+            result.message = "something went wrong"
             send(res)
             break;
     }

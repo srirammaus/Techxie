@@ -27,7 +27,7 @@
                 <input name="new-cpassword" type="password" id="cpassword" placeholder="Confirm Password" autocomplete="off">
                 <input name="new-email" type="email" id="email" placeholder="Enter Email" autocomplete="off">
                 <input name="new-ph_number" type="tel" id="phone" placeholder="Enter Phone Number" autocomplete="off-number">
-                <a class="red-alert">*Please fill the requested field</a>
+                <a class="red-alert"></a>
                 <button>Next</button>
             </form>
         </div>
@@ -37,24 +37,17 @@
                 <input type="tel" id="otp" placeholder="Enter OTP">
                 <button>Verify OTP</button>
             </form>
-        </div>
-        <div class="phase-4 hidden">
-            <h2>Phase 4: Final Step</h2>
-            <p> Congratulations! You have completed the signup process.</p>
-            <button>Finish</button>
         </div> -->
         <div class="em">
           <p>Check you inbox and you will get verification mail <a href="#">abc123@gmail.com</a></p>
+          <div class="home-btn"><a href="/login">login</a></div>
           <!-- <div class="em-container"> -->
-
           <!-- </div> -->
         </div>
     </div>
 
-    <script src="/scripts/pages/signupSetting.js"></script>
-    <script src="/scripts/pages/userVerification.js">
-    </script>
-    <script type="module" src="/scripts/pages/signup.js"></script>
+    <script src="/scripts/lib/signupSetting.js"></script>
+    <script type="module" src="/scripts/pages/signup.page.js"></script>
 </body>
 </html>
 

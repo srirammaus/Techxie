@@ -1,6 +1,6 @@
 const express = require('express');//try
 const router = express.Router();
-const ExceptionHandler = require("../../lib/ExceptionHandlers.js")
+const ExceptionHandler = require("../../../lib/ExceptionHandlers.js")
 router.use(express.static('D:/Techxie'));
 /**
  * SSR
@@ -34,7 +34,7 @@ router.get('/login',function(err,res){
     res.sendFile("D:/Techxie/pages/login.html")
 })
 router.all('*',function(req,res,next){
-    next(new ExceptionHandler.PageError("Page Not found",404))
+    next(new ExceptionHandler.PageNotFound("Page Not found",404))
 })
 
 module.exports = router;

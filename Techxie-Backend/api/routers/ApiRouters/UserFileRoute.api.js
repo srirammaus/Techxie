@@ -1,8 +1,8 @@
 const express = require('express');
 
-var fetchFile = require('../features/fetchFile.api.js');
-var drive_upload =  require('../features/drive.upload.api.js');
-var Auth = require('../Auth.api.js');
+var fetchFile = require('../../features/fetchFile.api.js');
+var drive_upload =  require('../../features/drive.upload.api.js');
+var Auth = require('../../Auth.api.js');
 
 const router =  express.Router();
 router.use(express.static('D:/Techxie'));

@@ -54,9 +54,9 @@ var app =  express();
 /**
  * Routers
  */
-var UserRoute = require('./api/routers/UserRoute.api.js');
-var openAPI = require('./api/routers/openAPI.api.js');
-var PageRoute = require('./api/routers/PageRoute.api.js');
+var UserRoute = require('./api/routers/REST.api.js');
+var openAPI = require('./api/routers/ApiRouters/openAPI.api.js');
+var PageRoute = require('./api/routers/PageRouters/PageRoute.api.js');
 const { errorMonitor } = require('events');
 
 /**
@@ -84,14 +84,11 @@ app.use('/',PageRoute);
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/',function(req,res){ //Home
-   res.sendFile('D:/Techxie/pages/techxie.html') //static
-})
 
 app.use(ErrorMiddleware.ErrorMiddleware);
 
 app.all('*', function (req, res,next) { //useful // 404 
-   next(new ExceptionHandler.PageError("Not found",404))
+   next(new ExceptionHandler.PageNotFound("Page Not found",404))
   
 })
 /**
@@ -106,7 +103,7 @@ try {
       console.log("Running in http://%s : %s",ADDR , PORT);
    })
 }catch(err) {
-   console.log("I catch at REST.api.js")
+
    next(err);
    
 }

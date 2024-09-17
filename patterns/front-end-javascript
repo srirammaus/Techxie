@@ -14,3 +14,24 @@ requests:-
 Others:-
 	* socket javascript for php communications
 	* javascript requestes works form
+PROTOCOLS:-
+
+how to create:-
+	directory structure:-
+		pages - html 
+		script - javascript
+			scripts > errpagescripts - err page scripts, which are imported to err page htmls , which is somewhatS like pages , if any library function that should be lib and imported here
+					> lib -  library functions
+					> pages - media based function + run the actions + run the imported run functions			
+						> ifr - same like parent , but for ifr
+					> utils - utility function which can inported somewhere and use function somewhat like calc or interative with browser component 
+					> pdfviewer - for pdfviewer
+					> videoplayer - for videoplayer
+					> scrollkit - for scrollkit
+		assests - css
+
+
+
+
+		-----now start working front end functionak javascripts , there wil some places you may also work with css
+and after this continue css

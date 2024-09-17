@@ -21,14 +21,14 @@ function xsrf(req,res,next){
 	try {
 		//later remove the tool parameter , we will initiate this csrf at login, right for testing we are using tool
 		let userID,sessionID,session_token,tool;
-		let properties = ["body"];
+		let properties = ["cookies"];
 		let requiredParams = ["userID","sessionID","session_token"];
 
 		filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
-			userID = req.body.userID;
-			sessionID = req.body.sessionID;
-			session_token =	req.body.session_token;
-			tool = req.body.tool;
+			userID = req.cookies.userID;
+			sessionID = req.cookies.sessionID;
+			session_token =	req.cookies.session_token;
+			tool = req.cookies.tool;
 
 			var xsrf = new xsrf_lib(tool);//  vars
 			var filter = xsrf.filter([userID]);
@@ -93,7 +93,7 @@ function xsrf(req,res,next){
 
 // function xsrf(req,res,next){
 // 	var results;
-// 	var userID = req.body.userID; // vars
+// 	var userID = req.cookies.userID; // vars
 // 	var xsrf = new xsrf_lib();//  vars
 // 	if(userID == "undefined" || userID == null){
 // 		results = { status:0,Error:"invalid input"}

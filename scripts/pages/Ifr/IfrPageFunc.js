@@ -1,5 +1,11 @@
-import IfrElements from '/scripts/lib/IfrElements.js';
+/**
+ * This function should be applied to home ,recnets,trash
+ */
+import IfrElements from '/scripts/lib/IfrElements.lib.js';
+
 import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
+import pageURLs from '/scripts/utils/pageURLs.js';
+import * as Weblib from "/scripts/lib/webdrive.lib.js";
 
 // Add this file to every iframe pages
 
@@ -8,6 +14,7 @@ function initializeGlobalEventListeners () {
         more_();  
         handleAccountSettingsInteractions();
         hideAllSectionsExceptFirst();
+        homeElementListener();
     });
     IfrElements.DoneBtn.forEach(function(e,i) {
         e.addEventListener('click',function (){
@@ -127,7 +134,49 @@ function more_ () {
         }
     })
 }
+/**
+ * The next page function is used to go next page whereas the last page is used to go back to last pages
+ * cache compulsory
+ * right cache planning is not decided yet - september 14
+ */
+function homeElementListener () {
+   
+    IfrElements.FolderBtn.forEach((elem)=>{
+        elem.addEventListener("click",function(e){
+            nextPage(elem)
+        })
+    })
+    IfrElements.FileBtn.forEach((elem)=>{
+        elem.addEventListener("click",function(){
+            console.log( "clicked"+splitID(elem.id))
+        })
+    })
+}
+function nextPage (elem) {
+    //srcdoc might impact performance
+    // let sessionSotrage = new sessionStorage();
+    let F_num;
+    F_num = splitID(elem.id);
 
+    Weblib.fetchPage(IfrElements.getParentIfr(),F_num).then(()=>{
+            console.log("Code not reach here")
+    })
+
+}
+function splitID(id) {
+    id =  id.split("-");
+    // if(id.length == 3) {
+    //     //file
+    //     return id[1] // anyway we need 
+    // }else {
+        //folder id
+    return id[1];
+    // }
+    
+}
+function lastPage () {
+
+}
 try {
     initializeGlobalEventListeners();
 	
