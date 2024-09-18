@@ -17,7 +17,9 @@ router.get('/',function(req,res){
     res.sendFile("D:/Techxie/pages/techxie.html")
 })
  
-
+router.get('/home',function(req,res,next){
+    res.sendFile("D:/Techxie/pages/home.html")
+})
 router.get('/newuser',function(req,res,next) {
     /**
      * Userverificion api

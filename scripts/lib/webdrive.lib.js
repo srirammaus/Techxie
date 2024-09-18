@@ -7,7 +7,7 @@ function cachePage (F_num) {
 function cacheMedia (f_num) {
 
 }
-function fetchPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0") { // folder 
+function fetchPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0",temp =0) { // folder 
     /**
      * @param F_num=0 means deault is Home
      * check if it is in cache
@@ -18,9 +18,10 @@ function fetchPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0") { // folder
         F_num: F_num,
         F_id: F_id,
         f_id:f_id,
+        
     }
-    
     return new Promise((resolve,reject) =>{ 
+        console.log(this.temp)
         fetch(pageURls.home,{
             method:"POST",
             body : JSON.stringify(body),
@@ -32,13 +33,16 @@ function fetchPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0") { // folder
             return resp.text()
         }).then(html=>{
             //'data:text/html;charset=utf-8,' + encodeURI(html);
-            ifr.srcdoc = html;
-            //
-            resolve(ifr)
-        })
 
+            ifr.srcdoc = html;
+
+            ifr.addEventListener("load",function(){              
+                resolve(ifr)
+
+            })
+                
         })
-      
+    })
 
 
 }

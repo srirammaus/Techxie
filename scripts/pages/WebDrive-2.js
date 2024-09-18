@@ -43,6 +43,7 @@ export class WebDrive {
 				console.log("i happend web 2 resize ")
 				this.header();
 				this.main_();
+				
 				WebDrive.iframe_()
 			}
 		})

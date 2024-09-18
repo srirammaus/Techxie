@@ -21,10 +21,10 @@ export default class Elements {
 	static Account_settings= document.querySelector('.nav-item[attr=Account-settings]')
     static folder_wrapper = document.querySelector('.Folder-wrapper > div > a');
 	static homeIcon = document.getElementById("home-icon");
-	
+	static count = 0
 
 	constructor() {
-		let gifr;
+		let gifr
 		this.gifr = gifr;
 	}
 	/**
@@ -33,16 +33,15 @@ export default class Elements {
 	 * How to to use this iframe_
 	 * Elements.iframe_(ifr).then()...
 	 */
-
-	static iframe_(ifr = null) {
+	//cb,settimeout,load listner after fetchpage resolved
+	static iframe_() {
 		return new Promise((resolve,reject) => {
 
 			//this should be under window.onload or iframe.onload
 			// var iframe_small_frame_items = iframeDocument.querySelector('.small-frame-items'); //For trash and Recents
 			// var iframe_settings = iframeDocument.querySelector('.settings');
 			
-			console.log(ifr)
-			var iframe = ifr == null? document.getElementById("iframe-doc") : ifr ;
+			var iframe = document.getElementById("iframe-doc")  ;
 			var iframeDocument = iframe.contentWindow.document;
 			
 			this.iframe = iframe;
@@ -53,28 +52,23 @@ export default class Elements {
 			function default_() {
 
 				this.iframe.addEventListener('load',()=>{
-					this.iframe_(ifr);
+					this.iframe_().then(resolve).catch(reject)
 				})
-				console.log("failed 1")
 
 			}
 			default_ = default_.bind(this)
 			if(this.isValidIfr()){
 
 				if(this.iframeDocument.readyState == 'complete'){
-					// console.log(this.isIframeNotEmpty() + "This");
 					if(this.isIframeNotEmpty() == true ){	//&& iframeDocument.location.href == iframe.src because we ae using
 						this.setCurrentIfr(this.iframe);		
-						console.log("failed 2")
-						resolve([true,this.iframe,this.iframeDocument])
-			
-						
+						// this.iframe.removeEventListener("load",function(){ });	
+						resolve([true,this.iframe,this.iframeDocument]);
+
 
 					}else{
-						console.log("failed 4")
 						default_()
-				
-
+			
 					}
 				}else {
 			
@@ -93,7 +87,6 @@ export default class Elements {
 
 			}else{
 
-				console.log("failed 3")
 				default_()
 			
 			}
@@ -116,7 +109,6 @@ export default class Elements {
 		return true;
 	}
 	static isIframeNotEmpty() {
-		console.log(this.iframeDocument.body)
 		if(this.iframeDocument.body.children.length === 0 ){
 			return false;
 		}			

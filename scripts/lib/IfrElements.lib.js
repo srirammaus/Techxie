@@ -70,7 +70,7 @@ export default class IfrElements {
 			function default_() {
 
 				this.iframe.addEventListener('load',()=>{
-					this.iframe_();
+					this.iframe_().then(resolve).catch(reject)
 				})
 				console.log("failed 1")
 

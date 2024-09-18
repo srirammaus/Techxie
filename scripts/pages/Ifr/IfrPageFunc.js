@@ -4,8 +4,8 @@
 import IfrElements from '/scripts/lib/IfrElements.lib.js';
 
 import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
-import pageURLs from '/scripts/utils/pageURLs.js';
 import * as Weblib from "/scripts/lib/webdrive.lib.js";
+import pageURls from '/scripts/utils/pageURLs.js';
 
 // Add this file to every iframe pages
 
@@ -15,6 +15,7 @@ function initializeGlobalEventListeners () {
         handleAccountSettingsInteractions();
         hideAllSectionsExceptFirst();
         homeElementListener();
+        
     });
     IfrElements.DoneBtn.forEach(function(e,i) {
         e.addEventListener('click',function (){
@@ -158,11 +159,34 @@ function nextPage (elem) {
     let F_num;
     F_num = splitID(elem.id);
 
-    Weblib.fetchPage(IfrElements.getParentIfr(),F_num).then(()=>{
-            console.log("Code not reach here")
+    let body ={
+        F_num: F_num,
+        
+    }
+    return new Promise((resolve,reject) =>{ 
+        fetch(pageURls.home,{
+            method:"POST",
+            body : JSON.stringify(body),
+            headers:
+            {
+                "Content-Type": "application/json;charset=utf-8",
+            }
+        }).then( resp=> {
+            return resp.text()
+        }).then(html=>{
+            //'data:text/html;charset=utf-8,' + encodeURI(html);
+            console.log(html)
+            let parser = new DOMParser();
+            let newDoc = parser.parseFromString(html.toString(),'text/html');
+            //get the main content
+            document.body = newDoc.body;
+
+                
+        })
     })
 
 }
+
 function splitID(id) {
     id =  id.split("-");
     // if(id.length == 3) {
@@ -179,6 +203,7 @@ function lastPage () {
 }
 try {
     initializeGlobalEventListeners();
+  
 	
 }catch (e){
 	console.log(e)

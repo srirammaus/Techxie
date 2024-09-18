@@ -53,10 +53,11 @@ export class WebDrive {
 			this.header();
 			this.mainFunc();
 			Weblib.fetchPage(Elements.iframe_element,0).then((ifr) => {
-			
-					WebDrive.iframe_();				
+					WebDrive.iframe_();
 				
 			})
+		
+		
 			
 		})
 
@@ -127,16 +128,12 @@ export class WebDrive {
 	 * The lib function must be promise or async await
 	 * This  function sets with and height for the iframe , first this verified whether iframe is alive or not
 	 */
-	static iframe_() {
+	static  iframe_(elem) {
 
 		Elements.iframe_ ().then(function(elem) {	
-	
 			if(elem[0] == true) {
 				elem[1].style.setProperty('height',(80/100 * window.screen.height) +'px');
 				elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
-			}else {
-
-				console.log("Reached here")
 			}
 		})
 	}
