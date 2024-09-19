@@ -4,7 +4,7 @@
  * This is should maintain the page elements Interaction
  */
 import IfrElements from '/scripts/lib/Ifrlib/IfrElements.lib.js';
-
+import * as IfrPageFuncLib from '/scripts/lib/Ifrlib/IfrPageFunc.lib.js';
 import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
 import * as Weblib from "/scripts/lib/webdrive.lib.js";
 import pageURls from '/scripts/utils/pageURLs.js';
@@ -13,13 +13,17 @@ import pageURls from '/scripts/utils/pageURLs.js';
 
 function initializeGlobalEventListeners () {
     window.addEventListener("load",function(){
-        more_();  
-        homeElementListener(); 
+        
+        more_();  //This function call should only in window.onload because it works on document.onclick(..) ,so here
+        homeElementListener();  //This can be any anywhere because of btn
     });
     IfrElements.DoneBtn.forEach(function(e,i) {
         e.addEventListener('click',function (){
             IfrElements.toRedirect(0)
         })
+    })
+    IfrElements.getParent().addEventListener("resize",function(){
+
     })
     
 }
@@ -29,7 +33,9 @@ function more_ () {
     var check = null;
     var ElementBtn;
     var Element;
-    document.addEventListener("click",(e)=>{
+    // document.removeEventListener("click",handler,true)
+    document.addEventListener("click",handler,true);
+    function handler (e) {
         if(IfrElements.moreBtn.length > 0 ){
             if(e.target.className == IfrElements.moreBtn[1].className  ){
                 ElementBtn = e.target;
@@ -53,7 +59,8 @@ function more_ () {
                 })
             }
         }
-    })
+    }
+
 }
 
 /**
@@ -62,13 +69,14 @@ function more_ () {
  * right cache planning is not decided yet - september 14
  */
 function homeElementListener () {
-   
-    IfrElements.FolderBtn.forEach((elem)=>{
+   console.log("I ran")
+    IfrElements.FolderBtn().forEach((elem)=>{
+        console.log("i ran folder")
         elem.addEventListener("click",function(e){
             nextPage(elem)
         })
     })
-    IfrElements.FileBtn.forEach((elem)=>{
+    IfrElements.FileBtn().forEach((elem)=>{
         elem.addEventListener("click",function(){
             console.log( "clicked"+splitID(elem.id))
         })
@@ -78,41 +86,25 @@ function nextPage (elem) {
     //srcdoc might impact performance
     // let sessionSotrage = new sessionStorage();
     let F_num;
-    F_num = splitID(elem.id);
+    F_num = IfrPageFuncLib.splitID(elem.id);
 
     let body ={
         F_num: F_num,
         
     }
-    return new Promise((resolve,reject) =>{ 
-        fetch(pageURls.home,{
-            method:"POST",
-            body : JSON.stringify(body),
-            headers:
-            {
-                "Content-Type": "application/json;charset=utf-8",
-            }
-        }).then( resp=> {
-            return resp.text()
-        }).then(html=>{
-            //'data:text/html;charset=utf-8,' + encodeURI(html);
-            console.log(html)
-            let parser = new DOMParser();
-            let newDoc = parser.parseFromString(html.toString(),'text/html');
-            //get the main content
-            document.body = newDoc.body;
+    IfrPageFuncLib.fetchPage(pageURls.home,body).then((newDoc)=>{
 
-                
-        })
+        document.body = newDoc.body;
+        IfrPageFuncLib.ifrProcessDimension();
+        let FolderBtn = document.querySelectorAll(".small-Folder");
+        homeElementListener();
+            
+    
     })
 
+
 }
 
-function splitID(id) {
-    id =  id.split("-");
-    return id[1];
-    
-}
 function lastPage () {
 
 }

@@ -18,6 +18,7 @@ pdfconverter.js line 67
 * if username containing space the usernma is not trimmmed in userverification
 * if i uncomment req.body.folder in userpageroute /home then it will throw error as reference error ,so it sends {status:0msg...} but it was a page request i dont sne dlike that 
 * when uncaught exception caught for page requet ,it resposnd like api err message
+ *This bug has been solved , but have to know why uncaught expection cant caught it , in the home middleware .js put the if(req.folder.length ...){} in the setHomedata functions's last you get error in front end and backend caut caough
  ---
  hack:-
     if the next is in the 

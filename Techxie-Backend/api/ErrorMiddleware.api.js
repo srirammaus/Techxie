@@ -18,10 +18,11 @@ function ErrorMiddleware (err,req,res,next) {
     /***
      * Nowitself it is only sending error msg thrrough json , later send HTML accodingly
      */
-    console.log(err + "printed here")
-    console.log(err)
-    switch (true) {
 
+    switch (true) {
+        case err instanceof ExceptionHandler.PageEmptyFolder:
+            res.sendFile("D:/Techxie/pages/errPages/EmptyFolder.html")
+            break;
         case err instanceof ExceptionHandler.PageBadGateway: //badgateway
            res.sendFile("D:/Techxie/pages/errPages/BadGateway.html");
             break;
@@ -46,6 +47,8 @@ function ErrorMiddleware (err,req,res,next) {
            res.sendFile("D:/Techxie/pages/errPages/ServiceUnavailable.html");
             break;
         case err instanceof ExceptionHandler.PageError: //server erro
+            console.log(err + "printed here")
+    
             res.sendFile("D:/Techxie/pages/errPages/ServerErr.html");
             break;
         case err instanceof ReferenceError: //Internale server Error code

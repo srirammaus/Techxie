@@ -1,5 +1,6 @@
 /**
  * This is only for Ifr Home, trash , sttings, recents
+ * Note: dynamic btn should be in function , not in static variable because it wonrt update
  */
 //DOM raising voilation we are not putting the  new passwor din the form fiel , "auto-complete attr have some feture new-password, current-password, cc ,csc"
 import apiConfig from "/scripts/utils/apiConfig.js";
@@ -14,13 +15,19 @@ export default class IfrElements {
     static sections = document.querySelectorAll(".settings > section[class $='-section']");
     static DoneBtn = document.querySelectorAll(".Done-btn")
     static mainPopBox = document.getElementById("mainPopBox");
-    static FolderBtn = document.querySelectorAll(".small-Folder");
-    static FileBtn = document.querySelectorAll(".small-File");
 
     static getClickedSection (attr) {
         let elem = document.querySelector(`.settings > section[class=${attr}` );
         return elem;
     }
+	static FolderBtn() {
+		let FolderBtn = document.querySelectorAll(".small-Folder");
+		return FolderBtn;
+	}
+	static FileBtn() {
+		let FileBtn = document.querySelectorAll(".small-File");
+		return FileBtn;
+	}
     static getStyles(elem) {
         return window.getComputedStyle(elem);
     }
@@ -75,21 +82,17 @@ export default class IfrElements {
 				this.iframe.addEventListener('load',()=>{
 					this.iframe_().then(resolve).catch(reject)
 				})
-				console.log("failed 1")
 
 			}
 			default_ = default_.bind(this)
 			if(this.isValidIfr()){
 
 				if(this.iframeDocument.readyState == 'complete'){
-					console.log(this.isIframeNotEmpty() + "This");
 					if(this.isIframeNotEmpty() == true ){	//&& iframeDocument.location.href == iframe.src because we ae using
 						this.setCurrentIfr(this.iframe);		
-						console.log("failed 2")
 						resolve([true,this.iframe,this.iframeDocument])
 
 					}else{
-						console.log("failed 4")
 						default_()
 				
 
@@ -110,8 +113,6 @@ export default class IfrElements {
 				}
 
 			}else{
-
-				console.log("failed 3")
 				default_()
 			
 			}

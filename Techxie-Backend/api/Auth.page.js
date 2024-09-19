@@ -36,10 +36,12 @@ function AuthMiddleWare (req,res,next) {
             })
         }
     }else {
-        next(new ExceptionHandler.PageError("something went wrong",500))}
+        next(new ExceptionHandler.PageError("something went wrong",500))
+     }
     }).catch(err=>{
         //swtich the error accordingy
-        next(utils.convertErrors(err))
+        // next(utils.convertErrors(err))
+        res.redirect("/login")
     })
     
     

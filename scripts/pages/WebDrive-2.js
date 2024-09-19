@@ -53,8 +53,8 @@ export class WebDrive {
 	}
 	OnLoad () {
 		window.addEventListener('load',()=>{
-			this.homePage()
-			Weblib.fetchPage(Elements.iframe_element,0).then((flag) => {
+	
+			Weblib.fetchPage(Elements.iframe_element,0).then((ifr) => {
 				WebDrive.iframe_();
 				
 			})
@@ -116,11 +116,7 @@ export class WebDrive {
 	 * The lib function must be promise or async await
 	 * This  function sets with and height for the iframe , first this verified whether iframe is alive or not
 	 */
-	homePage () { // default
-		//we can also use srcdoc but it is not gauranteed , because browser compactibility
-		driveFunc.fetchPage(Elements.iframe_element,0);
-	
-	}
+
 	static iframe_() {
 		
 		Elements.iframe_ ().then(function(elem) {	

@@ -1,9 +1,9 @@
 /**
- * This media settings shoul decides which css loads to webdrive first
+ * This media settings shoul decides which css loads to webdrive's iframe first
  * Note: here i checking parent media 
  */
 
-const WindowLimit = parent.matchMedia("(min-width:800px)");
+const WindowLimit = window.parent.matchMedia("(min-width:800px)"); //or just parent
 
 function Match () {
 

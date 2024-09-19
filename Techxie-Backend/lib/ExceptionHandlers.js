@@ -109,7 +109,20 @@ class PageError extends Error  { // 500
 		this.code = code;
 	}
 }
-
+class PageNoResultFound extends PageError {
+	constructor(message) {
+		super(message);
+		this.name = "No results Found"; 
+		this.code = 200 ;
+	}
+}
+class PageEmptyFolder extends PageError {
+	constructor(message) {
+		super(message);
+		this.name = "Emtpy Folder"; 
+		this.code = 200 ;
+	}
+}
 class PageServiceUnavailable extends PageError {
 	constructor(message) {
 		super(message);
@@ -189,7 +202,8 @@ module.exports = {
 	PageNotFound,
 	PageServiceUnavailable,
 	PageUnAuthorized,
-
+	PageEmptyFolder,
+	PageNoResultFound,
 	
 
 }

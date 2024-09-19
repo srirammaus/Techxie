@@ -38,9 +38,13 @@ function homeMiddleware(req,res,next)  {
                                 console.log(res)
                                 let RawData = res;
                                 setHomeData(req,RawData,next);
-
+                                if(req.body.Folders.length == 0 && req.body.Files == 0) {
+                                    next(new ExceptionHandler.PageEmptyFolder("Database Misbehaved"))
+                                }else{
+                                    next();
+                                    
+                                }
                                 // res.set("Content-Type", "text/html");
-                                next();
                             }
                             // var filteredresult = folder.viewFolderFilter(res)
                             // console.log("After: ")
@@ -106,12 +110,9 @@ function setHomeData (req,RawData,next) {
                 break;
         }
     }
-    if(Folders.length == 0 && Files == 0) {
-        next(new ExceptionHandler.PageError("Database Misbehaved"))
-    }
     req.body.Folders = Folders;
     req.body.Files = Files;
- 
+    
 
 }
 module.exports = {homeMiddleware}
