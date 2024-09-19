@@ -1,3 +1,6 @@
+/**
+ * Specfically for webdrive page responsiveness and this is for less than 800
+ */
 import Elements from '/scripts/lib/Elements.lib.js';
 import * as driveFunc from "/scripts/lib/webdrive.lib.js";
 import * as Weblib from "/scripts/lib/webdrive.lib.js";

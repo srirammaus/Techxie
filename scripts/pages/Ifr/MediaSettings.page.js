@@ -1,6 +1,8 @@
 /**
  * This media settings shoul decides which css loads to webdrive first
+ * Note: here i checking parent media 
  */
+
 const WindowLimit = parent.matchMedia("(min-width:800px)");
 
 function Match () {

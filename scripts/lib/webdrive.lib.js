@@ -1,4 +1,6 @@
-
+/**
+ * This applicable for  webdrive only
+ */
 import pageURls from '/scripts/utils/pageURLs.js';
 
 function cachePage (F_num) {

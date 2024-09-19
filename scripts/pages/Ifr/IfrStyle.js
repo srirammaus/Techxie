@@ -1,4 +1,7 @@
-import IfrElements from '/scripts/lib/IfrElements.lib.js';
+/**
+ * Dynamic page styles for Rececnts, home, trash - Ifr
+ */
+import IfrElements from '/scripts/lib/Ifrlib/IfrElements.lib.js';
 
 //main-pop-box include del , right click ,info box
 function mainPopBox () {

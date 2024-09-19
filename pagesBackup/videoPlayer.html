@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Video</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" /> -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css"/>
+  <link rel="stylesheet" type="text/css" href="/assets/VideoPlayer/videoplayer.css">
+</head>
+<body>
+
+<div class="video-container">
+  <!-- video -->
+  <div id="video">
+    <!-- width="640" height="360" -->
+    <video  id="my-video" src="/assets/VideoPlayer/video3.mp4" ></video>
+  </div>
+  <img id=loader src="/assets/VideoPlayer/loader.gif" />
+  <!-- video controls -->
+  <div id="video-controls">
+    <button id="play-pause-btn"><i class="mdi mdi-play"></i><i class="mdi mdi-pause"></i></button>
+    <input type="range" id="seek-bar" value="0">
+    <button id="speed-btn"><span><i class="mdi mdi-fast-forward"></i></span>
+</button>
+    <button id="mute-btn"><span><i class="mdi mdi-volume-high"></i></span></button>
+    <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1">
+    <button type="button" id="full-screen-btn" class="off"><span><i class="mdi mdi-fullscreen"></i></span></button>
+  </div>
+</div>
+<!-- temp -->
+<script type="text/javascript">
+  document.querySelector('.video-container').style.width = window.innerWidth + "px"
+</script>
+<script type="text/javascript"src="/scripts/videoPlayer/videoplayer.js"></script>
+<script type="text/javascript" src="/scripts/videoPlayer/UI/uifunc.js"></script>
+</body>
+</html>

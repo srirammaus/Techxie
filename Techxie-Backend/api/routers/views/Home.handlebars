@@ -36,9 +36,9 @@
 			{{#each Files}}
 				<div class="small-File" id={{this.f_id}}>
 					{{#if this.f_thumbnail_dir }}
-					<div attr=small-File-icon><img src= {{this.f_thumbnail_dir}}></div>
+					<div attr="small-File-icon"><img src= {{this.f_thumbnail_dir}}></div>
 					{{else}}
-					<div attr=small-File-icon><img src= "/assets/svg/{{this.type}}.svg"></div>
+					<div attr="small-File-icon"><img src= "/assets/svg/{{this.type}}.svg"></div>
 					{{/if}}
 					<div attr="small-File-name"><a>{{this.f_name}}</a><a attr="description" >{{this.description}}</a></div>
 					<div attr="small-File-more" data="more-box"><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant"></i><a>info</a></div></div></div>

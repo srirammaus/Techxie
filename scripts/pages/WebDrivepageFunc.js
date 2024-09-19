@@ -1,5 +1,7 @@
+/**
+ * This applicable for webdrive only to maintain the interation between the UI and their function , the function's respected algorithm should be written in webdrive.lib
+ */
 import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
-
 import * as webdrive_1 from "/scripts/pages/WebDrive-1.js";
 import * as webdrive_2 from "/scripts/pages/WebDrive-2.js";
 

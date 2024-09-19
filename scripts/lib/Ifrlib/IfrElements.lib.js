@@ -1,3 +1,6 @@
+/**
+ * This is only for Ifr Home, trash , sttings, recents
+ */
 //DOM raising voilation we are not putting the  new passwor din the form fiel , "auto-complete attr have some feture new-password, current-password, cc ,csc"
 import apiConfig from "/scripts/utils/apiConfig.js";
 export default class IfrElements {

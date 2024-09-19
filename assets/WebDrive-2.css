@@ -11,6 +11,7 @@ body {
     display: block;
     margin: 0;
     padding: 0;
+    background-color: yellow;
  
 }
 @supports selector(::-webkit-scrollbar) {
@@ -633,6 +634,7 @@ input[attr= 'search-bar-input'] {
     width:100%; 
     background:none;
 }
+/* I think this saves */
 @media screen and (max-width: 420px) { 
     * {
         font-size: 3vw;

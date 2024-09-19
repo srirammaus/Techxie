@@ -1,4 +1,6 @@
-
+/**
+ * Specfically for webdrive page responsiveness and this is for more than 800
+ */
 import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
 import Elements from '/scripts/lib/Elements.lib.js';
 import * as Weblib from "/scripts/lib/webdrive.lib.js";
@@ -6,8 +8,9 @@ import * as Weblib from "/scripts/lib/webdrive.lib.js";
  * my category
  * onload
  * onDOMcontentloaded
- * resize*/
-// export 
+ * resize
+ * */
+
 
 export class WebDrive {
 	constructor (){
@@ -28,7 +31,7 @@ export class WebDrive {
 		this.search_bar_input = Elements.search_bar_input;
 		this.search_dropdown = Elements.search_dropdown;
 		
-
+		console.log("Window height : " + window.innerHeight)
 		//Run
 		this.header();
 		this.mainFunc();

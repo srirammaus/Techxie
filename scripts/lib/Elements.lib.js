@@ -1,3 +1,6 @@
+/**
+ * This apllicable only for drive only not for iframes
+ */
 import apiConfig from "/scripts/utils/apiConfig.js";
 export default class Elements {
 	static FILE = ["settings","Trash","Recents","home"];
