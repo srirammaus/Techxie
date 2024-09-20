@@ -18,9 +18,10 @@ function ErrorMiddleware (err,req,res,next) {
     /***
      * Nowitself it is only sending error msg thrrough json , later send HTML accodingly
      */
-
     switch (true) {
         case err instanceof ExceptionHandler.PageEmptyFolder:
+            console.log(err)
+            res.statusCode = 200;
             res.sendFile("D:/Techxie/pages/errPages/EmptyFolder.html")
             break;
         case err instanceof ExceptionHandler.PageBadGateway: //badgateway
@@ -117,6 +118,8 @@ function caughtAnyExceptions(req,res,next){
         next(err)
     } )
     next()
+
+    //The biggest problem is next() above this line, becuase if u remove this next() it doesn't let to next function in your code and sometimes make a error loop which you seens as next()../ next()../ 
 }
 module.exports = {ErrorMiddleware,caughtAnyExceptions}
 

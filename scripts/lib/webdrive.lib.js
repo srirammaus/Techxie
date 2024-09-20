@@ -9,7 +9,7 @@ function cachePage (F_num) {
 function cacheMedia (f_num) {
 
 }
-function fetchPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0",temp =0) { // folder 
+function fetchIfrPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0",temp =0) { // folder 
     /**
      * @param F_num=0 means deault is Home
      * check if it is in cache
@@ -23,7 +23,6 @@ function fetchPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0",temp =0) { /
         
     }
     return new Promise((resolve,reject) =>{ 
-        console.log(this.temp)
         fetch(pageURls.home,{
             method:"POST",
             body : JSON.stringify(body),
@@ -33,8 +32,8 @@ function fetchPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0",temp =0) { /
             }
         }).then( resp=> {
             return resp.text()
-        }).then(html=>{
-            //'data:text/html;charset=utf-8,' + encodeURI(html);
+        }).then(html=>{ //this is text but we consider as html
+            //'data:text/html;charset=utf-8,'  + encodeURI(html);
 
             ifr.srcdoc = html;
 
@@ -43,10 +42,31 @@ function fetchPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0",temp =0) { /
 
             })
                 
+        }).catch(err=>{
+            reject(err)
         })
     })
 
 
+}
+function fetchPage(URL,body,method = "GET") {
+    return new Promise((resolve,reject)=>{
+        fetch(URL,{
+            method:method,
+            body : JSON.stringify(body),
+            headers:
+            {
+                "Content-Type": "application/json;charset=utf-8",
+            }
+
+        }).then(resp =>{
+            return resp.text();
+        }).then(text =>{//this is text but we consider as html
+            resolve(text)
+        }).catch(err=>{
+            console.error(err.message)
+        })
+    })
 }
 function fetchFile () {
     //get the media file
@@ -67,7 +87,7 @@ function editFile () {
 
 }
 
-export {fetchPage}
+export {fetchPage,fetchIfrPage}
 
 
  

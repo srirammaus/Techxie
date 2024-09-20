@@ -4,7 +4,7 @@
 import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
 import * as webdrive_1 from "/scripts/pages/WebDrive-1.js";
 import * as webdrive_2 from "/scripts/pages/WebDrive-2.js";
-
+import pageURLs from "/scripts/utils/pageURLs.js";
 
 import Elements from '/scripts/lib/Elements.lib.js';
 /**
@@ -44,18 +44,38 @@ function sideNav () {
     let nav_items_children = Elements.nav_items.children;
     for(let i in nav_items_children) {
         item  = nav_items_children[i];
-        console.log(i)
+        console.log(item)
         item.addEventListener('click',function(){
             // i = i === 3? 3-1:i; 
-            
+            console.log("clicked")
             Elements.toRedirectIfr(i ==3?0:i);  
             Elements.iframe_element.onload = () =>{
-               loadFrame();
+            loadFrame();
             //    FrameListeners();
             }
         })
         if(i==3) break;
         
+    }
+
+}
+function loadFrameContent (elemId) {
+    switch (elemId) {
+        case "Trash":
+            
+            break;
+        case "settings":
+            
+            break;
+        case "Recents":
+            
+            break;
+        case "home":
+            
+            break;
+
+        default:
+            break;
     }
 
 }

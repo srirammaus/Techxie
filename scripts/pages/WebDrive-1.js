@@ -1,7 +1,7 @@
 /**
  * Specfically for webdrive page responsiveness and this is for more than 800
  */
-import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
+
 import Elements from '/scripts/lib/Elements.lib.js';
 import * as Weblib from "/scripts/lib/webdrive.lib.js";
 /**
@@ -55,7 +55,7 @@ export class WebDrive {
 		window.addEventListener('load',()=>{ 
 			this.header();
 			this.mainFunc();
-			Weblib.fetchPage(Elements.iframe_element,0).then((ifr) => {
+			Weblib.fetchIfrPage(Elements.iframe_element,0).then((ifr) => {
 					WebDrive.iframe_();
 				
 			})
@@ -136,7 +136,7 @@ export class WebDrive {
 		Elements.iframe_ ().then(function(elem) {	
 			if(elem[0] == true) {
 				elem[1].style.setProperty('height',(80/100 * window.screen.height) +'px');
-				elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
+				// elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
 			}
 		})
 	}

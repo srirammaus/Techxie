@@ -13,7 +13,7 @@ import pageURls from '/scripts/utils/pageURLs.js';
 
 function initializeGlobalEventListeners () {
     window.addEventListener("load",function(){
-        
+        ifrProcessDimension();
         more_();  //This function call should only in window.onload because it works on document.onclick(..) ,so here
         homeElementListener();  //This can be any anywhere because of btn
     });
@@ -69,9 +69,7 @@ function more_ () {
  * right cache planning is not decided yet - september 14
  */
 function homeElementListener () {
-   console.log("I ran")
     IfrElements.FolderBtn().forEach((elem)=>{
-        console.log("i ran folder")
         elem.addEventListener("click",function(e){
             nextPage(elem)
         })
@@ -92,19 +90,40 @@ function nextPage (elem) {
         F_num: F_num,
         
     }
-    IfrPageFuncLib.fetchPage(pageURls.home,body).then((newDoc)=>{
-
-        document.body = newDoc.body;
-        IfrPageFuncLib.ifrProcessDimension();
-        let FolderBtn = document.querySelectorAll(".small-Folder");
-        homeElementListener();
-            
+    IfrPageFuncLib.fetchIfrPageFromIfr(pageURls.home,body).then((Ifr)=>{
     
     })
 
 
-}
+} 
 
+function ifrProcessDimension () { // lib //I think no need of it
+    try {
+        const WindowLimit = parent.matchMedia("(min-width:800px)");
+        
+       // or use switch state for multiple media query
+
+        if(WindowLimit.matches){
+            IfrElements.iframe_ ().then(function(elem) {	
+                if(elem[0] == true) {
+                    ///
+                    elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
+                }
+            })
+        }else{
+
+            IfrElements.iframe_ ().then(function(elem) {	
+                if(elem[0] === true){
+                    elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
+                }
+            })
+        }
+
+    }catch(err) {
+        console.error(err)
+    }
+
+}
 function lastPage () {
 
 }

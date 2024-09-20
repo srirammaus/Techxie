@@ -73,6 +73,9 @@ app.set('views','D:/Techxie/Techxie-Backend/api/routers/views');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('D:/Techxie'));
+app.use(express.static("D:/Techxie/scripts"))
+app.use(express.static("D:/Techxie/pages"))
+app.use(express.static("D:/Techxie/pages/errPages"))
 app.use(cookieParser())
 
 app.use(ErrorMiddleware.caughtAnyExceptions)
@@ -88,6 +91,7 @@ app.use('/',PageRoute);
 app.use(ErrorMiddleware.ErrorMiddleware);
 
 app.all('*', function (req, res,next) { //useful // 404 
+
    next(new ExceptionHandler.PageNotFound("Page Not found",404))
   
 })

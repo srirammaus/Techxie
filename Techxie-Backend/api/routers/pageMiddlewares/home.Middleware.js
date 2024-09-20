@@ -28,6 +28,7 @@ function homeMiddleware(req,res,next)  {
                 try {
         
                     let folder =  new Folder.Folder();
+                    let response = res;
                     folder.viewFolder(username,userID,F_num,(err,res)=>{
                         if(err){
                             reject(err);
@@ -40,8 +41,13 @@ function homeMiddleware(req,res,next)  {
                                 setHomeData(req,RawData,next);
                                 if(req.body.Folders.length == 0 && req.body.Files == 0) {
                                     next(new ExceptionHandler.PageEmptyFolder("Database Misbehaved"))
+           
                                 }else{
-                                    next();
+                        
+                                    next() 
+                                  
+                                    // next(new ExceptionHandler.PageEmptyFolder("Database Misbehaved"))
+                                 
                                     
                                 }
                                 // res.set("Content-Type", "text/html");

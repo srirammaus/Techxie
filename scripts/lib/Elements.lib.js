@@ -73,9 +73,7 @@ export default class Elements {
 						default_()
 			
 					}
-				}else {
-			
-					
+				}else {		
 					this.iframe.contentWindow.addEventListener("load", () =>{
 						if(this.isIframeNotEmpty()){
 							this.setCurrentIfr(this.iframe);
@@ -87,9 +85,7 @@ export default class Elements {
 
 					})
 				}
-
 			}else{
-
 				default_()
 			
 			}
@@ -123,6 +119,7 @@ export default class Elements {
 		window.location.href= this.FILE[val] + this.extension
 	}
 	static toRedirectIfr (val) {
+
 		this.iframe_element.src = this.FILE[val] + this.extension
 		// ifr.contentWindow.location.href = this.FILE[val] + this.extension
 	}

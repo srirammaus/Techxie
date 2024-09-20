@@ -38,6 +38,7 @@ const router = express.Router();
 router.use(express.static('D:/Techxie/assets'));
 router.use(express.static("D:/Techxie/scripts"))
 router.use(express.static("D:/Techxie/pages"))
+router.use(express.static("D:/Techxie/pages/errPages"))
 router.use(express.static('./views'))
 
 
@@ -84,6 +85,7 @@ router.get('/settings',function(req,res){
    let Files = req.body.Files;
  
    res.render('home',{layout:false,Folders:Folders,Files:Files})
+
 })
 router.post('/Recents',function(req,res){
    res.render('Recents',{layout:false})

@@ -19,6 +19,7 @@ pdfconverter.js line 67
 * if i uncomment req.body.folder in userpageroute /home then it will throw error as reference error ,so it sends {status:0msg...} but it was a page request i dont sne dlike that 
 * when uncaught exception caught for page requet ,it resposnd like api err message
  *This bug has been solved , but have to know why uncaught expection cant caught it , in the home middleware .js put the if(req.folder.length ...){} in the setHomedata functions's last you get error in front end and backend caut caough
+ * Main bug , the front end problem acutally while fetchng html src from iframefunction the jvascipt and css were not working , but the second page makes fool by showing the css working ,that because of the already avail css incache , but the javascript wont wrok even in second page
  ---
  hack:-
     if the next is in the 

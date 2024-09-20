@@ -36,6 +36,7 @@ router.get('/login',function(err,res){
     res.sendFile("D:/Techxie/pages/login.html")
 })
 router.all('*',function(req,res,next){
+    
     next(new ExceptionHandler.PageNotFound("Page Not found",404))
 })
 
