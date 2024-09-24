@@ -20,6 +20,7 @@ pdfconverter.js line 67
 * when uncaught exception caught for page requet ,it resposnd like api err message
  *This bug has been solved , but have to know why uncaught expection cant caught it , in the home middleware .js put the if(req.folder.length ...){} in the setHomedata functions's last you get error in front end and backend caut caough
  * Main bug , the front end problem acutally while fetchng html src from iframefunction the jvascipt and css were not working , but the second page makes fool by showing the css working ,that because of the already avail css incache , but the javascript wont wrok even in second page
+ * In user page route Recents app.post(....) in this if the Recents is not avail in view dir then it sending err as status:0msg.... [what actually happend there was Recents..handlebar.js] two dots so
  ---
  hack:-
     if the next is in the 

@@ -18,6 +18,7 @@ function ErrorMiddleware (err,req,res,next) {
     /***
      * Nowitself it is only sending error msg thrrough json , later send HTML accodingly
      */
+    console.log(err)
     switch (true) {
         case err instanceof ExceptionHandler.PageEmptyFolder:
             console.log(err)

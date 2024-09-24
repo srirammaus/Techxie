@@ -133,22 +133,31 @@ class login {
         let resp = await authResponse.json();
         if(resp?.status == 1) {
             //initate a csrf token
-            this.reqToken();
-            window.location.href = pageURLs.drive;
+            try {
+                const resp = this.reqToken(); 
+                //i guess you have to check for sttus code here
+                if(resp?.status == 1) {
+                    window.location.href = pageURLs.drive;
+
+                }else {
+                    //red alert
+
+                }
+
+            }catch (err) {
+                
+            }
         }else {
             //red alrert
             console.log(resp)
         }
     }
     async reqToken() { // csrf
-        try {
+       
             let resp = await fetch(this.csrfURL,{
                 method:"POST",
             })
             return await resp.json();
-        }catch(err) {   
-            console.log(err);
-        }
     }
     refreshSession(){
 

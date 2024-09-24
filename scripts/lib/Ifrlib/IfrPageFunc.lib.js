@@ -1,6 +1,6 @@
 import IfrElements from '/scripts/lib/Ifrlib/IfrElements.lib.js';
 
-
+let WindowLimit= window.matchMedia("(min-width:800px)");
 function fetchIfrPageFromIfr (URL,body) {
     return new Promise((resolve,reject) =>{  //lib
         fetch(URL,{
@@ -20,11 +20,10 @@ function fetchIfrPageFromIfr (URL,body) {
             //get the main content
             let Ifr = IfrElements.getParentIfr()
             Ifr.srcdoc = html;
-            Ifr.addEventListners("load",(e)=>{
+
+            Ifr.addEventListener("load",(e)=>{
                 resolve(Ifr);
 
-            }).catch(err=>{
-                reject(err)
             })
                 
         })
@@ -40,4 +39,4 @@ function splitID(id) { // lib
     
 }
 
-export {splitID,fetchIfrPageFromIfr}
+export {splitID,fetchIfrPageFromIfr,WindowLimit}

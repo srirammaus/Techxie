@@ -5,8 +5,9 @@ import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
 import * as webdrive_1 from "/scripts/pages/WebDrive-1.js";
 import * as webdrive_2 from "/scripts/pages/WebDrive-2.js";
 import pageURLs from "/scripts/utils/pageURLs.js";
-
+import * as Weblib from "/scripts/lib/webdrive.lib.js";
 import Elements from '/scripts/lib/Elements.lib.js';
+
 /**
  * 1.event listner[all in order]
  * 2.corresponding fuctions[all in order]
@@ -21,9 +22,7 @@ function GeneralEventListeners(){
             Elements.search_dropdown.style.display = "none"
         },100)
     })
-    Elements.homeIcon.addEventListener("click",function() {
-        Elements.toRedirectIfr(3)
-    })
+
     
 
 }
@@ -45,14 +44,12 @@ function sideNav () {
     for(let i in nav_items_children) {
         item  = nav_items_children[i];
         console.log(item)
-        item.addEventListener('click',function(){
-            // i = i === 3? 3-1:i; 
-            console.log("clicked")
-            Elements.toRedirectIfr(i ==3?0:i);  
-            Elements.iframe_element.onload = () =>{
-            loadFrame();
-            //    FrameListeners();
-            }
+        item.addEventListener('click',function(event){
+            // console.log(i)
+            // Elements.toRedirectIfr(i ==3?0:i);  
+            // Elements.iframe_element.onload = () =>{
+                loadFrameContent(i)
+            // }
         })
         if(i==3) break;
         
@@ -61,31 +58,32 @@ function sideNav () {
 }
 function loadFrameContent (elemId) {
     switch (elemId) {
-        case "Trash":
-            
+        case "0":
+        case 0 : //"settings"
+            loadFrame("settings",Elements.bodyParams,"GET");
             break;
-        case "settings":
-            
+        case "1":
+        case 1: // "Trash" 
+            loadFrame("Trash",Elements.bodyParams,"POST");
             break;
-        case "Recents":
-            
+        case "2":
+        case 2: //"Recents"
+            loadFrame("Recents",Elements.bodyParams,"POST");
             break;
-        case "home":
-            
+        case "3":
+        case 3:  //storage
+            loadFrame("Trash",Elements.bodyParams,"POST");
             break;
 
-        default:
+        default  : //"home"
             break;
     }
 
 }
-function loadFrame () {
-    if(window.innerWidth > 800) {
-        webdrive_1.WebDrive.iframe_()
-    }else{
-        webdrive_2.WebDrive.iframe_();
-        Elements.nav_drawer.style.width = "0%";
-    }
+function loadFrame (page,body,method) {
+    Weblib.fetchIfrPage(Elements.iframe_element,pageURLs[page],method,body).then((ifr) => {
+
+    })  
 
 }
 function updateSearchValue () {

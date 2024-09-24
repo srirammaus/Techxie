@@ -5,7 +5,7 @@ export default  {
     techxie:"http://techxie.local:5000/",
     home:"http://techxie.local:5000/User/page/home",
     settings:"http://techxie.local:5000/User/page/settings",
-    trash:"http://techxie.local:5000/User/page/Trash",
-    recents:"http://techxie.local:5000/User/page/Recents",
+    Trash:"http://techxie.local:5000/User/page/Trash",
+    Recents:"http://techxie.local:5000/User/page/Recents",
 
 }

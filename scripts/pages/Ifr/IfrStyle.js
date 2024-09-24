@@ -1,5 +1,6 @@
 /**
  * Dynamic page styles for Rececnts, home, trash - Ifr
+ * This is General sizes which will aplly for both, this will works according by css's media query
  */
 import IfrElements from '/scripts/lib/Ifrlib/IfrElements.lib.js';
 

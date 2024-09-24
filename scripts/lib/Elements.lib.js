@@ -24,6 +24,10 @@ export default class Elements {
 	static Account_settings= document.querySelector('.nav-item[attr=Account-settings]')
     static folder_wrapper = document.querySelector('.Folder-wrapper > div > a');
 	static homeIcon = document.getElementById("home-icon");
+	static bodyParams = { // default for body
+		F_num: 0,
+		F_id: "F-0",
+	}
 	static count = 0
 
 	constructor() {

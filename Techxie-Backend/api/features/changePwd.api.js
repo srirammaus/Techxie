@@ -15,9 +15,9 @@ async function changePwdMiddleWare (req,res,next) {
     //use fileter
 
     let properties = ["body"]
-    let requiredParams = ["username","currentPass","newPass"];
+    let requiredParams = ["currentPass","newPass"];
     filter.Filter(req,res,next,properties,requiredParams).then(flag =>{
-        username =req.body.username;
+        username =req.cookies.username; //old :body
         currentPass =req.body.currentPass;
         newPass = req.body.newPass;
     
@@ -26,6 +26,7 @@ async function changePwdMiddleWare (req,res,next) {
             //test for throw
             changePwd_.changePwdThroughOld(username,currentPass,newPass).then((flag)=>{
                 if(flag == 1) {
+                    console.log("Done")
                     result.status = 1;
                     result.message = "password updated succesfully";
                     res.send(result);

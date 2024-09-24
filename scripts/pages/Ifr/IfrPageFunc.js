@@ -9,12 +9,14 @@ import * as ExceptionHandler from '/scripts/utils/ExceptionHandler.js';
 import * as Weblib from "/scripts/lib/webdrive.lib.js";
 import pageURls from '/scripts/utils/pageURLs.js';
 
+import * as  IfrPage_1 from "/scripts/pages/Ifr/IfrPage-1.js";
+import * as  IfrPage_2 from "/scripts/pages/Ifr/IfrPage-2.js";
+
+
 // Add this file to every iframe pages
 
 function initializeGlobalEventListeners () {
     window.addEventListener("load",function(){
-        ifrProcessDimension();
-        more_();  //This function call should only in window.onload because it works on document.onclick(..) ,so here
         homeElementListener();  //This can be any anywhere because of btn
     });
     IfrElements.DoneBtn.forEach(function(e,i) {
@@ -29,40 +31,19 @@ function initializeGlobalEventListeners () {
 }
 
 
-function more_ () {
-    var check = null;
-    var ElementBtn;
-    var Element;
-    // document.removeEventListener("click",handler,true)
-    document.addEventListener("click",handler,true);
-    function handler (e) {
-        if(IfrElements.moreBtn.length > 0 ){
-            if(e.target.className == IfrElements.moreBtn[1].className  ){
-                ElementBtn = e.target;
-                Element = e.target.nextSibling;
-                if(Element.className == IfrElements.more[1].className) {
-                    if(window.getComputedStyle(Element).display === "block"){
+function more_(Element){
+  
+        if(window.getComputedStyle(Element).display === "block"){
             
-                        Element.style.display = "none";
-                        // ElementBtn.style.setProperty('z-index',0)
-                    }else {
-                        IfrElements.more.forEach(function(element,i){
-                            element.style.display = "none";
-                        })
-                        Element.style.display = "block";
-                    }
-                }
-
-            }else{
-                IfrElements.more.forEach((elem,i)=>{
-                    elem.style.display = "none";
-                })
-            }
+            Element.style.display = "none";
+            // ElementBtn.style.setProperty('z-index',0)
+        }else {
+            IfrElements.more.forEach(function(element,i){
+                element.style.display = "none";
+            })
+            Element.style.display = "block";
         }
-    }
-
 }
-
 /**
  * The next page function is used to go next page whereas the last page is used to go back to last pages
  * cache compulsory
@@ -71,6 +52,7 @@ function more_ () {
 function homeElementListener () {
     IfrElements.FolderBtn().forEach((elem)=>{
         elem.addEventListener("click",function(e){
+            console.log("clicked me")
             nextPage(elem)
         })
     })
@@ -78,6 +60,12 @@ function homeElementListener () {
         elem.addEventListener("click",function(){
             console.log( "clicked"+splitID(elem.id))
         })
+    })
+    IfrElements.moreBtn().forEach((elem)=>{
+        elem.addEventListener("click",function(){
+            more_(elem)
+        })
+    
     })
 }
 function nextPage (elem) {
@@ -90,6 +78,7 @@ function nextPage (elem) {
         F_num: F_num,
         
     }
+    //This hom is actaully pagination, this will be rendered by server 
     IfrPageFuncLib.fetchIfrPageFromIfr(pageURls.home,body).then((Ifr)=>{
     
     })
@@ -97,37 +86,97 @@ function nextPage (elem) {
 
 } 
 
-function ifrProcessDimension () { // lib //I think no need of it
-    try {
-        const WindowLimit = parent.matchMedia("(min-width:800px)");
+
+function HandleViewerport () {
+	try {
+
+
+	    if(IfrPageFuncLib.WindowLimit.matches){
+	    	console.log("change 1")
+	        new IfrPage_1.IfrPage();
+	    }else {
+	        console.log("changed 2")
+	        new IfrPage_2.IfrPage();
+	    }    
+	}catch (err) {
+		console.log(err);
+	}
+}
+
+
+
+
+
+IfrPageFuncLib.WindowLimit.addEventListener("change",function(event){
+    HandleViewerport();
+})
+//Good idea , but whike implementing ou have put all the function inalso doument.click
+// function more_ () {
+//     var check = null;
+//     var ElementBtn;
+//     var Element;
+//     // document.removeEventListener("click",handler,true)
+//     document.addEventListener("click",handler,true);
+//     function handler (e) {
+//         console.log(e.target)
+//         e.stopPropagation();
+//         if(IfrElements.moreBtn.length > 0 ){
+//             if(e.target.className == IfrElements.moreBtn[1].className  ){
+//                 ElementBtn = e.target;
+//                 Element = e.target.nextSibling;
+//                 if(Element.className == IfrElements.more[1].className) {
+//                     if(window.getComputedStyle(Element).display === "block"){
+            
+//                         Element.style.display = "none";
+//                         // ElementBtn.style.setProperty('z-index',0)
+//                     }else {
+//                         IfrElements.more.forEach(function(element,i){
+//                             element.style.display = "none";
+//                         })
+//                         Element.style.display = "block";
+//                     }
+//                 }
+
+//             }else{
+//                 IfrElements.more.forEach((elem,i)=>{
+//                     elem.style.display = "none";
+//                 })
+//             }
+//         }
+//     }
+
+// }
+//This below function in load , now i comment it
+// function ifrProcessDimension () { // lib //I think no need of it
+//     try {
+//         const WindowLimit = parent.matchMedia("(min-width:800px)");
         
-       // or use switch state for multiple media query
+//        // or use switch state for multiple media query
 
-        if(WindowLimit.matches){
-            IfrElements.iframe_ ().then(function(elem) {	
-                if(elem[0] == true) {
-                    ///
-                    elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
-                }
-            })
-        }else{
+//         if(WindowLimit.matches){
+//             IfrElements.iframe_ ().then(function(elem) {	
+//                 if(elem[0] == true) {
+//                     ///
+//                     elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
+//                 }
+//             })
+//         }else{
 
-            IfrElements.iframe_ ().then(function(elem) {	
-                if(elem[0] === true){
-                    elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
-                }
-            })
-        }
+//             IfrElements.iframe_ ().then(function(elem) {	
+//                 if(elem[0] === true){
+//                     elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
+//                 }
+//             })
+//         }
 
-    }catch(err) {
-        console.error(err)
-    }
+//     }catch(err) {
+//         console.error(err)
+//     }
 
-}
-function lastPage () {
+// }
 
-}
 try {
+    HandleViewerport();  //dont put this inside window.onload becuase it already contains window.onload
     initializeGlobalEventListeners();
   
 	

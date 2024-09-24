@@ -2,13 +2,15 @@
 body {
 	margin: 0;
 	padding: 0;
+	height: 0;
+	transition: height .5s;
+
 }
 
 .settings {
 	display: flex;
 	width: 100%;
-	height: 0;
-	transition: height .5s;
+	height: 100%;
 
 }
 .settings-section {
@@ -416,7 +418,8 @@ body {
 		margin: 5% 0 5% 0%;*/
 	}
 	.password-items .prompt-message {
-		display:inline-flex;
+		/* inline-flex */
+		display:none; 
 		color: red;
 		width: 60%;
 		height: 8%;
@@ -811,7 +814,8 @@ body {
 	}
 
 	.password-items .prompt-message {
-		display:inline-flex;
+		/*inline-flex*/
+		display:none;
 		color: red;
 		width: 60%;
 		height: 8%;

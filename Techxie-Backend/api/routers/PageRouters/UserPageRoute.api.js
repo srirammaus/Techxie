@@ -52,11 +52,11 @@ router.use(express.static('./views'))
   */
 
 
-router.get('/pdfViewer',function(req,res) {
+router.get('/pdfViewer',function(req,res) { //open by new tab
   //chekc for ouath and send pdf
   res.sendFile('D:/Techxie/pages/pdfViewer.html') // this is from the file which saved in sepreate folder
 })
-router.get('/videoplayer',function(req,res) {
+router.get('/videoplayer',function(req,res) { //player inside the iframe
   //strem video and check for OAuth
   res.sendFile('D:/Techxie/pages/videoPlayer.html')
 })
@@ -87,12 +87,17 @@ router.get('/settings',function(req,res){
    res.render('home',{layout:false,Folders:Folders,Files:Files})
 
 })
-router.post('/Recents',function(req,res){
-   res.render('Recents',{layout:false})
+router.post('/Recents',homeMiddleware.homeMiddleware,function(req,res){
+   let Folders = req.body.Folders;
+   let Files = req.body.Files;
+   res.render('Recents',{layout:false,Folders:Folders,Files:Files})
 
 })
-router.post('/Trash',function(req,res){
-   res.render('Trash',{layout:false})
+router.post('/Trash',homeMiddleware.homeMiddleware,function(req,res){
+   let Folders = req.body.Folders;
+   let Files = req.body.Files;
+ 
+   res.render('Trash',{layout:false,Folders:Folders,Files:Files})
 
 })
 //---

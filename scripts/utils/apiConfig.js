@@ -1,3 +1,4 @@
+
 export  default {
     baseURL:"http://techxie.local:5000/",
     userVerificationAPI:"http://techxie.local:5000/User/api/UserVerification",
@@ -7,4 +8,5 @@ export  default {
     loginAPI:"http://techxie.local:5000/User/api/login",
     tool_lstAPI:"http://techxie.local:5000/User/api/tools_lst",
     csrfAPI:"http://techxie.local:5000/User/api/verify",
+    changePwd:"http://techxie.local:5000/User/api/changePwd",
 }

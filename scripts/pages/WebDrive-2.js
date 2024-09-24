@@ -3,12 +3,12 @@
  */
 import Elements from '/scripts/lib/Elements.lib.js';
 import * as Weblib from "/scripts/lib/webdrive.lib.js";
+import pageURLs from "/scripts/utils/pageURLs.js";
 // export 
 
 export class WebDrive {
 	constructor(){
 		//initialize
-
 		this.search_dropdown = Elements.search_dropdown;
 		this.search_bar_input =  Elements.search_bar_input;
 		this.nav_drawer = Elements.nav_drawer;
@@ -22,8 +22,7 @@ export class WebDrive {
 		this.FILE = Elements.FILE;
 		this.URL = Elements.URL;
 		this.extension = Elements.extension;
-		
-
+	
 		
 		//Run
 		this.OnLoad();
@@ -53,7 +52,7 @@ export class WebDrive {
 	OnLoad () {
 		window.addEventListener('load',()=>{
 	
-			Weblib.fetchIfrPage(Elements.iframe_element,0).then((ifr) => {
+			Weblib.fetchIfrPage(Elements.iframe_element,pageURLs.home,"POST",Elements.bodyParams).then((ifr) => {
 				WebDrive.iframe_();
 				
 			})
@@ -69,7 +68,7 @@ export class WebDrive {
 			};
 
 			const svgObj = {
-			  data: "assets/svg/header_wave.svg",
+			  data: "/assets/svg/header_wave.svg",
 			  class: "wave-obj",
 			  type: "image/svg+xml",
 			};
@@ -106,8 +105,9 @@ export class WebDrive {
 	main_() {
 
 		this.main.style.setProperty('height','auto');
-		this.folder_map.style.setProperty('height',(10/100 * window.screen.height) + 'px');
 		this.nav_drawer.style.width = "0%";
+		// this.folder_map.style.setProperty('height',(10/100 * window.screen.height) + 'px');
+
 
 
 	}
@@ -122,7 +122,6 @@ export class WebDrive {
 			if(elem[0] === true){
 				console.log("reached here")
 				elem[1].style.setProperty('height',(80/100 * window.screen.height) +'px');
-				// elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
 			}
 		})
 	}

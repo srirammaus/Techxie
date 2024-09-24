@@ -8,18 +8,26 @@ export default class IfrElements {
     static FILE = ["settings","Trash","Recents","Home"];
 	static URL = apiConfig.baseURL;
 	static extension = ".html";
-
+	static small_frame_items = document.querySelector(".small-frame-items");
     static more =document.querySelectorAll(".small-frame-items div[data='more-box'] div[attr='pop-box']");
-    static moreBtn = document.querySelectorAll(".mdi-dots-vertical"); //.small-frame-items div[data='more-btn']
     static setting_items = document.querySelectorAll(".settings-item");
     static sections = document.querySelectorAll(".settings > section[class $='-section']");
     static DoneBtn = document.querySelectorAll(".Done-btn")
     static mainPopBox = document.getElementById("mainPopBox");
+	static folder_map = document.querySelector('.Folder-map');
 
     static getClickedSection (attr) {
         let elem = document.querySelector(`.settings > section[class=${attr}` );
         return elem;
     }
+	static body (){
+		let body = document.querySelector('body');
+		return body;
+	}
+	static moreBtn(){
+		let moreBtn = document.querySelectorAll(".mdi-dots-vertical"); //.small-frame-items div[data='more-btn']
+		return moreBtn;
+	}
 	static FolderBtn() {
 		let FolderBtn = document.querySelectorAll(".small-Folder");
 		return FolderBtn;

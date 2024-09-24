@@ -6,7 +6,7 @@
 
 	
 </head>
-<link rel="stylesheet" type="text/css" href="assets/settings.css">
+<link rel="stylesheet" type="text/css" href="/assets/settings.css">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +51,7 @@
 					<a attr=verifying>verifying</a>
 					<a attr=username>Username</a>
 					<div class="loader"></div>
-					<a attr="home"> Return to Home</a>
+					<a attr="home" href="/User/page/settings"> Return</a>
 				</div>
 
 				<div class="verification-wrapper" attr="done">
@@ -59,14 +59,14 @@
 						<img src="/assets/svg/tick.svg">
 					</div>
 					<div><a> Email verified</a></div> 
-					<div><a class="Done-btn">Home</a></div>
+					<div><a class="Done-btn" href="/User/page/settings">Return</a></div>
 				</div>
 				<div class="verification-wrapper" attr="failed">
 					<div class="svg-wrapper" attr=tick >
 						<img src="/assets/svg/failed.gif">
 					</div>
 					<div><a> verification failed</a></div> 
-					<div><a class="Done-btn">Home</a></div>
+					<div><a class="Done-btn" href="/User/page/settings">Return</a></div>
 				</div>
 			</div>
 		</section>
@@ -82,7 +82,7 @@
 					<a attr=verifying>Phones verifying</a>
 					<a attr=username>Username</a>
 					<div class="loader"></div>
-					<a attr="home"> Return to Home</a>
+					<a attr="home" href="/User/page/settings"> Return</a>
 				</div>
 				<div class="verification-wrapper" attr="done">
 					<div class="svg-wrapper" attr=tick >
@@ -90,14 +90,14 @@
 					</div>
 					<!-- add or change phone number-->
 					<div><a> Number Updated</a></div> 
-					<div><a class="Done-btn">Home</a></div>
+					<div><a class="Done-btn" href="/User/page/settings">Return</a></div>
 				</div>
 				<div class="verification-wrapper" attr="failed">
 					<div class="svg-wrapper" attr=tick >
 						<img src="/assets/svg/failed.gif">
 					</div>
 					<div><a> verification failed</a></div> 
-					<div><a class="Done-btn">Home</a></div>
+					<div><a class="Done-btn" href="/User/page/settings">Return</a></div>
 				</div>
 			</div>
 		</section>
@@ -121,21 +121,21 @@
 					<a attr=verifying>Payment Processing</a>
 					<a attr=username>Username</a>
 					<div class="loader"></div>
-					<a attr="home"> Return to Home</a>
+					<a attr="home" href="/User/page/settings"> Return</a>
 				</div>
 				<div class="verification-wrapper" attr="done">
 					<div class="svg-wrapper" attr=tick >
 						<img src="/assets/svg/tick.svg">
 					</div>
 					<div><a> Payment Success </a></div>
-					<div><a class="Done-btn">Home</a></div>
+					<div><a class="Done-btn" href="/User/page/settings">Return</a></div>
 				</div>
 				<div class="verification-wrapper" attr="failed">
 					<div class="svg-wrapper" attr=tick >
 						<img src="/assets/svg/failed.gif">
 					</div>
 					<div><a> Paymentfailed</a></div> 
-					<div><a class="Done-btn">Home</a></div>
+					<div><a class="Done-btn" href="/User/page/settings">Return</a></div>
 				</div>
 			</div>
 		</section>
@@ -144,9 +144,9 @@
 			<div class="password-items">
 				<label>Change phone</label>
                 <input type="password" name="currentpassword" placeholder="old password">
-                <input type="password" name="newpassword " placeholder="new password">
+                <input type="password" name="newpassword" placeholder="new password">
                 <input type="password" name="confirmpassword" placeholder="confirm password">
-                <div class="prompt-message"><a>*Invalid parmeter</a></div>
+                <div class="prompt-message"><a></a></div>
                 <div><a class= "verify-btn">verfiy</a></div>
 			</div>
 			<div class="verification">
@@ -154,27 +154,28 @@
 					<a attr=verifying> validating</a>
 					<a attr=username>Username</a>
 					<div class="loader"></div>
-					<a attr="home"> Return to Home</a>
+					<a attr="home" href="/User/page/settings"> Return</a>
 				</div>
 				<div class="verification-wrapper" attr="done">
 					<div class="svg-wrapper" attr=tick >
 						<img src="/assets/svg/tick.svg">
 					</div>
 					<div><a>Password succesfully changed</a></div>
-					<div><a class="Done-btn">Home</a></div>
+					<div><a class="Done-btn" href="/User/page/settings">Return</a></div>
 				</div>
 				<div class="verification-wrapper" attr="failed">
 					<div class="svg-wrapper" attr=tick >
 						<img src="/assets/svg/failed.gif">
 					</div>
+					{{!-- Invalid password,Password not upated [if server error] --}}
 					<div><a> Password not Updated</a></div> 
-					<div><a class="Done-btn">Home</a></div>
+					<div><a class="Done-btn" href="/User/page/settings">Return</a></div>
 				</div>
 			</div>
 		</section>
 	</div>
-	<script type="module" src="/scripts/pages/Ifr/IfrPageFunc.js"></script>
-<script type="text/javascript" src="/scripts/lib/settings.js"></script>
+	<script type="module"  src="/scripts/pages/Ifr/IfrSettingsFunc.js"></script>
+{{!-- <script type="module" src="/scripts/lib/Ifrlib/settings.lib.js"></script> --}}
 </body>
 
 </html>

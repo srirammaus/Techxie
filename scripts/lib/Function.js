@@ -2,7 +2,7 @@
  * This is used to req and response mangement
  */
 
-class Func  {
+export default class Func  {
     constructor (){
 
     }
@@ -53,6 +53,28 @@ class Func  {
         //folders and files
     }
     fetchFile () {
+        
+    }
+    /**
+     * 
+     * @param {Type should be array} inputs 
+     * @returns 
+     */
+    static filter (inputs) {
+        if(Array.isArray(inputs) ){
+            let filteredInputs = []
+            for (let input of inputs ){
+                input = input.trim();
+                if(input.length == 0){
+                    return false
+                }
+                filteredInputs.push(input)
+                console.log("three times")
+            }
+            return filteredInputs;
+        }else { 
+            return false;
+        }
         
     }
 

@@ -35,3 +35,19 @@ export class WarningError extends FrontEndErrors {
 		super(message);
 	} 
 }
+
+class InvalidParameter extends Error {
+	constructor (message){
+		super(message);
+	}
+}
+class PasswordMismatched extends Error {
+	constructor (message) {
+		super(message);
+	}
+}
+
+export {
+	PasswordMismatched,
+	InvalidParameter,
+}

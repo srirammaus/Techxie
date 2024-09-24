@@ -9,28 +9,25 @@ function cachePage (F_num) {
 function cacheMedia (f_num) {
 
 }
-function fetchIfrPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0",temp =0) { // folder 
+function fetchIfrPage (ifr,URL,method,body) { // folder 
     /**
      * @param F_num=0 means deault is Home
      * check if it is in cache
      * if not fetch it
      * 
      */
-    let body ={
-        F_num: F_num,
-        F_id: F_id,
-        f_id:f_id,
-        
+    let fetchParams = {
+        method:method,
+        headers:
+        {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+    }
+    if(method == "POST") {
+        fetchParams.body = JSON.stringify(body)
     }
     return new Promise((resolve,reject) =>{ 
-        fetch(pageURls.home,{
-            method:"POST",
-            body : JSON.stringify(body),
-            headers:
-            {
-                "Content-Type": "application/json;charset=utf-8",
-            }
-        }).then( resp=> {
+        fetch(URL,fetchParams).then( resp=> {
             return resp.text()
         }).then(html=>{ //this is text but we consider as html
             //'data:text/html;charset=utf-8,'  + encodeURI(html);
@@ -49,7 +46,7 @@ function fetchIfrPage (ifr,F_num =0,F_id="F-0",f_num = 0,f_id ="f-0-0",temp =0) 
 
 
 }
-function fetchPage(URL,body,method = "GET") {
+function fetchPage(URL,body,method = "GET") { //Not i use
     return new Promise((resolve,reject)=>{
         fetch(URL,{
             method:method,

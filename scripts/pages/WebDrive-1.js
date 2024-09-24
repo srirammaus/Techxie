@@ -4,6 +4,7 @@
 
 import Elements from '/scripts/lib/Elements.lib.js';
 import * as Weblib from "/scripts/lib/webdrive.lib.js";
+import pageURLs from "/scripts/utils/pageURLs.js";
 /**
  * my category
  * onload
@@ -15,8 +16,7 @@ import * as Weblib from "/scripts/lib/webdrive.lib.js";
 export class WebDrive {
 	constructor (){
 		//below should be static later
-
-
+		//,F_num =0F_id="F-0",f_num = 0,f_id ="f-0-0", -  just to remaind these are default values
 		this.folder_wrapper = Elements.folder_wrapper;
 		this.folder_map = Elements.folder_map;
 		this.Recents = Elements.Recents;
@@ -30,8 +30,7 @@ export class WebDrive {
 		this.extension = Elements.extension;
 		this.search_bar_input = Elements.search_bar_input;
 		this.search_dropdown = Elements.search_dropdown;
-		
-		console.log("Window height : " + window.innerHeight)
+
 		//Run
 		this.header();
 		this.mainFunc();
@@ -55,7 +54,7 @@ export class WebDrive {
 		window.addEventListener('load',()=>{ 
 			this.header();
 			this.mainFunc();
-			Weblib.fetchIfrPage(Elements.iframe_element,0).then((ifr) => {
+			Weblib.fetchIfrPage(Elements.iframe_element,pageURLs.home,"POST",Elements.bodyParams).then((ifr) => {
 					WebDrive.iframe_();
 				
 			})
@@ -122,7 +121,7 @@ export class WebDrive {
 		var Height = window.screen.height;
 		this.main.style.setProperty('height',Height + 'px')
 		this.nav_drawer.style.width = '17%';
-		this.folder_map.style.height = "15%";
+		// this.folder_map.style.height = "15%";
 	
 		
 	}
@@ -136,7 +135,6 @@ export class WebDrive {
 		Elements.iframe_ ().then(function(elem) {	
 			if(elem[0] == true) {
 				elem[1].style.setProperty('height',(80/100 * window.screen.height) +'px');
-				// elem[2].body.children[0].style.setProperty('height',(80/100 * window.screen.height) +'px');
 			}
 		})
 	}
