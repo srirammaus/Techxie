@@ -46,7 +46,7 @@ export class IfrPage {
     static IfrProcessDimension(){
         //setting body height
         IfrElements.body().style.setProperty("overflow-y","hidden")
-        IfrElements.body().style.setProperty('height',(100/100 * window.screen.height) +'px');
+        IfrElements.body().style.setProperty('height',(80/100 * window.screen.height) +'px');
         IfrElements.small_frame_items.style.setProperty("height","85%")
     }
 }

@@ -106,7 +106,7 @@ export class WebDrive {
 
 		this.main.style.setProperty('height','auto');
 		this.nav_drawer.style.width = "0%";
-		// this.folder_map.style.setProperty('height',(10/100 * window.screen.height) + 'px');
+		this.folder_map.style.setProperty('height',(10/100 * window.screen.height) + 'px');
 
 
 

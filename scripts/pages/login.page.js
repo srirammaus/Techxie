@@ -40,61 +40,71 @@ class login {
         // UserRedAlert.innerHTML = "*Please fill the requested field"
         // UserRedAlert.style.setProperty("display","block")
         // add the filter
-        this.loginBtn.addEventListener("click",async (e)=>{
-           
-            e.preventDefault();
-            console.log(this.loginForm)   
-            let formData =  new extendedFormData(this.loginForm);
-            for(let key of formData.keys()){
-                console.log(key)
-                if(!formData.filter(key)){
-                    //pop the please fill up the form
-                    this.UserRedAlert.innerHTML = "*Please fill the requested field"
-                    this.UserRedAlert.style.setProperty("display","block")
-                    return false;
-                }
-            }
-            this.UserRedAlert.innerHTML = "*";
-            this.UserRedAlert.style.setProperty("display","none");
-            console.log(this.loginURL)
-            let loginResp = await fetch(this.loginURL,{
-                method: 'POST',
-                body: new URLSearchParams(formData),
-            }) 
-            let result = await loginResp.json();
-            let parameters = result?.result;
-            console.log(result)
-            //email not verifieed error
-            // console.log(...GRANT_VALUES)
-            if(result?.status ==1 ){
-                console.log(result)
-                this.userData.email = result.message.email;
-                this.userData.username = result.message.username;
-                this.userData.userID = result.message.userID;  
-                this.setCurrentUser(this.userData);
-                this.Authorization("GRANT_CODE",this.userData.username,this.userData.userID,result.message.sessionID,result.message.grant_code); 
+
+        
+            this.loginBtn.addEventListener("click",async (e)=>{
             
-            }else if(result?.status == -1){
-                //the email is not verified
-                this.userData.email = result.message.email;
-                this.userData.username = result.message.username;
-                this.userData.userID = result.message.userID;
+                e.preventDefault();
+                console.log(this.loginForm)   
+                let formData =  new extendedFormData(this.loginForm);
+                for(let key of formData.keys()){
+                    console.log(key)
+                    if(!formData.filter(key)){
+                        //pop the please fill up the form
+                        this.UserRedAlert.innerHTML = "*Please fill the requested field"
+                        this.UserRedAlert.style.setProperty("display","block")
+                        return false;
+                    }
+                }
+                this.UserRedAlert.innerHTML = "*";
+                this.UserRedAlert.style.setProperty("display","none");
+                console.log(this.loginURL)
+                try {
+                    
+                    var loginResp = await fetch(this.loginURL,{
+                        method: 'POST',
+                        body: new URLSearchParams(formData),
+                    }) 
+                    var result = await loginResp.json();
 
-                this.setCurrentUser(this.userData)
-                this.validateEmail()
-                this.loginContainer.style.setProperty("display","none");
-                this.em.style.setProperty("display","flex");
+                }catch(err) {
+                    console.log(err)
+                }
+            
+                let parameters = result?.result;
+                console.log(result)
+                //email not verifieed error
+                // console.log(...GRANT_VALUES)
+                if(result?.status ==1 ){
+                    this.userData.email = result.message.email;
+                    this.userData.username = result.message.username;
+                    this.userData.userID = result.message.userID;  
+                    this.setCurrentUser(this.userData);
+                    this.Authorization("GRANT_CODE",this.userData.username,this.userData.userID,result.message.sessionID,result.message.grant_code); 
                 
-            }else if(result?.status == 0) {
-                //react the page according to the result
+                }else if(result?.status == -1){
+                    //the email is not verified
+                    this.userData.email = result.message.email;
+                    this.userData.username = result.message.username;
+                    this.userData.userID = result.message.userID;
 
-                this.UserRedAlert.innerHTML += result.message;
-                
-            }else {
-                //does nothing
-                this.UserRedAlert.innerHTML += "something went wrong";
-            }
-        })
+                    this.setCurrentUser(this.userData)
+                    this.validateEmail()
+                    this.loginContainer.style.setProperty("display","none");
+                    this.em.style.setProperty("display","flex");
+                    
+                }else if(result?.status == 0) {
+                    //react the page according to the result
+                    this.UserRedAlert.style.display = "block"
+                    this.UserRedAlert.innerHTML = result.message;
+                    
+                }else {
+                    //does nothing
+                    this.UserRedAlert.style.display = "block"
+                    this.UserRedAlert.innerHTML = "something went wrong";
+                }
+            })
+        
     }
     validateEmail() {
 
@@ -114,10 +124,11 @@ class login {
             //red alert
         })        
     }
-    async Authorization (request,username,userID,sessionID,GRANT_CODE= 0,REFRESH=0) {
+    Authorization (request,username,userID,sessionID,GRANT_CODE= 0,REFRESH=0) {
         let formData = new extendedFormData();
         let args = [...arguments];
         let keys = ["request","username","userID","sessionID"];
+        
         GRANT_CODE == 0 ?keys.push("refresh"):keys.push("grant_code");
 
         for ( let [index,elem] of args.entries() ) {
@@ -125,39 +136,54 @@ class login {
                 console.log(elem)
                 formData.set(keys[index],elem)
         }
-        
-        let authResponse = await fetch(this.AuthURL,{
+
+
+    
+        fetch(this.AuthURL,{
             method:'POST',
             body: new URLSearchParams(formData),
-        })
-        let resp = await authResponse.json();
-        if(resp?.status == 1) {
-            //initate a csrf token
-            try {
-                const resp = this.reqToken(); 
-                //i guess you have to check for sttus code here
-                if(resp?.status == 1) {
-                    window.location.href = pageURLs.drive;
-
-                }else {
-                    //red alert
-
+        }).then((authResponse)=>{
+            return authResponse
+        }).then(async authResponse =>{
+            let resp = await authResponse.json();
+            if(resp?.status == 1) {
+                //initate a csrf token
+                try {
+                    const response = await this.reqToken(); 
+                    console.log(resp)
+                    //i guess you have to check for sttus code here
+                    if(!response?.ok) {
+                        //red alert
+                        response = response.json()
+                        this.UserRedAlert.style.display = "block"
+                        this.UserRedAlert.innerHTML = respons?.message;
+                    }else {
+                        window.location.href = pageURLs.drive;
+                    }
+    
+                }catch (err) {
+                        //red alrert
+                    this.UserRedAlert.style.display = "block"
+                    this.UserRedAlert.innerHTML = "something went wrong";
                 }
-
-            }catch (err) {
-                
+            }else {
+                //red alrert
+                this.UserRedAlert.style.display = "block"
+                this.UserRedAlert.innerHTML = resp?.message;
             }
-        }else {
-            //red alrert
-            console.log(resp)
-        }
+        }).catch(err =>{
+            this.UserRedAlert.style.display = "block"
+            this.UserRedAlert.innerHTML = "something went wrong";
+        })
+       
     }
     async reqToken() { // csrf
        
             let resp = await fetch(this.csrfURL,{
                 method:"POST",
             })
-            return await resp.json();
+        
+            return await resp;
     }
     refreshSession(){
 

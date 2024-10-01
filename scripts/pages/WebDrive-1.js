@@ -121,7 +121,7 @@ export class WebDrive {
 		var Height = window.screen.height;
 		this.main.style.setProperty('height',Height + 'px')
 		this.nav_drawer.style.width = '17%';
-		// this.folder_map.style.height = "15%";
+		this.folder_map.style.height = "15%";
 	
 		
 	}
