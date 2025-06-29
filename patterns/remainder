@@ -28,7 +28,7 @@
 * update size and values of images in upload : LATER 
 * check in intenet whether we need new connection for each time same file like signup.js have insert content in USERS and USER ids[check it later]
 * pendinng  validating the user id because we will try if there any new method to reduce the time take
-*file name  
+* file name  
 * what to do if suddenly our algorithm fails in middle of the project like algorithm is [a+b then its ans /3 then * 7] for i.e if the /3 fails then what to do? DONT KNOW LEARN THAT
 * token is null, fill them later
 * set Recursin limit , suppose it may fail MUST
@@ -36,8 +36,8 @@
 * we will make check mate by adding signed variable in db 0 first and then the user id used once to signup then put 1 there
 * create like sep server for creating bucket
 * env varible working good but they are not[env variable] saved permanently
-
-
+* while clicking folder three dot that's not working 
+* after opening the change number or change number pop up external doesb;t close that, so add X box to close or external close feature
 
 routing 
 error management
@@ -58,3 +58,8 @@ done with login error
  create contact api techxie home page
  add try again btn in verification mail
 add home btn in login page redirection btn in verification mail box or create a auto redirection by maintainng connection
+
+
+change number - api add
+change email - api  add
+folder navigatorworks do now

@@ -135,7 +135,9 @@ a{
 	rotate: 90deg
 	
 }
-
+#nav-bar .nav-list li {
+	cursor: pointer;
+}
 .dropdown-content {
 	display: block;
 	position:  absolute;

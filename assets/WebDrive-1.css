@@ -311,6 +311,7 @@ input[attr= 'search-bar-input'] {
     overflow: hidden;
     
 }
+
 .Folder-map {
     display: flex;
     position: relative;
@@ -323,14 +324,13 @@ input[attr= 'search-bar-input'] {
 .Folder-map > div{
     display:inline-flex;
     flex-direction: row;
-    font-size: 2.2vh;
-    width:3%;
+    font-size: 100%;
+    width:15%;
     height:100%;
     align-items:center;
     justify-content:center;
     color: #000000bd;
 }
-
 .Folder-map > .Folder-wrapper {
     width: 15%;
     height: 100%;
@@ -340,11 +340,127 @@ input[attr= 'search-bar-input'] {
     text-overflow: ellipsis;
     flex: 0 0 auto;
 }
+.Folder-map > .add-files {
+    display: flex;
+    position: relative;
+}
+.Folder-map > .add-files > .dropdown {
+    display: none;
+    position: absolute;
+    width:100%;
+    height:80%;
+    top:55%;
+}
+.add-files > .dropdown > .dropdown-menu {
+    display: inline-flex;
+    text-decoration: none;
+    flex-direction:column;
+    z-index: 100;
+    height:100%;
+    width:100%;
+    background:white;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+}
+.add-files > .dropdown > .dropdown-menu li{
+    display:block;
+    list-style: none;
+    width:100%;
+    height:25%;
+    margin-left:-10%;
+    margin-top:10%;
+    
+}
+.add-files > .dropdown > .dropdown-menu li input {
+    visibility: hidden;
+}
+@media screen and (max-width: 900px) {
+    .Folder-map > .add-files > .dropdown {
+        height:50%;
+    }
+    .add-files > .dropdown > .dropdown-menu li{
+        display:block;
+        list-style: none;
+        width:100%;
+        height:30%;
+        margin-left:-10%;
+        
+    }
+}
+.add-files > .dropdown > .dropdown-menu li a {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-decoration:none;
+    display:block;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    color:#808080;
+
+}
+.Folder-map .sort-by {
+    width: 15%;
+    text-align: left;
+}
+
+
+.Folder-map > .navigation-wrapper {
+    width: 100%;
+    height: 100%;
+    margin:0;
+    align-items: center;
+    justify-content:flex-start;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 0 0 auto;
+}
+.navigation-wrapper > div{
+    /* This is the place where the width should be altered */
+    display: inline-flex;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    width: 50%;
+    
+}
+.navigation-wrapper .navigation-wrapper-items {
+    max-width: 25%;
+    overflow:hidden;
+}
+.navigation-wrapper .navigation-wrapper-items > div {
+    display: inline-flex;
+    margin:0% 1% 0 1%;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    
+}
+/* .navigation-wrapper-items .ls-fm-Fname a {
+    display:inline-block;
+    width:20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+} */
+.navigation-wrapper  .checkbox-wrapper {
+    display:inline-flex;
+    position:relative;
+    width:auto;
+    margin-left:auto;
+    margin-right:11%;
+    align-self:center;
+    justify-self:flex-end;
+    --checkbox-height: 20px;
+}
+.navigation-wrapper > div > i {
+    margin: 0 0 0 5%;
+}
+
 .Folder-wrapper > div {
     display: inline-flex;
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
-
 }
 .Folder-map .fm-icon {
     padding-right:5%;
@@ -522,17 +638,165 @@ input[attr= 'search-bar-input'] {
     font-size: 50%;
     /*color: #3a3930de*/
 }
+
 .large-frame-items{
     display: none;
 }
+/** pop box completely dynamic**/
+
 .main-pop-box {
-    display: none;
+    display: flex;
     position: absolute;
     /* top:25%;
     left:25%;*/
+    top:-100%;
     height:100%;
     width:100%; 
     background: none;
+    justify-content:center;
+    /* align-items:center; */
+    transition: top .2s linear;
+}
+.main-pop-box .frame {
+    display:inline-flex;
+    position:relative;
+    flex-direction:row;
+    /* // this below should be dynamic */
+
+
+}
+.frame[attr="del-frame"]{
+    width:40%;
+    height:25%;
+    justify-content:center;
+    align-items:center;
+    background-color:white;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+    border-radius:20px;
+}
+
+.frame[attr="del-frame"] .close {
+    display: inline-flex;
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    align-self: flex-start;
+    justify-self: flex-end;
+    flex-direction: row-reverse;
+    right: 5%;
+    top:8%;
+
+}
+.frame[attr="del-frame"] .close i {
+    position: fixed;
+    width:auto;
+    height: auto;
+    font-size: 100%;
+}   
+.frame[attr="del-frame"] .option {
+    display:inline-flex;
+    position:relative;
+    width:50%;
+    height:14%;
+    position:relative;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+.frame[attr="del-frame"] .option a {
+    display:inline-flex;
+    width:20%;
+    aspect-ratio: 2 /1;
+    border-radius:10%;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-family: 'Poppins', sans-serif;
+    font-size:65%;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+}
+.frame[attr="popCopied"]{
+    width:10%;
+    height:5%;
+    justify-content:center;
+    align-items:center;
+    background-color:white;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+    border-radius:20px;
+}
+.frame[attr="popCopied"] a {
+    font-family: 'Poppins', sans-serif;    
+    width: auto;
+    height: auto;
+    font-size:80%;
+}
+.frame[attr ="info"] {
+    width:20%;
+    max-height: 45%;
+    height:35%;
+    justify-content:center;
+    align-items:center;
+    background-color:white;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+    border-radius:10px;
+    overflow:scroll;
+
+}
+.frame[attr ="info"] .close {
+    display: inline-flex;
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    align-self: flex-start;
+    justify-self: flex-end;
+    flex-direction: row-reverse;
+    right: 5%;
+    top:8%;
+}
+.frame[attr ="info"]  .close i {
+    position:fixed;
+    width:auto;
+    height: auto;
+    font-size: 100%;
+}
+.frame[attr ="info"] div {
+    display:inline-flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    top:10%;
+    width: 50%;
+    height: 100%;
+
+}
+    
+.frame[attr ="info"] div a {
+    font-family: 'Poppins', sans-serif;
+    font-size: 70%;
+}
+.frame[attr ="info"] .title-coloumn {
+    align-items: flex-start;
+
+}
+.frame[attr ="info"] .description-coloumn{
+    display: inline-flex;
+    align-items: flex-start;
+}
+.frame[attr ="info"] .title-coloumn .title-item {
+    height: 20%;
+}
+.frame[attr ="info"] .description-coloumn .description-item {
+    height: 20%;
+}
+@supports selector(::-webkit-scrollbar) {
+    .frame[attr ="info"]::-webkit-scrollbar {
+        width: 5px;
+        height:4px;
+        
+        background-color: #F5F5F5;        
+    }
 }
 #iframe-doc {
     display: flex;

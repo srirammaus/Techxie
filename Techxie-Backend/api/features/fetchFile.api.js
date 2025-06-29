@@ -17,11 +17,13 @@ let F_name;
 let F_num; // for create folder - current forlder where eit is creating, for del foler the number is delete folder
 // add auth
 function setParameters (req){
-    username = req.body.username;
-    userID=req.body.userID;
+    username = req.body.username || req.cookies.username;
+    userID=req.body.userID || req.cookies.userID;
     F_name=req.body.F_name;
     F_num= req.body.F_num; // for create folder - current forlder where eit is creating, for del foler the number is delete folder
+    console.log(F_num + "is it Nan")
     F_num = Number(F_num)
+    console.log(F_num + "is it Nann")
     F_id = req.body.F_id;
     f_id =req.body.f_id;
 
@@ -165,7 +167,8 @@ function uploadFileMiddleware(resolve,reject,req,response,next) {
             f_names.push(f_name)
         }
         fileTypes = file.classifiedFileType(req?.body?.fileExt);
-
+        console.log(username  + "This is that")
+        console.log(F_num + "IS the fum valid")
         file.getFolderInfo(username,userID,F_num,(err,i_count)=>{ //-- done
             if(err){
                 reject(err);

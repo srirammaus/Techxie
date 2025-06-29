@@ -21,70 +21,76 @@ class upload{ // check username , token , user is corresponding to theri types l
 		var username,file_original_name,userID,sessionID,session_token,csrf_token;
 		var f_names =[];
 		var fileExt = [];
-		var Multer = multer.diskStorage({
-			destination:(req,file,cb)=>{
-				let properties = ["body"]
-                let requiredParams = ["username","userID","xsrf_token","session_token","sessionID"]
+		try {
+			var Multer = multer.diskStorage({
+				destination:(req,file,cb)=>{
+					let properties = ["cookies"];
 
-				filter.Filter(req,null,null,properties,requiredParams).then(flag =>{
-					if(flag == 1){
-						username = req.body.username;
-						userID = req.body.userID;
-						session_token = req.body.session_token;
-						sessionID =  req.body.sessionID;
-						csrf_token = req.body.csrf_token || req.body.xsrf_token;
-						var xsrf_verification = new xsrf_verification_lib();
-						if(username == null || typeof username == "undefined" && sessionID == null || typeof sessionID == "undefined" && session_token == null || typeof session_token == "undefined" && csrf_token == null || typeof csrf_token == "undefined" && userID == null || typeof userID == "undefined" ){
-							cb(new ExceptionHandler.BadRequest("Invalid Inputs"))
+					let requiredParams = ["username","userID","token","session_token","sessionID"]
+					filter.Filter(req,null,null,properties,requiredParams).then(flag =>{
+						if(flag == 1){
+							console.log("This cookies")
+							console.log(req.cookies)
+							username = req.cookies.username ; //req.cookies.username;
+							userID = req.cookies.userID  //req.cookies.userID;
+							session_token = req.cookies.session_token  //req.cookies.session_token;
+							sessionID =  req.cookies.sessionID  //req.cookies.sessionID;
+							csrf_token = req.cookies.token  //req.cookies.token  ;
+							var xsrf_verification = new xsrf_verification_lib();
+							if(username == null || typeof username == "undefined" && sessionID == null || typeof sessionID == "undefined" && session_token == null || typeof session_token == "undefined" && csrf_token == null || typeof csrf_token == "undefined" && userID == null || typeof userID == "undefined" ){
+								cb(new ExceptionHandler.BadRequest("Invalid Inputs"))
+							}
+							else if(username != "undefined" && this.isValidType(username)){
+								new OAuth().Authenticate(username,session_token,sessionID,(err,result)=>{
+									if(err){
+										cb(new Error(err.message));
+									}else if (result == 1){
+										xsrf_verification.setter([userID,csrf_token]);
+										xsrf_verification.verify((err,flag,result_)=>{
+											if(err){
+												cb(new Error(err.message));
+											}else if(flag ==0 ){
+												cb(new ExceptionHandler.UnAuthorized("csrf token expired"))
+											}else{
+												cb(null,this.getBucket(userID))
+											}
+										})
+										
+									}else{
+										cb(new ExceptionHandler.InternalServerError("something went wrong"))
+									}
+								})
+								
+							}	 // not uploaded : error handling problem everywhere
+							else{
+								cb( new ExceptionHandler.InternalServerError("something went  wrong"))
+							}
+						}else {
+							cb(new  ExceptionHandler.InternalServerError("something went wrong"))
 						}
-						else if(username != "undefined" && this.isValidType(username)){
-							new OAuth().Authenticate(username,session_token,sessionID,(err,result)=>{
-								if(err){
-									cb(new Error(err.message));
-								}else if (result == 1){
-									xsrf_verification.setter([userID,csrf_token]);
-									xsrf_verification.verify((err,flag,result_)=>{
-										if(err){
-											cb(new Error(err.message));
-										}else if(flag ==0 ){
-											cb(new ExceptionHandler.UnAuthorized("csrf token expired"))
-										}else{
-											cb(null,this.getBucket(userID))
-										}
-									})
-									
-								}else{
-									cb(new ExceptionHandler.InternalServerError("something went wrong"))
-								}
-							})
-							
-						}	 // not uploaded : error handling problem everywhere
-						else{
-							cb( new ExceptionHandler.InternalServerError("something went  wrong"))
-						}
-					}else {
-						cb(new  ExceptionHandler.InternalServerError("something went wrong"))
-					}
-				}).catch(err=>{
-					cb (err)
-				})
+					}).catch(err=>{
+						cb (err)
+					})
 				
-			},
-			filename: (req,file,cb)=>{
-				// check whether filen name already exixts or not ! same file uploaded not a problem .
-				let f_name = this.setf_name(file?.originalname);
-				let fExt = file.mimetype.split('/')[1];
-				file_original_name = f_name //file.originalname
-		
-				f_names.push(f_name);
-				fileExt.push(fExt);
-				req.body.f_names = f_names;
-				req.body.fileExt = fileExt
-				if(file_original_name != "undefined" &&this.isValidType(file_original_name)){
-					cb(null,this.getFileName(file_original_name));
-				}	
-			}
-		})
+				},
+				filename: (req,file,cb)=>{
+					// check whether filen name already exixts or not ! same file uploaded not a problem .
+					let f_name = this.setf_name(file?.originalname);
+					let fExt = file.mimetype.split('/')[1];
+					file_original_name = f_name //file.originalname
+			
+					f_names.push(f_name);
+					fileExt.push(fExt);
+					req.body.f_names = f_names;
+					req.body.fileExt = fileExt
+					if(file_original_name != "undefined" &&this.isValidType(file_original_name)){
+						cb(null,this.getFileName(file_original_name));
+					}	
+				}
+			})
+		}catch(err){
+			console.log(err.message + "Message")
+		}
 		return Multer;
 	}
 	isValidFile(fileType){ //check if the file type is valid

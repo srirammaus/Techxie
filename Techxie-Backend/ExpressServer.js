@@ -68,20 +68,20 @@ const { errorMonitor } = require('events');
 
 app.engine('Handlebars',Handlebars.engine());
 app.set('view engine','Handlebars');
-app.set('views','D:/Techxie/Techxie-Backend/api/routers/views');
+app.set('views','F:/nodejs/projects/Techxie/Techxie-Backend/api/routers/views');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(express.static('D:/Techxie'));
-app.use(express.static("D:/Techxie/scripts"))
-app.use(express.static("D:/Techxie/pages"))
-app.use(express.static("D:/Techxie/pages/errPages"))
+app.use(express.static('F:/nodejs/projects/Techxie/'));
+app.use(express.static("F:/nodejs/projects/Techxie/scripts"))
+app.use(express.static("F:/nodejs/projects/Techxie/pages"))
+app.use(express.static("F:/nodejs/projects/Techxie/pages/errPages"))
 app.use(cookieParser())
 
 app.use(ErrorMiddleware.caughtAnyExceptions)
-app.use('/User',UserRoute)
-app.use('/api',openAPI);
-app.use('/',PageRoute);
+app.use('/User',UserRoute) //rest api
+app.use('/api',openAPI); //api routers
+app.use('/',PageRoute); //page routers
 
 
 // app.use(bodyParser.json());

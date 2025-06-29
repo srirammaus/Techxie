@@ -61,7 +61,8 @@ function Filter(req,res,next,properties,requiredParams){
                         }
                     }            
                 }else {
-                    reject(new ExceptionHandler.BadRequest ("Invalid Inputss"))
+                    console.log(JSON.stringify(req[prop]) + " here the error")
+                    reject(new ExceptionHandler.BadRequest ("Invalid Inputs"))
                 }
             }
             resolve(1);

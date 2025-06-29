@@ -22,14 +22,29 @@ body{
     justify-content: center;
     text-align: center;
 }
+.login-form {
+    display:inline-flex;
+    width:100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.login-form [class$= "-btn"] {
+}
 .red-alert {
+    cursor: auto;
     color: red;
     font-size: 1vw; /* Use viewport units for scalability */
     /* margin: 0 0 0 5%; */
+    width: 90%;
+    font-size: 80%;
     text-align: left;
-    display: block;
-    width: 100%;
+    align-self: center;
+    display: none;
     height: auto;
+    background:none;
+    
 }
 .em {
     display: none;
@@ -88,10 +103,10 @@ button {
 .fg-btn {
     display:block;
     height: auto;
-    width: 100%;
+    width: 90%;
     text-align: left;
-    align-self: start;
-    font-size: 1vw;
+    align-self: center;
+    font-size: 80%;
     color:black;
     background: none;
 
@@ -105,12 +120,13 @@ button {
     color:blue;
 }
 input[type="text"], input[type="password"], input[type="email"], input[type="tel"] {
-    width: 100%; /* Full width for better readability */
+    width: 90%; /* Full width for better readability */
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 @media only screen and (max-width: 768px) {
     .container {
         margin: 20px auto;
@@ -118,6 +134,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="tel
     .login{
         width: 95%; /* More space on smaller screens */
         max-width:95%;
+    }
+    .login-form {
+        width: 100%;
+        
     }
 }
 

@@ -17,6 +17,7 @@ function verifyMailMiddleWare(req,res,next) { // use it for change mail
                 userID = Number(req.body.userID);
                 email = req.body.email;
                 // username,email,userID   //"sriram","sriram@gmail.com",14
+
                 em.setUser(username,email,userID ).setToken();
                 return new Promise((resolve,reject)=>{
                     em.verifyEmail(null,null,null,(err,flag) =>{
@@ -33,9 +34,10 @@ function verifyMailMiddleWare(req,res,next) { // use it for change mail
                                                 reject(err)
                                             }else{
                                                 res.send({status:1,message:"email sent"})
+                                                
                                             }
                                         });
-                                        
+
                                     } 
                                     else{
                                         reject(new ExceptionHandler.InternalServerError("something went wrong"))
@@ -52,13 +54,16 @@ function verifyMailMiddleWare(req,res,next) { // use it for change mail
     
         }
         catch(err) {
+            // console.log("The error is here 1 :" + err.message)
+
             next(err)
-            // console.log(err.message)
         }
         }else {
+
             next(new ExceptionHandler.InternalServerError("something went wrong"))
         }
     }).catch(err=>{
+
         next(err)
     })
        

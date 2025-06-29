@@ -1,7 +1,7 @@
 const express = require('express');//try
 const router = express.Router();
 const ExceptionHandler = require("../../../lib/ExceptionHandlers.js")
-router.use(express.static('D:/Techxie'));
+router.use(express.static('F:/nodejs/projects/Techxie'));
 /**
  * SSR
  * content-static content
@@ -14,11 +14,11 @@ router.use(express.static('D:/Techxie'));
   * handlebars - static
   */
 router.get('/',function(req,res){
-    res.sendFile("D:/Techxie/pages/techxie.html")
+    res.sendFile("F:/nodejs/projects/Techxie/pages/techxie.html")
 })
- 
+//  i changed the next line from home.html to techxie.html , 
 router.get('/home',function(req,res,next){
-    res.sendFile("D:/Techxie/pages/home.html")
+    res.sendFile("F:/nodejs/projects/Techxie/pages/techxie.html")
 })
 router.get('/newuser',function(req,res,next) {
     /**
@@ -26,14 +26,14 @@ router.get('/newuser',function(req,res,next) {
      * signup form api
      * e -verification api
      */
-    res.sendFile('D:/Techxie/pages/signup.html');
+    res.sendFile('F:/nodejs/projects/Techxie/pages/signup.html');
 })
 router.get('/login',function(err,res){
     /**
      * Login
      * if everifiation pednig it then shows
      */
-    res.sendFile("D:/Techxie/pages/login.html")
+    res.sendFile("F:/nodejs/projects/Techxie/pages/login.html")
 })
 router.all('*',function(req,res,next){
     

@@ -23,35 +23,35 @@ function ErrorMiddleware (err,req,res,next) {
         case err instanceof ExceptionHandler.PageEmptyFolder:
             console.log(err)
             res.statusCode = 200;
-            res.sendFile("D:/Techxie/pages/errPages/EmptyFolder.html")
+            res.sendFile("F:/nodejs/projects/Techxie/pages/errPages/EmptyFolder.html")
             break;
         case err instanceof ExceptionHandler.PageBadGateway: //badgateway
-           res.sendFile("D:/Techxie/pages/errPages/BadGateway.html");
+           res.sendFile("F:/nodejs/projects/Techxie/pages/errPages/BadGateway.html");
             break;
         case err instanceof ExceptionHandler.PageBadRequest: //badgateway
-           res.sendFile("D:/Techxie/pages/errPages/BadGateway.html");
+           res.sendFile("F:/nodejs/projects/Techxie/pages/errPages/BadGateway.html");
             break;
         case err instanceof ExceptionHandler.PageConflictError: //Server error
-           res.sendFile("D:/Techxie/pages/errPages/ServerErr.html");
+           res.sendFile("F:/nodejs/projects/Techxie/pages/errPages/ServerErr.html");
             break;
         case err instanceof ExceptionHandler.PageForbidden: //malformed request  //bad gateway
-               res.sendFile("D:/Techxie/pages/errPages/BadGateway.html");
+               res.sendFile("F:/nodejs/projects/Techxie/pages/errPages/BadGateway.html");
             break;
         case err instanceof ExceptionHandler.PageNotFound: //pagenotfound
             console.log("I should caught")
-            res.sendFile("D:/Techxie/pages/errPages/NotFound.html");
+            res.sendFile("F:/nodejs/projects/Techxie/pages/errPages/NotFound.html");
             console.log("I should caught 2")
             break;
         case err instanceof ExceptionHandler.PageServiceUnavailable: // serviceunable
-           res.sendFile("D:/Techxie/pages/errPages/ServiceUnavailable.html");
+           res.sendFile("F:/nodejs/projects/Techxie/pages/errPages/ServiceUnavailable.html");
             break;
         case err instanceof ExceptionHandler.PageUnAuthorized: //service unavail
-           res.sendFile("D:/Techxie/pages/errPages/ServiceUnavailable.html");
+           res.sendFile("F:/nodejs/projects/Techxie/pages/errPages/ServiceUnavailable.html");
             break;
         case err instanceof ExceptionHandler.PageError: //server erro
             console.log(err + "printed here")
     
-            res.sendFile("D:/Techxie/pages/errPages/ServerErr.html");
+            res.sendFile("F:/nodejs/projects/Techxie/pages/errPages/ServerErr.html");
             break;
         case err instanceof ReferenceError: //Internale server Error code
             //logs

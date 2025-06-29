@@ -6,14 +6,33 @@ var results = {
 function setCookie(res,arr) {
     for(let cookie of arr) {
         if(cookie?.expires){
-            res.cookie(cookie.name,cookie.value,{
+            if(cookie.name == "username" || cookie.name == "userID") {
+                    res.cookie(cookie.name,cookie.value,{
+                    expires:new Date(cookie?.expires ),
+                    //for username and user ID the http only is false
+                    
+                    httpOnly:false,
+                });  
+            }else {
+                res.cookie(cookie.name,cookie.value,{
                 expires:new Date(cookie?.expires ),
+                //for username and user ID the http only is false
+                
                 httpOnly:true,
-            });
+                });
+            }
+
         }else {
-            res.cookie(cookie.name,cookie.value,{
+            if(cookie.name == "username" || cookie.name == "userID")  {
+                res.cookie(cookie.name,cookie.value,{
+                httpOnly:false,
+            });
+            }else {
+                res.cookie(cookie.name,cookie.value,{
                 httpOnly:true,
             });
+            }
+            
         }
 
 

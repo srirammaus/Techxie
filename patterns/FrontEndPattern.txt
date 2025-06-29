@@ -52,3 +52,13 @@ general design :-
 				* right side :-  of main frame sorting orders 
 				* view orders
 				* main frame  default orders - grid with thumbnail
+
+		above iframe :-
+			back +  home  +  sort by 
+		below iframe :-
+
+			drive folder navigator:-
+				folder navigator + ..SPACE... + del + checkbox  + refresh [del option should be disbaled unkess check should be ticked]
+
+
+				del pop up

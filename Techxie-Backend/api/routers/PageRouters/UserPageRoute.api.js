@@ -35,10 +35,10 @@ const router = express.Router();
  */
 
 
-router.use(express.static('D:/Techxie/assets'));
-router.use(express.static("D:/Techxie/scripts"))
-router.use(express.static("D:/Techxie/pages"))
-router.use(express.static("D:/Techxie/pages/errPages"))
+router.use(express.static('F:/nodejs/projects/Techxie/assets'));
+router.use(express.static("F:/nodejs/projects/Techxie/scripts"))
+router.use(express.static("F:/nodejs/projects/Techxie/pages"))
+router.use(express.static("F:/nodejs/projects/Techxie/pages/errPages"))
 router.use(express.static('./views'))
 
 
@@ -54,11 +54,11 @@ router.use(express.static('./views'))
 
 router.get('/pdfViewer',function(req,res) { //open by new tab
   //chekc for ouath and send pdf
-  res.sendFile('D:/Techxie/pages/pdfViewer.html') // this is from the file which saved in sepreate folder
+  res.sendFile('F:/nodejs/projects/Techxie/pages/pdfViewer.html') // this is from the file which saved in sepreate folder
 })
 router.get('/videoplayer',function(req,res) { //player inside the iframe
   //strem video and check for OAuth
-  res.sendFile('D:/Techxie/pages/videoPlayer.html')
+  res.sendFile('F:/nodejs/projects/Techxie/pages/videoPlayer.html')
 })
 router.get('/settings',function(req,res){
    res.render('settings',{layout:false})
@@ -76,11 +76,12 @@ router.get('/settings',function(req,res){
     * drive Recents
     * drive Trash
     */
-   // res.sendFile("D:/Techxie/pages/webdrive.html");
+   // res.sendFile("F:/nodejs/projects/Techxie/pages/webdrive.html");
    res.render('webdrive',{layout:false})
 })
 //for now test it , later alter the homemiddleware, because it asking for username, userid ,everything .. once session management plan creted change it
  router.post('/home',homeMiddleware.homeMiddleware,function(req,res){ // In pages it should show internal server error as page and 404 not found page too
+   console.log("Reached here Home")
    let Folders = req.body.Folders;
    let Files = req.body.Files;
  
@@ -102,7 +103,7 @@ router.post('/Trash',homeMiddleware.homeMiddleware,function(req,res){
 })
 //---
 router.get("/playground",function(req,res) {
-   res.sendFile('D:/Techxie/playground.html')
+   res.sendFile('F:/nodejs/playground.html')
 })
 
 

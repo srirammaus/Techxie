@@ -1,3 +1,4 @@
+// import { uploadFile } from "../lib/webdrive.lib";
 
 export  default {
     baseURL:"http://techxie.local:5000/",
@@ -9,4 +10,6 @@ export  default {
     tool_lstAPI:"http://techxie.local:5000/User/api/tools_lst",
     csrfAPI:"http://techxie.local:5000/User/api/verify",
     changePwd:"http://techxie.local:5000/User/api/changePwd",
+    driveUploadFile:"http://techxie.local:5000/user/file/upload",
+    createFolder:"http://techxie.local:5000/user/folder/createfolder"
 }

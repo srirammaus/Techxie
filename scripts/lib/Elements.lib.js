@@ -7,6 +7,7 @@ export default class Elements {
 	static URL = apiConfig.baseURL;
 	static extension = ".html";
 
+	static body = document.querySelector("body")
 	static iframe_element = document.getElementById("iframe-doc"); //not use
     static header_= document.querySelector('.header')
     static header_container = document.querySelector('.header > .header-container');
@@ -24,6 +25,13 @@ export default class Elements {
 	static Account_settings= document.querySelector('.nav-item[attr=Account-settings]')
     static folder_wrapper = document.querySelector('.Folder-wrapper > div > a');
 	static homeIcon = document.getElementById("home-icon");
+	static addFiles = document.querySelector(".add-files i");
+	static addFilesMenu = document.querySelector(".add-files > .dropdown ")
+	static driveUpload = document.querySelector(".add-files > .dropdown > .dropdown-menu .upload ");
+	static driveUploadInput =  document.querySelector(".add-files > .dropdown > .dropdown-menu .upload input ");
+	static createFolder = document.querySelector(".add-files > .dropdown > .dropdown-menu .create-folder")
+	static homeIcon = document.getElementById("home-icon")	
+	static BackBtn = document.querySelector(".Folder-map .Back i")
 	static bodyParams = { // default for body
 		F_num: 0,
 		F_id: "F-0",

@@ -4,7 +4,7 @@ const express = require('express');
 var fetchFolder = require('../../features/fetchFolder.api.js');
 
 const router =  express.Router();
-router.use(express.static('D:/Techxie'));
+router.use(express.static('F:/nodejs/projects/Techxie/'));
 router.post('/createFolder',fetchFolder.MiddleWare(1),function(req,res){ //createFolder
     
 })

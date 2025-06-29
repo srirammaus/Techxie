@@ -9,7 +9,8 @@ class Files{
 		return DB;
 	}
 
-	getFolderInfo(username,userID,F_num,cb){ // checkLastFolderNum in folder.js
+	getFolderInfo(username,userID,F_num,cb){ // checkLastFolderNum in folder
+		console.log(F_num + "This is not a nan")
 		var query = {username: username,USER_ID: Number(userID)};
 		this.getConnection().getConnection((err,db)=>{
 			if(err){
@@ -34,6 +35,7 @@ class Files{
 									cb(null,i_count)
 								}
 							}else{
+								console.log("Error thrown here" + res.F_count + "  " + F_num)
 								cb(new ExceptionHandler.BadRequest("you trynaa hack me by entering diff folder number"))
 							}
 						}

@@ -5,6 +5,8 @@
 import Elements from '/scripts/lib/Elements.lib.js';
 import * as Weblib from "/scripts/lib/webdrive.lib.js";
 import pageURLs from "/scripts/utils/pageURLs.js";
+import apiConfig from '/scripts/utils/apiConfig.js';
+import * as WebDrivepageFunc2 from "/scripts/pages/WebDrivepageFunc2.js"
 /**
  * my category
  * onload
@@ -30,8 +32,13 @@ export class WebDrive {
 		this.extension = Elements.extension;
 		this.search_bar_input = Elements.search_bar_input;
 		this.search_dropdown = Elements.search_dropdown;
+		this.driveUpload = Elements.driveUpload;
+		this.driveUploadInput = Elements.driveUploadInput;
+		this.createFolder = Elements.createFolder;
+		this.addFiles = Elements.addFiles ;
+		this.addFilesMenu = Elements.addFilesMenu;
 
-		//Run
+		//Run	
 		this.header();
 		this.mainFunc();
 
@@ -54,6 +61,13 @@ export class WebDrive {
 		window.addEventListener('load',()=>{ 
 			this.header();
 			this.mainFunc();
+			this.addFiles_();
+			this.upload();
+			this.createFolder_()
+			this.goBack();
+
+			//By default the Element.bodypararms.F_num is zero , so dont need to get that from the session storage
+			//page url is now temporary
 			Weblib.fetchIfrPage(Elements.iframe_element,pageURLs.home,"POST",Elements.bodyParams).then((ifr) => {
 					WebDrive.iframe_();
 				
@@ -68,6 +82,7 @@ export class WebDrive {
 		
 		window.addEventListener('resize',()=>{
 			if(window.innerWidth > 800) {
+				this.header();
 				WebDrive.iframe_()
 			}
 		})
@@ -104,11 +119,14 @@ export class WebDrive {
 
 			svg.addEventListener("load", ()=> {
 			  this.header_container.style.height = this.svg.getBoundingClientRect().height + 'px';
+			  console.log(document.querySelector(".wave-obj").getBoundingClientRect().height + 'px' + "before")
+
 			  this.header_container.style.width = '100%';
 			  this.header_container.style.transform = 'translate(0%,-25%)';
 			});
 		}else{
 	  		this.header_container.style.height = document.querySelector(".wave-obj").getBoundingClientRect().height + 'px';
+			console.log(document.querySelector(".wave-obj").getBoundingClientRect().height + 'px' + "After")
 			this.header_container.style.width = '100%';
 			this.header_container.style.transform = 'translate(0%,-25%)';
 		}
@@ -125,7 +143,39 @@ export class WebDrive {
 	
 		
 	}
+	addFiles_() {
+		let addFilesMenu = this.addFilesMenu;
+		
+		this.addFiles.addEventListener("click",function(e){
+			e.stopPropagation()
+			if(window.getComputedStyle(addFilesMenu).display == "none" ){
 
+				addFilesMenu.style.display = "flex"
+			}else {
+				addFilesMenu.style.display = "none"
+
+			}
+		})
+	}
+	upload () {
+		/** upload and show some loading graphics */
+		let driveUploadInput = this.driveUploadInput
+		this.driveUpload.addEventListener("click",function(){
+			WebDrivepageFunc2.upload()
+		})
+		// Weblib.uploadFile
+	}
+	createFolder_ () {
+		this.createFolder.addEventListener("click",function(){
+			WebDrivepageFunc2.createFolder_()
+		})
+	}
+	goBack () {
+		Elements.BackBtn.addEventListener("click",function(){
+			// Weblib.cacheIfrPage(Elements.iframe_element,pageURLs.home,Weblib.getCurrentFolder())
+			WebDrivepageFunc2.Back()
+		})
+	}
 	/**
 	 * The lib function must be promise or async await
 	 * This  function sets with and height for the iframe , first this verified whether iframe is alive or not

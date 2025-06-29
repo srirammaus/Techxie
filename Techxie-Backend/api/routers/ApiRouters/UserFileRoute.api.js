@@ -5,9 +5,8 @@ var drive_upload =  require('../../features/drive.upload.api.js');
 var Auth = require('../../Auth.api.js');
 
 const router =  express.Router();
-router.use(express.static('D:/Techxie'));
+router.use(express.static('F:/nodejs/projects/Techxie/'));
 function errHandler (err,req,res,next) {
-    console.log("this happend")
     if(err) {
        res.send({err:err.message})
     }

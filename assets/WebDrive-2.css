@@ -1,9 +1,9 @@
 :root{
- --primary-color: #ffff33;
- --secondary-color: rgb(204, 255, 255,.3);
- --third-color: white;
- --four-color: #C3E0E0;
-/* */
+    --primary-color: #ffff33;
+    --secondary-color: rgb(204, 255, 255,.3);
+    --third-color: white;
+    --four-color: #C3E0E0;
+    /* */
 }
 
 
@@ -12,7 +12,7 @@ body {
     margin: 0;
     padding: 0;
     /* background-color: yellow; */
- 
+
 }
 @supports selector(::-webkit-scrollbar) {
     body::-webkit-scrollbar {
@@ -22,11 +22,12 @@ body {
     }
 }
 * {
-   font-size: 2vw;
+    font-size: 2vw;
 }
 .header {
     position: relative;
     display:block;
+    
 }
 .wave { 
     display: block;
@@ -109,7 +110,7 @@ body {
     border-radius: 100px;
     /*transform: translate(0,-70%);*/
     transform: translate(0,0%);
-   
+    
     /*visibility: hidden;*/
 }
 .wrapper {
@@ -331,7 +332,7 @@ input[attr= 'search-bar-input'] {
 }
 .nav-item  i {
     font-size:6vw;
- 
+
 }
 .nav-item a {
     font-family: 'Lemon', serif;
@@ -365,7 +366,44 @@ input[attr= 'search-bar-input'] {
     height: 100%;
     flex-direction: row;
 }
+.Folder-map > .navigation-wrapper {
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    align-items:center;
+    justify-content:flex-start;
+    
+}
 
+.navigation-wrapper .navigation-wrapper-items {
+    display:inline-flex;
+    width:50%;
+    height:100%;
+    align-items:center;
+    overflow:hidden;
+}
+.navigation-wrapper .navigation-wrapper-items div{
+    display: inline-flex;
+    margin-left: 3%;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+.navigation-wrapper-items div:first-child{
+    margin-left:10%;
+}
+.navigation-wrapper-items div a {
+    padding-right: 3%;
+}
+.checkbox-wrapper {
+    display: inline-flex;
+    width: auto;
+    margin-left: auto;
+    justify-self: flex-end;
+    margin-right: 10%;
+    --checkbox-height: 20px;
+
+}
 .Folder-map .fm-icon {
     display: inline-flex;
     width: 33%;
@@ -511,7 +549,7 @@ input[attr= 'search-bar-input'] {
 }
 .small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] > div[attr="pop-item"],
 .small-File div[attr='small-File-more'] > div[attr="pop-box"] > div[attr="pop-item"] {
-   /* float:left;
+    /* float:left;
     width:80%;
     height:33%;
     margin: 0 0 0 30%;
@@ -608,222 +646,356 @@ input[attr= 'search-bar-input'] {
     align-items:center;
 }
 .page-back-btn div[attr="pg-wrapper"] {
-    margin: 0 0 0 -25%;
+margin: 0 0 0 -25%;
 }
 .page-front-btn  div[attr="pg-wrapper"] {
-    margin: 0 0 0 25%;
+margin: 0 0 0 25%;
 }
 .page-btn div i {
-    font-size:4.5vw;
+font-size:4.5vw;
 
 }
 .page-back-btn i{
-    margin: 0;
+margin: 0;
 }
 .page-front-btn i{
-    margin: 0;
-    /*background: black;*/
-    
+margin: 0;
+/*background: black;*/
+
 }
 .main-pop-box {
-    display: none;
+    display: flex;
     position: absolute;
     /* top:5%;
     left:22.5%;*/
-    height:100%;
-    width:100%; 
-    background:none;
-}
-/* I think this saves */
-@media screen and (max-width: 420px) { 
-    * {
-        font-size: 3vw;
-    }
-
-    .profile-icon-container {
-        display: inline-flex;
-        width: 70%;
-        /*transform: translate(0,-50%);*/
-        transform: translate(0,0%);
-        aspect-ratio: 1/1;
-        border-radius: 100%;
-        background: white;
-        overflow: hidden;
-        justify-content:center;
-        align-items:center;
-        box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
-
-    }
-
-    
-    .search-bar {
-        display: block;
-        position: relative;
-        width: 100%;
-        height: 25%;
-        background: white;
-        border-radius: 100px;
-        /*transform: translate(0,-70%);*/
-        transform: translate(0,0%);
-        /*visibility: hidden;*/
-    }
-
-
-    .nav-profile-icon-container {
-        display: inline-flex;
-        width: 55%;
-        aspect-ratio: 1/1;
-        border-radius: 100%;
-        background: white;
-        overflow: hidden;
-        justify-content:center;
-        align-items:center;
-        box-shadow: 1px 1px 5px 5px #aaaaaa,-1px -1px 5px 5px #aaaaaa;
-    }
-
-
-    .nav-profile-container >div[attr=user] {
-        width: 100%;
-        /*#1e1212bf*/
-        color:#808080;
-
-    }   
-    .nav-profile-container >div[attr=user] a {
-        font-size:5vw;
-    }
-    .nav-profile-container >div[attr=email] {
-        width: 70%;
-        font-size: 200%;
-        /*#0000008a*/
-        color:#808080;
-    }
-    .nav-profile-container >div[attr=email]{
-        font-size:2vw;
-    }
-
-    /*parent for the below i*/
-
-
-    .nav-item  i {
-        font-size:9vw;
-     
-    }
-    .nav-item a {
-        font-family: 'Lemon', serif;
-        font-size: 5vw;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-
-    }
-
-
-    .small-Folder div[attr="small-Folder-icon"],.small-File div[attr="small-File-icon"] {
-        justify-content:center;
-        width:20%;
-        flex: 0 0 auto;
-        font-size:200%;
-    }
-    .small-Folder div[attr="small-Folder-icon"] i ,.small-File div[attr="small-File-icon"] i{
-        font-size:4vw;
-    }
-
-    .small-Folder div[attr="small-Folder-name"] a,.small-File div[attr="small-File-name"] a {
-        font-family: 'Poppins', sans-serif;
-        color: #000000d4;
-        font-weight: bold;
-        font-size:3vw;
-    }
-    .small-Folder div[attr="small-Folder-name"]  a[attr=description] ,.small-File div[attr="small-File-name"]  a[attr=description] {
-        font-family: 'Poppins', sans-serif;
-        font-size:1.8vw;
-        /*color: #3a3930de*/
-    }
-
-
-    .small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] > div[attr="pop-item"] {
-       /* float:left;
-        width:80%;
-        height:33%;
-        margin: 0 0 0 30%;
-        font-family: 'Poppins', sans-serif;*/
-        display: inline-block;
-        position: relative;
-        transform:translate(0,0);
-        width: 100%;
-        height:33%;
-        border:none;
-        box-shadow:none;
-
-    }
-    .small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] i {
-        display:inline-block;
-        float:left;
-        margin:6% 0 0 5%;
-        height:100%;
-    }
-    .small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] a {
-        display:inline-block;;
-        margin:5% 0 0 15%;
-        font-family: 'Poppins', sans-serif;
-        width: 50%;  
-    }
-
-    .small-File div[attr="small-File-icon"] img {   
-        height: 30%;
-    }
-
-
-    .page-btn {
-        display: flex;
-        position: fixed;
-        /*background: yellow;*/
-        top: 81%;
-        width: 100%;
-        height: 15%;
-    }
-    .page-btn .page-back-btn, .page-btn .page-front-btn {
-        display: inline-flex;
-        width: 50%;
-        height: 100%;
-        align-items: center;
-        justify-content: center;
-    }
-    .page-btn div[attr="pg-wrapper"]  {
-        display:inline-flex;
-        position:relative;
-        width:25%;
-        aspect-ratio:1/1;
-        background: white;
-        box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
-        border-radius: 100%;
-        /*for disblae*/
-        /*color: #00000070; */
-        color: #000000a6;
-        justify-content:center;
-        align-items:center;
-    }
-
-    .page-btn div i {
-        font-size:7vw;
-
-    }
-    .page-back-btn i{
-        margin: 0;
-    }
-    .page-front-btn i{
-        margin: 0;
-        /*background: black;*/
-    }
-    .main-pop-box {
-
-    display: none;
-    position: absolute;
-    /* top:25%;
-    left:25%;*/
+    top:-100%;
     height:100%;
     width:100%; 
     background: none;
+    justify-content:center;
+    /* align-items:center; */
+    transition: top .2s linear;
+}
+
+.main-pop-box .frame {
+    display:inline-flex;
+    position:relative;
+    flex-direction:row;
+    /* // this below should be dynamic */
+
+
+}
+.frame[attr = "del-frame"]{
+    width:50%;
+    height:17%;
+    justify-content:center;
+    align-items:center;
+    background-color:white;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+    border-radius:20px;
+}
+
+.frame[attr = "del-frame"] .close {
+    display: inline-flex;
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    align-self: flex-start;
+    justify-self: flex-end;
+    flex-direction: row-reverse;
+    right: 5%;
+    top:8%;
+
+}
+.frame[attr = "del-frame"] .close i {
+    width:auto;
+    height: auto;
+    font-size: 100%;
+}   
+.frame[attr = "del-frame"] .option {
+    display:inline-flex;
+    position:relative;
+    width:50%;
+    height:14%;
+    position:relative;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+.frame[attr = "del-frame"] .option a {
+    display:inline-flex;
+    width:20%;
+    aspect-ratio: 2 /1;
+    border-radius:10%;
+    text-align:center;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-family: 'Poppins', sans-serif;
+    font-size:65%;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+}
+.frame[attr="popCopied"] {
+    width:10%;
+    height:5%;
+    justify-content:center;
+    align-items:center;
+    background-color:white;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+    border-radius:20px;
+    overflow: hidden;
+}
+.frame[attr="popCopied"] a {
+    font-family: 'Poppins', sans-serif;    
+    width: auto;
+    height: auto;
+    font-size:80%;
+}
+.frame[attr ="info"] {
+    width:60%;
+    max-height: 45%;
+    height:35%;
+    justify-content:center;
+    align-items:center;
+    background-color:white;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+    border-radius:10px;
+    overflow:scroll;
+
+}
+.frame[attr ="info"] .close {
+    display: inline-flex;
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    align-self: flex-start;
+    justify-self: flex-end;
+    flex-direction: row-reverse;
+    right: 5%;
+    top:8%;
+}
+.frame[attr ="info"]  .close i {
+    position: fixed;
+    width:auto;
+    height: auto;
+    font-size: 100%;
+}
+.frame[attr ="info"] div {
+    display:inline-flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    top:10%;
+    width: 50%;
+    height: 100%;
+
+}
+    
+.frame[attr ="info"] div a {
+    font-family: 'Poppins', sans-serif;
+    font-size: 70%;
+}
+.frame[attr ="info"] .title-coloumn {
+}
+.frame[attr ="info"] .description-coloumn{
+    display: inline-flex;
+    align-items: flex-start;
+}
+.frame[attr ="info"] .title-coloumn .title-item {
+    height: 20%;
+}
+.frame[attr ="info"] .description-coloumn .description-item {
+    height: 20%;
+}
+@supports selector(::-webkit-scrollbar) {
+    .frame[attr ="info"]::-webkit-scrollbar {
+        width: 5px;
+        height:4px;
         
+        background-color: #F5F5F5;        
     }
 }
+/* I think this saves */
+@media screen and (max-width: 420px) { 
+* {
+    font-size: 3vw;
+}
+
+.profile-icon-container {
+    display: inline-flex;
+    width: 70%;
+    /*transform: translate(0,-50%);*/
+    transform: translate(0,0%);
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    background: white;
+    overflow: hidden;
+    justify-content:center;
+    align-items:center;
+    box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+
+}
+
+
+.search-bar {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 25%;
+    background: white;
+    border-radius: 100px;
+    /*transform: translate(0,-70%);*/
+    transform: translate(0,0%);
+    /*visibility: hidden;*/
+}
+
+
+.nav-profile-icon-container {
+    display: inline-flex;
+    width: 55%;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    background: white;
+    overflow: hidden;
+    justify-content:center;
+    align-items:center;
+    box-shadow: 1px 1px 5px 5px #aaaaaa,-1px -1px 5px 5px #aaaaaa;
+}
+
+
+.nav-profile-container >div[attr=user] {
+    width: 100%;
+    /*#1e1212bf*/
+    color:#808080;
+
+}   
+.nav-profile-container >div[attr=user] a {
+    font-size:5vw;
+}
+.nav-profile-container >div[attr=email] {
+    width: 70%;
+    font-size: 200%;
+    /*#0000008a*/
+    color:#808080;
+}
+.nav-profile-container >div[attr=email]{
+    font-size:2vw;
+}
+
+/*parent for the below i*/
+
+
+.nav-item  i {
+    font-size:9vw;
+
+}
+.nav-item a {
+    font-family: 'Lemon', serif;
+    font-size: 5vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+
+
+.small-Folder div[attr="small-Folder-icon"],.small-File div[attr="small-File-icon"] {
+    justify-content:center;
+    width:20%;
+    flex: 0 0 auto;
+    font-size:200%;
+}
+.small-Folder div[attr="small-Folder-icon"] i ,.small-File div[attr="small-File-icon"] i{
+    font-size:4vw;
+}
+
+.small-Folder div[attr="small-Folder-name"] a,.small-File div[attr="small-File-name"] a {
+    font-family: 'Poppins', sans-serif;
+    color: #000000d4;
+    font-weight: bold;
+    font-size:3vw;
+}
+.small-Folder div[attr="small-Folder-name"]  a[attr=description] ,.small-File div[attr="small-File-name"]  a[attr=description] {
+    font-family: 'Poppins', sans-serif;
+    font-size:1.8vw;
+    /*color: #3a3930de*/
+}
+
+
+.small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] > div[attr="pop-item"] {
+    /* float:left;
+    width:80%;
+    height:33%;
+    margin: 0 0 0 30%;
+    font-family: 'Poppins', sans-serif;*/
+    display: inline-block;
+    position: relative;
+    transform:translate(0,0);
+    width: 100%;
+    height:33%;
+    border:none;
+    box-shadow:none;
+
+}
+.small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] i {
+    display:inline-block;
+    float:left;
+    margin:6% 0 0 5%;
+    height:100%;
+}
+.small-Folder div[attr='small-Folder-more'] > div[attr="pop-box"] a {
+    display:inline-block;;
+    margin:5% 0 0 15%;
+    font-family: 'Poppins', sans-serif;
+    width: 50%;  
+}
+
+        .small-File div[attr="small-File-icon"] img {   
+            height: 30%;
+        }
+
+
+        .page-btn {
+            display: flex;
+            position: fixed;
+            /*background: yellow;*/
+            top: 81%;
+            width: 100%;
+            height: 15%;
+        }
+        .page-btn .page-back-btn, .page-btn .page-front-btn {
+            display: inline-flex;
+            width: 50%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-btn div[attr="pg-wrapper"]  {
+            display:inline-flex;
+            position:relative;
+            width:25%;
+            aspect-ratio:1/1;
+            background: white;
+            box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+            border-radius: 100%;
+            /*for disblae*/
+            /*color: #00000070; */
+            color: #000000a6;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .page-btn div i {
+            font-size:7vw;
+
+        }
+        .page-back-btn i{
+            margin: 0;
+        }
+        .page-front-btn i{
+            margin: 0;
+            /*background: black;*/
+        }
+     
+   }

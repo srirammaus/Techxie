@@ -46,7 +46,7 @@ class email {
             }
             else {
             // create a db or do something for those email storing
-            console.log("----")    
+              
             console.log(res)
                 if(res?.verified_e == 0){
                     // send new token if also have 
@@ -119,6 +119,8 @@ class email {
         //setDoc
         //sendemail
         let mailer = new SMTPMailer.SMTPmailer();
+        console.log("-----URL");
+        console.log(this.getURL())
         try {
             mailer.setDoc(this.getURL())
             mailer.sendEmail().catch((err)=>{

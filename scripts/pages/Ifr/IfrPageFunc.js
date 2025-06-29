@@ -2,6 +2,7 @@
  * IfrPage - this means the pagination pages so dont include settings stuffs here
  * This function should be applied to home ,recents,trash
  * This is should maintain the page elements Interaction
+ * Average Items should be listned per page should be 50 , you have to add load more button somewhere else
  */
 import IfrElements from '/scripts/lib/Ifrlib/IfrElements.lib.js';
 import * as IfrPageFuncLib from '/scripts/lib/Ifrlib/IfrPageFunc.lib.js';
@@ -18,6 +19,7 @@ import * as  IfrPage_2 from "/scripts/pages/Ifr/IfrPage-2.js";
 function initializeGlobalEventListeners () {
     window.addEventListener("load",function(){
         homeElementListener();  //This can be any anywhere because of btn
+        
     });
     IfrElements.DoneBtn.forEach(function(e,i) {
         e.addEventListener('click',function (){
@@ -32,7 +34,7 @@ function initializeGlobalEventListeners () {
 
 
 function more_(Element){
-  
+        Element = Element.nextElementSibling
         if(window.getComputedStyle(Element).display === "block"){
             
             Element.style.display = "none";
@@ -40,9 +42,29 @@ function more_(Element){
         }else {
             IfrElements.more.forEach(function(element,i){
                 element.style.display = "none";
+
             })
             Element.style.display = "block";
         }
+        
+}
+function moreItemListeners () {
+        //more having three elements they are info,delete , copy
+
+        //copy 
+        IfrElements.more.children.forEach((elem) =>{
+            console.log(elem)
+        })
+
+}
+function moreItemsContentListeners (){
+    if(mainPopBox.children.length >0 ){
+        mainPopBox.querySelector(".close").addEventListener("click",(e)=>{
+            mainPopBox.style.top = "-100%";
+        })
+        // mainPopBox.querySelector(".")
+    }
+    
 }
 /**
  * The next page function is used to go next page whereas the last page is used to go back to last pages
@@ -50,9 +72,12 @@ function more_(Element){
  * right cache planning is not decided yet - september 14
  */
 function homeElementListener () {
+    let mainPopBox = IfrElements.mainPopBox;
+    
+
     IfrElements.FolderBtn().forEach((elem)=>{
         elem.addEventListener("click",function(e){
-            console.log("clicked me")
+            IfrPageFuncLib.cachePage(IfrPageFuncLib.getCurrentFolder())
             nextPage(elem)
         })
     })
@@ -62,25 +87,30 @@ function homeElementListener () {
         })
     })
     IfrElements.moreBtn().forEach((elem)=>{
-        elem.addEventListener("click",function(){
+        elem.addEventListener("click",function(e){
             more_(elem)
+            e.stopPropagation();
         })
     
     })
+
 }
 function nextPage (elem) {
     //srcdoc might impact performance
     // let sessionSotrage = new sessionStorage();
     let F_num;
     F_num = IfrPageFuncLib.splitID(elem.id);
+    IfrPageFuncLib.pageTracker_(F_num,IfrPageFuncLib.getCurrentFolder())
 
+    IfrPageFuncLib.setParentFolder(IfrPageFuncLib.getCurrentFolder())  
+    IfrPageFuncLib.setCurrentFolder(F_num)
+   
     let body ={
         F_num: F_num,
         
     }
     //This hom is actaully pagination, this will be rendered by server 
     IfrPageFuncLib.fetchIfrPageFromIfr(pageURls.home,body).then((Ifr)=>{
-    
     })
 
 
@@ -89,8 +119,6 @@ function nextPage (elem) {
 
 function HandleViewerport () {
 	try {
-
-
 	    if(IfrPageFuncLib.WindowLimit.matches){
 	    	console.log("change 1")
 	        new IfrPage_1.IfrPage();

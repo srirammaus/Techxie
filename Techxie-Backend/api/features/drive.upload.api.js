@@ -8,7 +8,7 @@ var ExceptionHandler = require('../../lib/ExceptionHandlers.js');
 function upload_(req,res,next){
     //usernames and other stuffs should be in url encoded form data then only we can read them before entering it into multer upload function
 	var username,token;
-	try{
+	try{	
 		var upload = new upload__(null,null);
 		var setMulter = upload.setMulter();
 		var getMulter = upload.getMulter();
@@ -16,10 +16,13 @@ function upload_(req,res,next){
 		Multer(req,res,(err)=>{
 				if(upload.getFileFlag() == 1){
 					if(err instanceof upload.getRMulter().MulterError){ 
+						
 						next(err)
 					}else if(err){
+
 						next(err)
 					}else{
+
 						// console.log( req?.body?.username + "user")
 						// res.send("Uploaded Successfully"); 
 						next()

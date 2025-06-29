@@ -22,7 +22,18 @@ function GeneralEventListeners(){
             Elements.search_dropdown.style.display = "none"
         },100)
     })
-
+    Elements.homeIcon.addEventListener("click", function(){
+        loadFrame("home",Elements.bodyParams,"POST");
+        Weblib.setCurrentFolder(0)
+        Weblib.setParentFolder(0)
+        Weblib.pageTracker_();
+    })
+    Elements.body.addEventListener("click",function(e) {
+        console.log("Im the first" + window.getComputedStyle(Elements.addFilesMenu).display )
+        if(!Elements.addFilesMenu.contains(e.target) && window.getComputedStyle(Elements.addFilesMenu).display != "none" ){
+            Elements.addFilesMenu.style.display = "none"
+        }
+    })
     
 
 }
@@ -57,6 +68,9 @@ function sideNav () {
 
 }
 function loadFrameContent (elemId) {
+    Weblib.setCurrentFolder(0);
+    Weblib.setParentFolder(0);
+    Weblib.pageTracker_();
     switch (elemId) {
         case "0":
         case 0 : //"settings"
@@ -68,21 +82,25 @@ function loadFrameContent (elemId) {
             break;
         case "2":
         case 2: //"Recents"
+            
             loadFrame("Recents",Elements.bodyParams,"POST");
             break;
         case "3":
         case 3:  //storage
             loadFrame("Trash",Elements.bodyParams,"POST");
             break;
-
+        case "4":
+        case 4:  //storage
+            loadFrame("home",Elements.bodyParams,"POST");
+            break;
         default  : //"home"
+            loadFrame("home",Elements.bodyParams,"POST");
             break;
     }
 
 }
 function loadFrame (page,body,method) {
     Weblib.fetchIfrPage(Elements.iframe_element,pageURLs[page],method,body).then((ifr) => {
-
     })  
 
 }
@@ -92,7 +110,7 @@ function updateSearchValue () {
             Elements.search_bar_input.value = element.querySelector("a")?.innerHTML;
         }
         element.onmouseover = ()=>{
-            Elements.search_bar_input.value = element.querySelector("a")?.innerHTML
+            Elements.search_bar_input.value = element.querySelector("a")?.innerHTML;
         }
     });
 }

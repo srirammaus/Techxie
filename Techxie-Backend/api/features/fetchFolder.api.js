@@ -23,6 +23,7 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
     //filter and type should evaluated
     let properties = ["body"];
     let requiredParams= ["username","userID","F_num","F_name"];
+    console.log(req.body.username+ "Good request")
     filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
         setParameters (req)
         folder.checkLastFolderNum(username,userID,F_num,(err,F_count,i_count,active,P_F_num,item_number)=>{ //item_number = res
@@ -60,7 +61,6 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
                                 })
                             }
                         })
-                            
                         
                     }
                 })
@@ -69,6 +69,7 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
     }else {
         next(new ExceptionHandler.InternalServerError("something went wrong"))
     }}).catch(err=>{
+        console.log("Error thrown here")
         next(err)
     })
     

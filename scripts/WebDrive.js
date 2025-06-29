@@ -15,7 +15,21 @@
 //FYI: we can also use aysnc in script tag and we can also use await in import statement but it affcects domcontnloaded
 import * as webdrive_1 from "/scripts/pages/WebDrive-1.js";
 import * as webdrive_2 from "/scripts/pages/WebDrive-2.js";
+import * as Weblib from "/scripts/lib/webdrive.lib.js";
 let WindowLimit= window.matchMedia("(min-width:800px)");
+
+/**
+ * By default set F_num to 0  in session storage
+ */
+// if(sessionStorage.getItem("F_num") == null || sessionStorage.getItem("F_num") ==undefined ) {
+	// console.log(sessionStorage.getItem("F_num"));
+// }
+/**
+ * setting the default page to F_num is 0 and p_F_num is also 0
+ */
+Weblib.setCurrentFolder(0);
+Weblib.setParentFolder(0);
+Weblib.pageTracker_();
 
 function HandleViewerport () {
 	try {
