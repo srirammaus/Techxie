@@ -584,6 +584,7 @@ input[attr= 'search-bar-input'] {
     overflow-x: hidden;*/
     overflow: hidden;
     transform:translate(-60%,32%);
+    z-index: 100;
 
 }
 

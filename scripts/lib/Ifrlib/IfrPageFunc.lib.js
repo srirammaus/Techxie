@@ -20,10 +20,10 @@ function cachePage (F_num) {
     }
     
 }
-function fetchIfrPageFromIfr (URL,body) {
+function fetchIfrPageFromIfr (URL,body,method= "POST") {
     return new Promise((resolve,reject) =>{  //lib
         fetch(URL,{
-            method:"POST",
+            method:method,
             body : JSON.stringify(body),
             headers:
             {
@@ -36,7 +36,7 @@ function fetchIfrPageFromIfr (URL,body) {
             //'data:text/html;charset=utf-8,' + encodeURI(html);
             // let parser = new DOMParser();
             // let newDoc = parser.parseFromString(html.toString(),'text/html');
-            //get the main content
+            // get the main content
             let Ifr = IfrElements.getParentIfr()
             Ifr.srcdoc = html;
 
@@ -75,7 +75,44 @@ function pageTracker_ (key = null,value = null){
     }
 
 }
+function delFolder (URL,body,method="POST") {
+    return new Promise((resolve,reject)=>{
+            fetch(URL,{
+                method:method,
+                body :JSON.stringify(body),
+                headers:{
+                    "Content-Type": "application/json;charset=utf-8",
+                },
 
+            }).then(resp =>{
+            
+                return resp.text();
+            }).then(text =>{//this is text but we consider as html
+                resolve(text)
+            }).catch(err=>{
+                console.error(err.message)
+            })
+        })
+}
+function delFile (URL,body,method="POST") {
+       return new Promise((resolve,reject)=>{
+            fetch(URL,{
+                method:method,
+                body :JSON.stringify(body),
+                headers:{
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+
+            }).then(resp =>{
+            
+                return resp.text();
+            }).then(text =>{//this is text but we consider as html
+                resolve(text)
+            }).catch(err=>{
+                console.error(err.message)
+            })
+        }) 
+}
 function getCurrentFolder () {
      /** This function has to get the current folder F_num */
      let currentF_num = sessionStorage.getItem("F_num")
@@ -101,4 +138,6 @@ export {splitID,
     setParentFolder,
     cachePage,
     getParentFolder,
+    delFolder,
+        delFile,
     pageTracker_,fetchIfrPageFromIfr,WindowLimit,getCurrentFolder,setCurrentFolder}

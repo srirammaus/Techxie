@@ -11,5 +11,7 @@ export  default {
     csrfAPI:"http://techxie.local:5000/User/api/verify",
     changePwd:"http://techxie.local:5000/User/api/changePwd",
     driveUploadFile:"http://techxie.local:5000/user/file/upload",
-    createFolder:"http://techxie.local:5000/user/folder/createfolder"
+    createFolder:"http://techxie.local:5000/user/folder/createfolder",
+    delFolder:"http://techxie.local:5000/user/folder/delFolder",
+    delFile:"http://techxie.local:5000/user/file/delFile",
 }

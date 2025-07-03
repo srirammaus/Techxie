@@ -34,6 +34,9 @@ router.get('/viewFile/:userID/:f_name',fetchFile.MiddleWare(3),function(req,res)
      * respected file from the bucket
      */
 })
+router.post("/delFile",fetchFile.MiddleWare(5),function(req,res) {
+    
+})
 router.post('/errtest',fetchFile.MiddleWare(6),function(req,res,next) {
     
 })

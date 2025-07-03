@@ -12,7 +12,7 @@ import pageURls from '/scripts/utils/pageURLs.js';
 
 import * as  IfrPage_1 from "/scripts/pages/Ifr/IfrPage-1.js";
 import * as  IfrPage_2 from "/scripts/pages/Ifr/IfrPage-2.js";
-
+import apiConfig from '/scripts/utils/apiConfig.js';
 
 // Add this file to every iframe pages
 
@@ -34,7 +34,9 @@ function initializeGlobalEventListeners () {
 
 
 function more_(Element){
+        console.log(Element)
         Element = Element.nextElementSibling
+
         if(window.getComputedStyle(Element).display === "block"){
             
             Element.style.display = "none";
@@ -42,18 +44,82 @@ function more_(Element){
         }else {
             IfrElements.more.forEach(function(element,i){
                 element.style.display = "none";
-
             })
+            
             Element.style.display = "block";
         }
         
 }
-function moreItemListeners () {
+function moreItemListeners (elem) {
         //more having three elements they are info,delete , copy
+        console.log(elem)
+        elem = elem.nextElementSibling;
+        console.log(elem)
 
         //copy 
-        IfrElements.more.children.forEach((elem) =>{
-            console.log(elem)
+        
+        Array.from(elem.children).forEach(function(element,i) {
+            element.addEventListener("click",function(e){
+                if(elem.children[i].contains(e.target) ) {
+                    switch (i) {
+                        case 0:
+                            //delete
+                            //you have to make a check here dont forget put it later , may be there may nnot be a cokie
+                            // if there any erroo ,then it pases to next page ,while clikcing delete
+                            let username = document.cookie.split(";")[0]
+                            let userID = document.cookie.split(";")[1]
+                            let Fo_id = elem.parentElement.getAttribute("Fo_id");
+                            let f_id = elem.parentElement.getAttribute("f_id")
+                            if(Fo_id != null || Fo_id != undefined) {
+                                let F_num = Fo_id.split("-")[1]
+                                username  =  username.substring(9).trim()
+                                userID = userID.substring(8).trim()
+                                let body = {
+                                    userID: userID,
+                                    username: username,
+                                    F_num:F_num,
+
+                                }
+                                console.log("the F_num is " + F_num)
+                                IfrPageFuncLib.delFolder (apiConfig.delFolder,body).then((result)=>{
+                                    let body_ = {
+                                        F_num: IfrPageFuncLib.getCurrentFolder()
+                                    }
+                                    loadFrame("home",body_)
+                                })
+                            }else {
+                                //For file deletion
+                                username  =  username.substring(9).trim()
+                                userID = userID.substring(8).trim()
+                                let body = {
+                                    userID:userID,
+                                    username:username,
+                                    f_id:f_id,
+                                }
+                                IfrPageFuncLib.delFile(apiConfig.delFile,body).then((result) =>{
+                                    let body_ = {
+                                        F_num: IfrPageFuncLib.getCurrentFolder()
+                                    }
+                                    loadFrame("home",body_)
+
+                                })
+                            }
+           
+                            break;
+                        case 1: 
+                            //copy
+                            break;
+                        case 2: 
+                            //info
+                            // IfrPageFuncLib.
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                e.stopPropagation();
+
+            })
         })
 
 }
@@ -90,6 +156,7 @@ function homeElementListener () {
         elem.addEventListener("click",function(e){
             more_(elem)
             e.stopPropagation();
+            moreItemListeners(elem);
         })
     
     })
@@ -110,13 +177,15 @@ function nextPage (elem) {
         
     }
     //This hom is actaully pagination, this will be rendered by server 
-    IfrPageFuncLib.fetchIfrPageFromIfr(pageURls.home,body).then((Ifr)=>{
-    })
+    loadFrame("home",body)
 
 
 } 
 
-
+function loadFrame (page,body,method = "POST") {
+    IfrPageFuncLib.fetchIfrPageFromIfr(pageURls[page],body,method).then((Ifr)=>{
+    })
+}
 function HandleViewerport () {
 	try {
 	    if(IfrPageFuncLib.WindowLimit.matches){

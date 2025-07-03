@@ -42,11 +42,13 @@ function upload () {
                 formdata.append("F_num",Weblib.getCurrentFolder())
                 console.log("file added")
                 for (let file of driveUploadInput.files) {
-                        console.log(file.name + "Works perferct")
                         formdata.append("uploads",file)
                 }
                 Weblib.uploadFile(apiConfig.driveUploadFile,formdata).then(result =>{
-                            console.log(result)
+                    let body = {
+                        F_num:Weblib.getCurrentFolder(),
+                    }
+                    loadFrame("home",body,"POST")
                 })
             })
             
@@ -67,17 +69,21 @@ function Back () {
     /**
         * atlast dont forget to change the P_F_num and F_num
      */
+
     let [currentPage,lastPage] = Weblib.getLastPage() 
     let body = {
         F_num: lastPage,
     }
-    let page = "home";
-    loadFrame(page,body,"POST");
-    console.log(currentPage,lastPage)
-    Weblib.setCurrentFolder(lastPage)
-    Weblib.removePageTrackerItem (currentPage)
-    //Now here actually i changed the current folder , so there shoul be a new Weblib.getLastPage needed
-    Weblib.setParentFolder(Weblib.getLastPage()[1] ? Weblib.getLastPage()[1]: 0 )
+    if(currentPage != undefined && currentPage != null && lastPage !=undefined && lastPage != undefined) {
+        let page = "home";
+        loadFrame(page,body,"POST");
+        console.log(currentPage,lastPage)
+        Weblib.setCurrentFolder(lastPage)
+        Weblib.removePageTrackerItem (currentPage)
+        //Now here actually i changed the current folder , so there shoul be a new Weblib.getLastPage needed
+        Weblib.setParentFolder(Weblib.getLastPage()[1] ? Weblib.getLastPage()[1]: 0 )
+    }
+
 }
 function Forth () {
 

@@ -80,7 +80,7 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
 function delFolderMiddleware(resolve,reject,req,response,next){
     let properties = ["body"];
     let requiredParams= ["username","userID","F_num"];
-    filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
+    filter.Filter(req,response,next,properties,requiredParams).then(flag=>{if(flag == 1){
         setParameters (req)
         folder.checkLastFolderNum(username,userID,F_num,(err,F_count,i_count,active,P_F_num,item_number)=>{
             if(err){

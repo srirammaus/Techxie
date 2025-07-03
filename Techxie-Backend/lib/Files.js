@@ -229,17 +229,17 @@ class Files{
 			}
 		})
 	}
-	deleteFile(username,userID,F_num,P_F_num){ 
+	deleteFile(username,userID,item_number,P_F_num,cb){ 
 		/**
 		 * check it is valid
 		 * make it inactive
-		 * 
+		 * f-id has both parent number and 
 		 */
 		var query = {username: username,USER_ID: Number(userID)}
-		var key_1 = F_num + ".active";
+		// var key_1 = F_num + ".active";
 		var key_2 = P_F_num + ".items." + item_number + ".active";
 		var data = {
-			[`${key_1}`]: 0,
+			// [`${key_1}`]: 0,
 			[`${key_2}`]:0,
 		}
 		DB.getConnection((err,db)=>{

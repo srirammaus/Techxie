@@ -123,12 +123,36 @@ filter.Filter(req,response,next,properties,requiredParams).then(flag=>{
 
 
 }
-function delFileMiddleware(resolve,reject,req,res,next){
+function delFileMiddleware(resolve,reject,req,response,next){
     /**
      * check it is a valid file 
-     * make it for inactive request 
+     * make it for inactive request
      */
+    let properties = ["body"]
+    let requiredParams= ["userID","username","f_id"]
+    filter.Filter(req,response,next,properties,requiredParams).then(flag=>{
+        if(flag == 1){
+            setParameters(req);
+            let username = req.body.username;
+            let userID = req.body.userID;
+            let f_id = req.body.f_id
+            let splited = f_id.split("-");
+            let P_F_num = splited[1]
+            let item_number = splited[2]
+            file.deleteFile(username,userID,item_number,P_F_num,(err,res)=>{
+                if(err) {
+                    reject(err)
+                }else{
+                    result.status = 1;
+                    result.message = "successfully deleted"
+                    response.send(result)
+                }
+            })
+        }else {
+            next(err)
+        }
 
+    })
 }
 function editFileMiddleware(resolve,reject,req,res,next){ 
     /**

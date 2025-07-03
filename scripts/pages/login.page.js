@@ -34,9 +34,22 @@ class login {
         this.em = em;
         this.userData = userData;
         this.UserRedAlert = UserRedAlert;
+
+        this.generalEventListners()
         
     }
-    makeLogin(){
+    generalEventListners () {
+        let makeLogin = this.makeLogin;
+        console.log(this.loginBtn)
+        document.addEventListener("keypress",(event) => {
+            if(event.key == "Enter" ) {
+                
+                this.makeLogin(1)
+            }
+        }).bind(this)
+    }
+
+    makeLogin(triggerClick = 0){
         // UserRedAlert.innerHTML = "*Please fill the requested field"
         // UserRedAlert.style.setProperty("display","block")
         // add the filter
@@ -104,7 +117,9 @@ class login {
                     this.UserRedAlert.innerHTML = "something went wrong";
                 }
             })
-        
+        if(triggerClick == 1) {
+            this.loginBtn.click()
+        }
     }
     validateEmail() {
 
