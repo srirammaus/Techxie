@@ -6,10 +6,10 @@ var Handlebars = require("express-handlebars");
 var path = require('path');
 const { helpers } = require('handlebars');
 var homeMiddleware = require('../pageMiddlewares/home.Middleware.js');
+var pdfViewerMiddleware = require('../pageMiddlewares/pdfViewer.Middleware.js');
 const { FORMERR } = require('dns');
-
-
 const router = express.Router();
+
 /**
  * Home page is techxie.html
  * sigup page 
@@ -54,6 +54,7 @@ router.use(express.static('./views'))
 
 router.get('/pdfViewer',function(req,res) { //open by new tab
   //chekc for ouath and send pdf
+  const src= req.query.src;
   res.sendFile('F:/nodejs/projects/Techxie/pages/pdfViewer.html') // this is from the file which saved in sepreate folder
 })
 router.get('/videoplayer',function(req,res) { //player inside the iframe

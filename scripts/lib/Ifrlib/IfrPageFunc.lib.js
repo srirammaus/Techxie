@@ -77,41 +77,94 @@ function pageTracker_ (key = null,value = null){
 }
 function delFolder (URL,body,method="POST") {
     return new Promise((resolve,reject)=>{
-            fetch(URL,{
-                method:method,
-                body :JSON.stringify(body),
-                headers:{
-                    "Content-Type": "application/json;charset=utf-8",
-                },
+        fetch(URL,{
+            method:method,
+            body :JSON.stringify(body),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            },
 
-            }).then(resp =>{
-            
-                return resp.text();
-            }).then(text =>{//this is text but we consider as html
-                resolve(text)
-            }).catch(err=>{
-                console.error(err.message)
-            })
+        }).then(resp =>{
+        
+            return resp.text();
+        }).then(text =>{//this is text but we consider as html
+            resolve(text)
+        }).catch(err=>{
+            console.error(err.message)
         })
+    })
+}
+function rename (URL,body,method="POST") {
+        return new Promise((resolve,reject)=>{
+        fetch(URL,{
+            method:method,
+            body :JSON.stringify(body),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            },
+
+        }).then(resp =>{
+        
+            return resp.text();
+        }).then(text =>{//this is text but we consider as html
+            resolve(text)
+        }).catch(err=>{
+            console.error(err.message)
+        })
+    })
 }
 function delFile (URL,body,method="POST") {
-       return new Promise((resolve,reject)=>{
-            fetch(URL,{
-                method:method,
-                body :JSON.stringify(body),
-                headers:{
-                    "Content-Type": "application/json;charset=utf-8",
-                },
+    return new Promise((resolve,reject)=>{
+        fetch(URL,{
+            method:method,
+            body :JSON.stringify(body),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            },
 
-            }).then(resp =>{
-            
-                return resp.text();
-            }).then(text =>{//this is text but we consider as html
-                resolve(text)
-            }).catch(err=>{
-                console.error(err.message)
-            })
-        }) 
+        }).then(resp =>{
+        
+            return resp.text();
+        }).then(text =>{//this is text but we consider as html
+            resolve(text)
+        }).catch(err=>{
+            console.error(err.message)
+        })
+    }) 
+}
+function getFileInfo (URL,body,method="POST") {
+        return new Promise((resolve,reject)=>{
+        fetch(URL,{
+            method:method,
+            body :JSON.stringify(body),
+            headers:{
+                "Content-Type": "application/json;charset=utf-8",
+            },
+
+        }).then(resp =>{
+        
+            return resp.text();
+        }).then(text =>{//this is text but we consider as html
+            resolve(text)
+        }).catch(err=>{
+            console.error(err.message)
+        })
+    }) 
+}
+function viewFile(URL,method="GET") {
+        return new Promise((resolve,reject)=>{
+        fetch(URL,{
+            method:method,
+
+        }).then(resp =>{
+        
+            return resp.text();
+        }).then(text =>{//this is text but we consider as html
+            resolve(text)
+        }).catch(err=>{
+            console.error(err.message)
+        })
+    }) 
 }
 function getCurrentFolder () {
      /** This function has to get the current folder F_num */
@@ -133,11 +186,67 @@ function splitID(id) { // lib
     return id[1];
     
 }
+/**
+ * These are deault styles that are automtically should be ther
+ * More box should hide where ever touch
+ * videoplayer should hide where ever touch
+ * phtoviewer should hide where ever touch
+ * input field should be toggled back
+ */
+function defaultStyles (e) {
+       //videoplayer , phtoviewer ,more
+        let gallery_container = IfrElements.gallery_container;
+        let videoContainer = IfrElements.videoContainer;
+        let more = IfrElements.more;
 
+    
+        if(window.getComputedStyle(gallery_container).display != "none" && e.target.getAttribute("class") != "main-img"  && e.target.getAttribute("class") != "gallery-img") {
+            gallery_container.style.display = "none";
+            //main-img ,//gallery-img
+        }
+
+        if(window.getComputedStyle(videoContainer).display != "none" && e.target.getAttribute("id") != "my-video"  && e.target.getAttribute("class") != "video") {
+            videoContainer.querySelector(".video video").pause()
+            videoContainer.style.display = "none";
+            //main-img ,//gallery-img
+        }
+        if(e.target.getAttribute("attr") != "pop-box") {
+            // if(window.getComputedStyle(e.target).display != "none"){
+            //     e.target.style.display = "block"
+            // }
+            let F_id = sessionStorage.getItem("morePopBox") 
+            if(F_id != null || F_id != undefined) {
+                let more =document.querySelector(`.small-frame-items div[Fo_id=${F_id}]`) ?? document.querySelector(`.small-frame-items div[f_id=${F_id}]`);
+                console.log(more)
+                more.children[1].style.display = "none"
+            }
+
+        }
+        if(e.target.getAttribute("attr") != "small-Folder-new-name"  ) {
+            let F_id = sessionStorage.getItem("renameFolder")
+            if(F_id != null || F_id != undefined) {
+                let element =document.querySelector(`.small-frame-items div[id=${F_id}]`);
+                console.log(element)
+                console.log(element.querySelector('div[attr="small-Folder-name"]'))
+                element.querySelector('div[attr="small-Folder-name"]').classList.toggle("hide-name");
+                element.querySelector('input[attr="small-Folder-new-name"]').classList.toggle("show-input")
+                sessionStorage.removeItem("renameFolder")
+
+            }
+
+        }
+
+    
+   
+}
 export {splitID,
     setParentFolder,
     cachePage,
     getParentFolder,
     delFolder,
+    viewFile,
+    defaultStyles,
+    rename,
         delFile,
+        getFileInfo,
     pageTracker_,fetchIfrPageFromIfr,WindowLimit,getCurrentFolder,setCurrentFolder}

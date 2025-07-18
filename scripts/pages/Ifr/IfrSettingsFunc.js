@@ -26,6 +26,7 @@ class IfrSettingsFunc {
          */
         window.addEventListener("load",()=>{
             settings.loadStyle();
+            this.closeCurrent();
             this.hideAllSectionsExceptFirst();
             this.handleAccountSettingsInteractions(); 
         });
@@ -55,6 +56,15 @@ class IfrSettingsFunc {
     * asks for email  valid email ,then sent for verifcation
     * it should be load in meantime ,if success done, else fail
     */
+
+    closeCurrent() {
+        console.log(IfrElements.closeBtn)
+        IfrElements.closeBtn.forEach((elem) =>{
+                elem.addEventListener("click",()=>{
+                this.hideAllSectionsExceptFirst()
+            })
+        })
+    }
     handleAccountSettingsInteractions () {
         IfrElements.setting_items.forEach((e,i)=>{
             e.addEventListener('click',()=>{

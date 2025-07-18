@@ -126,6 +126,7 @@ class Folder{
 	//F_count denotes the entire folder count which will keep track of the folder number
 	// F_num + i_count which denotes items in the folder , the all items in the folder should be consider as file eventhough it is a file
 	NewFolder(username,userID,F_num,F_name,F_count,i_count,cb){
+	
 		var query = {username: username,USER_ID: Number(userID)};
 		var F_id = "F-" + F_count; // actual F_count
 		var f_id ="f-" +F_num + "-" + i_count;
@@ -170,9 +171,40 @@ class Folder{
 			}
 		})
 	}
+	Rename(username,userID,F_num,P_F_num,item_number,F_name,cb){
+		var query = {username: username,USER_ID: Number(userID)}
+		var key_1 = F_num + ".F_name";
+		var key_2 = P_F_num + ".items." + item_number + ".F_name";
+		var data = {
+			[`${key_1}`]:F_name,
+			[`${key_2}`]:F_name,
+		}
+		DB.getConnection((err,db)=>{
+			if(err){
+				cb(new ExceptionHandler.InternalServerError("something went wrong"))
+			}else{
+				DB.UpdateDocument(db,query,null,"BucketInfo",data,(err,res)=>{
+					if(err){
+						cb(new ExceptionHandler.InternalServerError("something went wrong"))
+					}else{
+						if(typeof res == "undefined" || res == null){
+							cb(new ExceptionHandler.UnAuthorized("Invalid Username or User ID"))
+						}else{
+							cb(null,res); // check with this result modified count
+						}
+					}
+				})
+			}
+		})
+
+	}
+	
+
+
 	//in future , if u developed multiple folders in once , then put those F_id in array and put in loop like uploadfileinfo in files.js
 	//i am not changing this even thought for understanding purpose the above documentation is determined by me
 	uploadFolderInfo(username,userID,F_name,F_id_array,Description= "This is a default description",cb){
+		//add logic here if except f_name is other are null , jsut update the F_name
 		var query = {username: username,USER_ID: Number(userID)}
 		var key_1 ;
 		var n,i;

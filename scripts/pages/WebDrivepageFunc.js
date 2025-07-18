@@ -31,7 +31,7 @@ function GeneralEventListeners(){
     Elements.body.addEventListener("click",function(e) {
         console.log("Im the first" + window.getComputedStyle(Elements.addFilesMenu).display )
         if(!Elements.addFilesMenu.contains(e.target) && window.getComputedStyle(Elements.addFilesMenu).display != "none" ){
-            Elements.addFilesMenu.style.display = "none"
+            Elements.addFilesMenu.classList.remove("show")
         }
     })
     

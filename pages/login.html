@@ -6,26 +6,32 @@
         <title>Login</title>
         <link rel="stylesheet" href="/assets/login.css">
     </head>
-    <body>
-        <div class="login">
-            <h2>Login</h2>
-            <form class="login-form" action="#" autocomplete="off">
-                <input name="username" type="text" id="name" placeholder="Enter Name" autocomplete="off">
-                <input name="password" type="password" id="password" placeholder="Enter Password" autocomplete="off">
-                <button class="red-alert"></button>
-                <button class="fg-btn">Forgot Password</button><br>
-                <button class="login-btn">login</button>
-            </form>
-        </div>
-        <div class="em">
-            <p>Check you inbox and you will get verification mail <a href="#">abc123@gmail.com</a></p>
-            <div class="home-btn"><a href="/login">login</a></div>
-            <!-- <div class="em-container"> -->
-  
-            <!-- </div> -->
-          </div>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <h2>Login</h2>
+      <form class="login-form" action="#" autocomplete="off">
+        <input name="username" type="text" id="name" placeholder="Enter Name" required>
+        <input name="password" type="password" id="password" placeholder="Enter Password" required>
+        <div class="red-alert" id="errorMsg">Invalid credentials</div>
+        <button type="button" class="fg-btn">Forgot Password?</button>
+        <button type="submit" class="login-btn">Login</button>
+      </form>
+    </div>
+  </div>
 
-        <script type="module" src="/scripts/pages/login.page.js"></script>
-    </body>
+  <div class="em" id="emailVerify">
+    <p>
+      Check your inbox for a verification mail <a href="#">abc123@gmail.com</a>
+    </p>
+    <div class="home-btn">
+      <a href="/login">Back to Login</a>
+    </div>
+  </div>
+
+  <script type="module" src="/scripts/pages/login.page.js"></script>
+</body>
 </html>
 <!-- Both login and signup contain email verification phase , unless untill email is email verfication done , the drive page should not be shown -->
+
+

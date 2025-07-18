@@ -15,7 +15,10 @@ export default class IfrElements {
     static DoneBtn = document.querySelectorAll(".Done-btn")
     static mainPopBox = document.getElementById("mainPopBox");
 	static folder_map = document.querySelector('.Folder-map');
-
+	static closeBtn = document.querySelectorAll(".close-btn");
+	static gallery_container = document.querySelector(".gallery-container");
+	static videoContainer = document.querySelector(".video-container")
+	static small_Folder_new_name = document.querySelectorAll('.small-Folder input[attr="small-Folder-new-name"]')
     static getClickedSection (attr) {
         let elem = document.querySelector(`.settings > section[class=${attr}` );
         return elem;
@@ -27,6 +30,12 @@ export default class IfrElements {
 	static moreBtn(){
 		let moreBtn = document.querySelectorAll(".mdi-dots-vertical"); //.small-frame-items div[data='more-btn']
 		return moreBtn;
+	}
+	static getSelectedFolder (id) {
+		return document.getElementById(id)
+	}
+	static getSelectedFile (id) {
+		return document.getElementById(id)
 	}
 	static FolderBtn() {
 		let FolderBtn = document.querySelectorAll(".small-Folder");
@@ -86,11 +95,9 @@ export default class IfrElements {
 
 			
 			function default_() {
-
 				this.iframe.addEventListener('load',()=>{
 					this.iframe_().then(resolve).catch(reject)
 				})
-
 			}
 			default_ = default_.bind(this)
 			if(this.isValidIfr()){

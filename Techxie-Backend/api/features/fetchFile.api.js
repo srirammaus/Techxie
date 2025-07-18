@@ -59,34 +59,39 @@ function getFileInfoMiddleWare(resolve,reject,req,response,next) {
         */
     let properties = ["body"];
     let requiredParams= ["username","userID","f_id"];
+    filter.Filter(req,response,next,properties,requiredParams).then(flag=>{
 
-    filter.Filter(req,response,next,properties,requiredParams).then(flag=>{if(flag == 1){
-        setParameters(req);
-
-        file.getFileInfo(username,userID,f_id,function(err,res){
-            let URL = process.env.baseURL + `User/file/viewFile/${userID}/`
-            if(err){
-                reject (err) 
-            }  else{
-                let f_name = res[0]?.f_name 
-                if(f_name  == undefined || f_name == null){
-                    reject(new ExecptionHandler.BadRequest("Invalid request",200))
-                }else{
-                    //Bugs
-                    let URI = URL + `${f_name}`
-                    result.status = 1;
-                    result.message = {
-                        f_name: f_name,
-                        userID:userID,
-                        URI: URI,
+        if(flag == 1){
+            setParameters(req);
+            file.getFileInfo(username,userID,f_id,function(err,res){
+                // process.env.baseURL
+                let URL = process.env.baseURL + `User/file/viewFile/${userID}/`
+                if(err){
+                    reject (err) 
+                }  else{
+                    let f_name = res[0]?.f_name 
+                    if(f_name  == undefined || f_name == null){
+                        reject(new ExecptionHandler.BadRequest("Invalid request",200))
+                    }else{
+                        //Bugs
+                        let URI = URL + `${f_name}`
+                        result.status = 1;
+                        result.message = {
+                            f_name: f_name,
+                            userID:userID,
+                            URI: URI,
+                        }
+                        console.log(result);
+                        response.send(result) //response
                     }
-                    response.send(result) //response
                 }
-            }
         })
     }else {
+        console.log("here it went")
         next(new ExecptionHandler.InternalServerError("something went wrong"))
     }}).catch(err=>{
+        //Here the error not displaying in front page
+        console.log(err)
         next(err)
     })
 
@@ -99,7 +104,7 @@ function viewFileMiddleware(resolve,reject,req,response,next) {
  * Compulsory authentication need
  * get the f_name as the parameter and send the respected file
  */
-let properties = ["body"];
+let properties = ["params"];
 let requiredParams= ["userID","f_name"]
 filter.Filter(req,response,next,properties,requiredParams).then(flag=>{
     if(flag == 1){
@@ -107,16 +112,18 @@ filter.Filter(req,response,next,properties,requiredParams).then(flag=>{
         let userID,f_name;
         userID =req.params.userID;
         f_name = req.params.f_name;
-        fs.access(`D:/Techxie/Techxie-Backend/lib/WebDrive/${userID}/${f_name}`,(err)=>{
+        fs.access(`F:/nodejs/projects/Techxie/Techxie-Backend/lib/WebDrive/${userID}/${f_name}`,(err)=>{
             if(err){
+                console.log(err)
                 response.send(result)
             }
-            response.sendFile(`D:/Techxie/Techxie-Backend/lib/WebDrive/${userID}/${f_name}`)
+            response.sendFile(`F:/nodejs/projects/Techxie/Techxie-Backend/lib/WebDrive/${userID}/${f_name}`)
     })
 
 }else {
-    next(err)
-}}).catch(err=>{
+    next(err)}
+}).catch(err=>{
+    console.log("here the error")
     next(err)
 })
 

@@ -125,7 +125,38 @@ export class WebDrive {
 			}
 		})
 	}
+	addFiles_() {
+		let addFilesMenu = this.addFilesMenu;
+		
+		// this.addFiles.addEventListener("click",function(e){
+		// 	e.stopPropagation()
+		// 	if(window.getComputedStyle(addFilesMenu).display == "none" ){
 
+		// 		addFilesMenu.style.display = "flex"
+		// 	}else {
+		// 		addFilesMenu.style.display = "none"
+
+		// 	}
+		// })
+		this.addFiles.addEventListener("click",(e)=>{
+			e.stopPropagation();
+			addFilesMenu.classList.toggle("show")
+		})
+	}
+	upload () {
+		/** upload and show some loading graphics */
+		let driveUploadInput = this.driveUploadInput
+		this.driveUpload.addEventListener("click",function(){
+			WebDrivepageFunc2.upload()
+		})
+		// Weblib.uploadFile
+	}
+	createFolder_ () {	
+	
+		this.createFolder.addEventListener("click",()=>{
+			WebDrivepageFunc2.createFolder_()
+		})
+	}
 	reload() {
 		window.location.reload()
 	}

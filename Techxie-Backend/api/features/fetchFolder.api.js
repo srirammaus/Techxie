@@ -23,16 +23,17 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
     //filter and type should evaluated
     let properties = ["body"];
     let requiredParams= ["username","userID","F_num","F_name"];
-    console.log(req.body.username+ "Good request")
+
     filter.Filter(req,res,next,properties,requiredParams).then(flag=>{if(flag == 1){
         setParameters (req)
+
         folder.checkLastFolderNum(username,userID,F_num,(err,F_count,i_count,active,P_F_num,item_number)=>{ //item_number = res
           
             if(err){ 
                 reject(err);
             }else{
                 // this F_count-1 should be used as actual F_num given by the user
-        
+
                 folder.NewFolder(username,userID,F_num,F_name,F_count,i_count,(err,F_id_array)=>{
                     if(err){
                         reject(err);
@@ -52,8 +53,11 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
                                             }else{
                                                 result.status = 1;
                                                 result.message = "folder created succesfully",
-                                                result.info = results
-
+                                                result.info =  {
+                                                    F_name: F_name,
+                                                    F_id:F_id_array[0],
+                                                    
+                                                }
                                                 res.send(result)
                                             }
                                         }) 
@@ -74,6 +78,38 @@ function createFolderMiddleware(resolve,reject,req,res,next) {
     })
     
   
+
+}
+function RenameFolder (resolve,reject,req,res,next) {
+    let properties = ["body"];
+    let requiredParams= ["username","userID","F_num","F_name"];
+    filter.Filter(req,res,next,properties,requiredParams).then(flag=>{
+        setParameters (req)
+        if(flag == 1){
+            folder.checkLastFolderNum(username,userID,F_num,(err,F_count,i_count,active,P_F_num,item_number)=>{ //item_number = res
+                if(err) {
+                    console.log(err.message)
+                    reject(err)
+                }else {
+
+                    folder.Rename(username,userID,F_num,P_F_num,item_number,F_name,(err,arr)=>{
+                        if(err) {
+                            reject(err)
+                        }else {
+                            console.log(F_count,P_F_num,F_num)
+                            result.status = 1;
+                            result.message = "folder renamed succesfully"
+                        }
+                    })
+                        res.send(result)
+                }   
+            })
+        }else {
+            next(new ExceptionHandler.InternalServerError("something went wrong"))
+        }
+    }).catch (err =>{
+        next(err)
+    })
 
 }
 //csrf needed
@@ -177,6 +213,8 @@ function MiddleWare(func){
                         return editFolderMiddleware(resolve,reject,req,res,next)
                     case 5:
                         return getFolderInfoMiddleWare(resolve,reject,req,res,next) // get info from drive info
+                    case 6: 
+                        return RenameFolder(resolve,reject,req,res,next)
                     default:
                         reject(new ExceptionHandler.InternalServerError("something went wrong"))
                 }

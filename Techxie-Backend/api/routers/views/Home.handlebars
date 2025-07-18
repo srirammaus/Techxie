@@ -45,8 +45,9 @@
 			{{#each Folders}}
 			<div class="small-Folder" id={{this.F_id}} F-num={{this.F_num}}>
 				<div attr="small-Folder-icon"><i class="mdi mdi-folder"></i></div>
+				<input class="hide-input" attr="small-Folder-new-name" type="text"/>
 				<div attr = "small-Folder-name"><a>{{ this.F_name}}</a><a attr="description" ></a></div>
-				<div attr="small-Folder-more" data="more-box" attrb ="new parameter" Fo_id= {{this.F_id}}><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep DELETE"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy COPY"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant INFO"></i><a>info</a></div></div></div>
+				<div attr="small-Folder-more" data="more-box" attr ="new parameter" Fo_id= {{this.F_id}}><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep DELETE"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy COPY"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant INFO"></i><a>info</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>Rename</a></div></div></div>
 			</div>
 			{{/each}}
 			 {{!-- <div class="small-Folder">
@@ -61,8 +62,9 @@
 					{{else}}
 					<div attr="small-File-icon"><img src= "/assets/svg/{{this.type}}.svg"></div>
 					{{/if}}
+					<input class="hide-input"  attr="small-File-new-name" type="text"/>
 					<div attr="small-File-name"><a>{{this.f_name}}</a><a attr="description" >{{this.description}}</a></div>
-					<div attr="small-File-more" data="more-box"  f_id= {{this.f_id}}><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant"></i><a>info</a></div></div></div>
+					<div attr="small-File-more" data="more-box"  f_id= {{this.f_id}}><i class="mdi mdi-dots-vertical"></i><div attr="pop-box"><div attr=pop-item><i class="mdi mdi-delete-sweep"></i><a>delete</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>copy</a></div><div attr=pop-item><i class="mdi mdi-information-variant"></i><a>info</a></div><div attr=pop-item><i class="mdi mdi-content-copy"></i><a>Rename</a></div></div></div>
 				</div>
 			{{/each}}
 		{{!-- <div class="small-File">
@@ -74,8 +76,37 @@
 	{{!-- to display info and are you sure want to delete , this is completely dynamic[javascript], you can also use it for right click --}}
 		
 		<div id="mainPopBox" class="main-pop-box"></div>
-		
-
+		<div class="gallery-container" id="gallery-container">
+			<div class=img-wrap><img class=main-img /></div>
+				<div class="gallery" id="gallery">
+					<!-- the gallery should be in a loop , once it came to an end image, then it comes again, and create a pop-up image in that scrolling gallery -->
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+					<img class="gallery-img" src="/assets/nav-bg.jpg">
+				</div>
+		</div>
+		<div class="video-container">
+			<!-- video -->
+			<div id="video" class="video">
+				<!-- width="640" height="360" -->
+				<video  id="my-video" controls="true" ></video>
+			</div>
+		</div>
 		<script type="module" src="/scripts/pages/Ifr/IfrPageFunc.js"></script>
 		<script type="module" src="/scripts/pages/Ifr/IfrStyle.js"></script>
 		<script type="module" src="/scripts/pages/Ifr/IfrDrivePageFunc.js"></script>

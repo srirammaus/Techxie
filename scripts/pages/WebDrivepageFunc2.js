@@ -17,58 +17,60 @@ function createFolder_() {
         }else {}
     }
     body.F_num = Weblib.getCurrentFolder();
-    body.F_name = "Temp Folder 5";
+    body.F_name = "New Folder";
         let params = {
         F_num: Weblib.getCurrentFolder(),
     }
     let page = "home";
-    Weblib.createFolder(apiConfig.createFolder,body).then((txt)=>{
-        loadFrame(page,params,"POST")
-
+    return new Promise((resolve,reject) =>{
+        Weblib.createFolder(apiConfig.createFolder,body).then((result)=>{
+                loadFrame(page,params,"POST").then((ifr) =>{
+                    resolve(result)
+                })
+        })
     })
-
-
-        
-
 }
 function upload () {
-            let driveUploadInput = Elements.driveUploadInput;
-            driveUploadInput.click()
-            console.log(driveUploadInput.files.fileName + " Name")
+        let driveUploadInput = Elements.driveUploadInput;
+        driveUploadInput.click()
+        console.log(driveUploadInput.files.fileName + " Name")
 
-            driveUploadInput.addEventListener("change",function(){
-                let formdata = new FormData();
-                console.log("The current Folder number " + Weblib.getCurrentFolder())
-                formdata.append("F_num",Weblib.getCurrentFolder())
-                console.log("file added")
-                for (let file of driveUploadInput.files) {
-                        formdata.append("uploads",file)
+        driveUploadInput.addEventListener("change",function(){
+            let formdata = new FormData();
+            console.log("The current Folder number " + Weblib.getCurrentFolder())
+            formdata.append("F_num",Weblib.getCurrentFolder())
+            console.log("file added")
+            for (let file of driveUploadInput.files) {
+                    formdata.append("uploads",file)
+            }
+            Weblib.uploadFile(apiConfig.driveUploadFile,formdata).then(result =>{
+                let body = {
+                    F_num:Weblib.getCurrentFolder(),
                 }
-                Weblib.uploadFile(apiConfig.driveUploadFile,formdata).then(result =>{
-                    let body = {
-                        F_num:Weblib.getCurrentFolder(),
-                    }
-                    loadFrame("home",body,"POST")
-                })
+                loadFrame("home",body,"POST")
             })
+        })
             
-            // console.log(driveUploadInput.files[0].name + " Name 2")
-            // console.log(formdata)
-            // for(let file of driveUploadInput.files) {
-            // 	console.log(file.name  + "fiile")
-            // }
-
-        
+        // console.log(driveUploadInput.files[0].name + " Name 2")
+        // console.log(formdata)
+        // for(let file of driveUploadInput.files) {
+        // 	console.log(file.name  + "fiile")
+        // }
 }
-function loadFrame (page,body,method) {
-    Weblib.fetchIfrPage(Elements.iframe_element,pageURLs[page],method,body).then((ifr) => {
-    })  
 
+
+function loadFrame (page,body,method) {
+    return new Promise ((resolve,reject) => {
+        Weblib.fetchIfrPage(Elements.iframe_element,pageURLs[page],method,body).then((ifr) => {
+            resolve(ifr)
+        })  
+    })
+ 
 }
 function Back () {
     /**
-        * atlast dont forget to change the P_F_num and F_num
-     */
+    * atlast dont forget to change the P_F_num and F_num
+    */
 
     let [currentPage,lastPage] = Weblib.getLastPage() 
     let body = {

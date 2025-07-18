@@ -43,7 +43,7 @@ class login {
         console.log(this.loginBtn)
         document.addEventListener("keypress",(event) => {
             if(event.key == "Enter" ) {
-                
+                console.log("Entered..")
                 this.makeLogin(1)
             }
         }).bind(this)

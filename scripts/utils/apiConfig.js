@@ -14,4 +14,7 @@ export  default {
     createFolder:"http://techxie.local:5000/user/folder/createfolder",
     delFolder:"http://techxie.local:5000/user/folder/delFolder",
     delFile:"http://techxie.local:5000/user/file/delFile",
+    getFileInfo:"http://techxie.local:5000/user/file/getFileInfo",
+    pdfViewer:"http://techxie.local:5000/user/page/pdfViewer",
+    renameFolder: "http://techxie.local:5000/user/folder/rename"
 }

@@ -1,9 +1,9 @@
 :root{
-    --primary-color: #ffff33;
-    --secondary-color: rgb(204, 255, 255,.3);
-    --third-color: white;
-    --four-color: #C3E0E0;
-    /* */
+  --primary-color: #ffff33;
+  --secondary-color: rgba(204, 255, 255, 0.3);
+  --third-color: white;
+  --four-color: #C3E0E0;
+  --font-primary: 'Poppins', sans-serif;
 }
 
 
@@ -428,6 +428,96 @@ input[attr= 'search-bar-input'] {
     display:flex;
     width: 100%;
     border: none;
+}
+.gallery-container{
+	display: none;
+	position: absolute;
+    top:0;
+	width:100%;
+    height:100%;
+	margin:60px 0px 0px 0px;
+	/* background:rgba(16 ,15, 15,.1 ) */
+}
+.img-wrap {
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	width:100%;
+	height:60%;
+	object-fit:contain;
+	/* background:yellow; */
+}
+.main-img {
+	background-color: black;
+	display: block;
+	position: relative;
+	height: 70%;
+	width:50%;
+	object-fit:contain;
+	/*width: 100%; if u didn't put this , this image zoom themselves to fit in it
+	height: 100%;*/
+	/*height: 75%; indirectly here is also height not working, but width manages those stuffs*/
+	max-width: 60%;
+	/*max-height: 75%; this should be manipulated by javascript*/
+	margin-left: 0%;
+    box-shadow: 2px 2px 10px 5px #aaaaaa,-2px -2px 10px 5px #aaaaaa;
+    border-radius: 20px;
+}
+.gallery{
+	display: flex;
+	position: relative;
+	box-sizing:border-box;
+	margin: 0% 5% 0px 5%;
+	width: 90%;
+	height: 100px;
+	background-color: inherit;
+	padding: 10px;
+	border-color: 2px solid black;
+	overflow-x: scroll;
+}
+.gallery-img {
+	display: inline-block;
+	position: relative;
+	max-width: 70px;
+	max-height: 70px;
+	border-radius: 10px;
+	box-shadow: 2px 2px 10px 2px #aaaaaa,-2px -2px 10px 2px #aaaaaa;
+	object-fit: cover;
+}
+.gallery-img:hover {
+	box-shadow: 2px 2px 10px 5px  #262626,-2px -2px 10px 5px  #262626;
+}
+#gallery::-webkit-scrollbar {
+	height:4px;
+	background-color: #F5F5F5;
+}
+#gallery::-webkit-scrollbar-thumb {
+	width:6px;
+	background-color: #808080;
+	border-radius:100px;
+}
+#gallery::-webkit-scrollbar-track {
+	border-radius:100px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+.video-container {
+    display: none;
+    position: absolute;
+    top:0;
+    width: 100%;
+    height: 100%;
+	/* background:yellow; */
+	justify-content:center;
+	align-items:center;
+	text-align:center;
+
+}
+#my-video {
+	display:inline-flex;
+	position:relative;
+	width:80%;
+	height:100%;
 }
 .large-frame-items {
     display: none;
@@ -951,51 +1041,51 @@ margin: 0;
     width: 50%;  
 }
 
-        .small-File div[attr="small-File-icon"] img {   
-            height: 30%;
-        }
+    .small-File div[attr="small-File-icon"] img {   
+        height: 30%;
+    }
 
 
-        .page-btn {
-            display: flex;
-            position: fixed;
-            /*background: yellow;*/
-            top: 81%;
-            width: 100%;
-            height: 15%;
-        }
-        .page-btn .page-back-btn, .page-btn .page-front-btn {
-            display: inline-flex;
-            width: 50%;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-        }
-        .page-btn div[attr="pg-wrapper"]  {
-            display:inline-flex;
-            position:relative;
-            width:25%;
-            aspect-ratio:1/1;
-            background: white;
-            box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
-            border-radius: 100%;
-            /*for disblae*/
-            /*color: #00000070; */
-            color: #000000a6;
-            justify-content:center;
-            align-items:center;
-        }
+    .page-btn {
+        display: flex;
+        position: fixed;
+        /*background: yellow;*/
+        top: 81%;
+        width: 100%;
+        height: 15%;
+    }
+    .page-btn .page-back-btn, .page-btn .page-front-btn {
+        display: inline-flex;
+        width: 50%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+    .page-btn div[attr="pg-wrapper"]  {
+        display:inline-flex;
+        position:relative;
+        width:25%;
+        aspect-ratio:1/1;
+        background: white;
+        box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
+        border-radius: 100%;
+        /*for disblae*/
+        /*color: #00000070; */
+        color: #000000a6;
+        justify-content:center;
+        align-items:center;
+    }
 
-        .page-btn div i {
-            font-size:7vw;
+    .page-btn div i {
+        font-size:7vw;
 
-        }
-        .page-back-btn i{
-            margin: 0;
-        }
-        .page-front-btn i{
-            margin: 0;
-            /*background: black;*/
-        }
-     
-   }
+    }
+    .page-back-btn i{
+        margin: 0;
+    }
+    .page-front-btn i{
+        margin: 0;
+        /*background: black;*/
+    }
+    
+}

@@ -31,7 +31,7 @@ export default class Elements {
 	static driveUploadInput =  document.querySelector(".add-files > .dropdown > .dropdown-menu .upload input ");
 	static createFolder = document.querySelector(".add-files > .dropdown > .dropdown-menu .create-folder")
 	static homeIcon = document.getElementById("home-icon")	
-	static BackBtn = document.querySelector(".Folder-map .Back i")
+	static BackBtn = document.querySelector(".Folder-map .Back i");
 	static bodyParams = { // default for body
 		F_num: 0,
 		F_id: "F-0",

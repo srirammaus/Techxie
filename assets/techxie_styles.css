@@ -313,7 +313,7 @@ a{
 }
 .gallery-container{
 	display: block;
-	postion: relative;
+	position: relative;
 	width: 100%;
 	margin:60px 0px 0px 0px;
 	/*background-color: grey;*/

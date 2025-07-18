@@ -147,6 +147,7 @@ function uploadFile (URL,body,method="POST") {
         })
     })
 }
+
 function getCurrentFolder () {
      /** This function has to get the current folder F_num */
      let currentF_num = sessionStorage.getItem("F_num")

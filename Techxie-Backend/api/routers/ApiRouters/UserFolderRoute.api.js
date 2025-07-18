@@ -16,5 +16,8 @@ router.post('/delFolder',fetchFolder.MiddleWare(3),function(req,res){ //del fold
 router.post('/getFolderInfo',fetchFolder.MiddleWare(5),function(req,res){ //get folder info 
     
 })
+router.post("/rename",fetchFolder.MiddleWare(6),function(req,res) {
+
+})
 
 module.exports = router

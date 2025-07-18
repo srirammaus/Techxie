@@ -43,6 +43,20 @@ export class IfrPage {
     loadElements(){
         
     }
+    /**
+     * do same like webdrive-1.js having 
+     */
+    Rename () {
+        /**get the new folder F_num 
+         * 
+        */
+        IfrElements.FolderBtn().forEach(element => {
+            element.addEventListener("click",()=>{
+                console.log("Rename clicked")
+            })
+        });
+
+    }	
     static IfrProcessDimension(){
         //setting body height
         IfrElements.body().style.setProperty("overflow-y","hidden")

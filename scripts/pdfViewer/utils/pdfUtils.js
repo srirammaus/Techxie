@@ -26,7 +26,7 @@ const MIN_WIDTH = 800;
 const HOME = "/webdrive.html";
 
 const _File = {};
-setFile("joint.pdf");
+setFile("Temp File");
 sideNav_();
 back_();
 var options = {
@@ -72,10 +72,13 @@ var options = {
 
 
 var pdfElem =document.querySelector(".maindoc");
-var pdfViewer = new PDFjsViewer($('.maindoc'), options);
+var pdfViewer = new PDFjsViewer($('.maindoc'), options); 
+/**
+ * This loadDocument is the place where you load the files ,
+ * The files should be open in new 
+ */
 
-
-pdfViewer.loadDocument("/scripts/pdfViewer/components/elements/joint.pdf").then(function(){
+pdfViewer.loadDocument(getFile().URI).then(function(){
   defaults_(pdfViewer)
 })
 
@@ -105,14 +108,15 @@ function defaults_ (pdfViewer) {
 
 }
 function setFile (filename){
-  var dir  = "/scripts/pdfViewer/components/elements/";
-  var URL = "http://192.168.43.98:3000" + dir ;
-  var URI = URL + filename; // file link
+  // var dir  = "/scripts/pdfViewer/components/elements/";
+  // var URL = "http://192.168.43.98:3000" + dir ;
+  // var URI = URL + filename; // file link
 
-  if(Object.keys(_File).length < 4 && Object.keys(_File).length >= 0) { //here may cause bug if there is no second check and add exception later 
-    _File.dir = dir;
-    _File.URL = URL;
-    _File.URI = URI;
+  let url = new URL(window.location.href)
+  let srcURL = url.searchParams.get("src");
+
+  if(Object.keys(_File).length < 2 && Object.keys(_File).length >= 0) { //here may cause bug if there is no second check and add exception later 
+    _File.URI = srcURL;
     _File.filename = filename;
   }
 
@@ -244,7 +248,7 @@ function sideNav_ (){
       pdfThumbnails.setAcitvePage = function(pageno) {
         console.log(pageno)
       }.bind(pdfThumbnails)
-      pdfThumbnails.loadDocument("/scripts/pdfViewer/components/elements/joint.pdf").then()
+      pdfThumbnails.loadDocument(getFile().URI).then()
      
 
     }();

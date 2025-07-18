@@ -18,7 +18,9 @@ import apiConfig from '/scripts/utils/apiConfig.js';
 
 function initializeGlobalEventListeners () {
     window.addEventListener("load",function(){
+        generalEventListeners()
         homeElementListener();  //This can be any anywhere because of btn
+        renameFolder()
         
     });
     IfrElements.DoneBtn.forEach(function(e,i) {
@@ -32,21 +34,169 @@ function initializeGlobalEventListeners () {
     
 }
 
+function getFileInfoFunc (elem) {
+    let URL = apiConfig.getFileInfo;
+    let method = "POST";
+    let username,userID,f_id;
+    username = document.cookie.split(";")[0]
+    userID = document.cookie.split(";")[1]
+    username  =  username.substring(9).trim()
+    userID = userID.substring(8).trim()
+    f_id = elem.getAttribute("id");
+    let body = {
+        userID:userID,
+        username:username,
+        f_id:f_id
+    }
+    IfrPageFuncLib.getFileInfo(URL,body,method).then((result) => {
+        let URL = JSON.parse(result)?.message?.URI
+        cachedFileURLs(f_id,URL,elem)
+    })
+    
+}
+function loadFiles (f_id ,URL_,elem) {
+    console.log(f_id,URL_)
+    sessionStorage.setItem("srcURL",URL_);
+    console.log(elem)
+    let elem_name = elem.children[24].children[0].innerHTML;
+    let ext = elem_name.split(".").pop();
+    switch (ext) {
+        case "pdf":
+            viewPdfFile()
+            break;
+        case "jpeg":
+        case "jpg":
+        case "JPG":
+        case "JPEG":
+            viewImageFile()
+            break;
+        case "mp4":
+        case "mkv":
+            viewVideoFile()
+        default:
+            break;
+    }
+    // IfrPageFuncLib.viewFile(URL_).then((result)=>{
+    //     console.log(result)
+    // })
+}
+function fileURLsCache (func) {
+    let cache = new Map() 
 
-function more_(Element){
-        console.log(Element)
-        Element = Element.nextElementSibling
+    return function (elem_f_id,URL_,elem) {
+        if(cache.has(elem_f_id)) {
+            console.log(cache.get(elem_f_id))
+            return func(elem_f_id,cache.get(elem_f_id),elem)
+        }
+        let func_ = func(elem_f_id,URL_,elem)
+        cache.set(elem_f_id,URL_)
+        return func_
 
-        if(window.getComputedStyle(Element).display === "block"){
+    }
+}
+let cachedFileURLs = fileURLsCache(loadFiles)
+function viewPdfFile () {
+    let srcURL = sessionStorage.getItem("srcURL")
+    let URL = apiConfig.pdfViewer + `?src=${srcURL}`
+    window.open(URL,"_blank")
+    
+}
+function viewImageFile () {
+    let gallery_container = IfrElements.gallery_container;
+    
+    if(window.getComputedStyle(gallery_container).display == "none") {
+        gallery_container.style.display = "block";
+        gallery_container.querySelector(".main-img").src = sessionStorage.getItem("srcURL")
+    }
+    
+}
+function viewVideoFile () {
+    let videoContainer = IfrElements.videoContainer;
+    if(window.getComputedStyle(videoContainer).display == "none") {
+        videoContainer.style.display = "flex"
+        videoContainer.querySelector("video").src = sessionStorage.getItem("srcURL")
+    }
+}
+function generalEventListeners () {
+    window.addEventListener("click",(e) => { 
+        IfrPageFuncLib.defaultStyles(e)
+
+    })
+    IfrElements.small_Folder_new_name.forEach(element => {
+        element.addEventListener("click",(e)=>{
+            e.stopPropagation()
+        })
+    });
+}   
+function renameFolder () {
+
+    window.addEventListener("storage",(e)=>{
+        if(e.storageArea == sessionStorage) {
+
+            onRenameFolder();
+        }
+    })
+
+    // let body = {
+
+    // }
+    // IfrPageFuncLib.rename(apiConfig.rename,)
+}
+function onRenameFolder () {
+    let username = document.cookie.split(";")[0]
+    let userID = document.cookie.split(";")[1]
+
+    username  =  username.substring(9).trim()
+    userID = userID.substring(8).trim()
+
+    let body = { 
+        username:username,
+        userID:userID,
+    }
+    console.log("code reached here")
+    let elemF_id  = sessionStorage.getItem("renameFolder")
+    let elem = IfrElements.getSelectedFolder(elemF_id).querySelector("input");
+    console.log("code reached here")
+    elem.addEventListener("change",(e) =>{
+        //set limit length
+        console.log("Code not reached..")
+        elem.onkeyup = (ev)=>{
+            console.log("Enterd")
+            if(ev.key == "Enter") {
+                let F_name = e.target.value;
+                body.F_num = elemF_id.split("-")[1];
+                body.F_name = F_name;
+            }
+            sessionStorage.removeItem("renameFolder")
+            IfrPageFuncLib.rename(apiConfig.renameFolder,body).then((result)=>{
+            let body_ = {
+                F_num: IfrPageFuncLib.getCurrentFolder()
+            }
+                loadFrame("home",body_)
+            })
+        }
             
+    })
+
+        // IfrElements.getSelectedFolder()
+    
+}
+function more_(Element){
+        let F_id = Element.parentElement.getAttribute("fo_id") ?? Element.parentElement.getAttribute("f_id")
+        console.log(F_id)
+
+        Element = Element.nextElementSibling
+        if(window.getComputedStyle(Element).display === "block"){
+            sessionStorage.removeItem("morePopBox")
             Element.style.display = "none";
             // ElementBtn.style.setProperty('z-index',0)
         }else {
             IfrElements.more.forEach(function(element,i){
-                element.style.display = "none";
+                sessionStorage.removeItem("morePopBox")
+                element.style.display = "none" ;
             })
-            
-            Element.style.display = "block";
+            sessionStorage.setItem("morePopBox",F_id)
+            Element.style.display = "block" ;
         }
         
 }
@@ -66,38 +216,37 @@ function moreItemListeners (elem) {
                             //delete
                             //you have to make a check here dont forget put it later , may be there may nnot be a cokie
                             // if there any erroo ,then it pases to next page ,while clikcing delete
-                            let username = document.cookie.split(";")[0]
-                            let userID = document.cookie.split(";")[1]
-                            let Fo_id = elem.parentElement.getAttribute("Fo_id");
-                            let f_id = elem.parentElement.getAttribute("f_id")
+                            var username = document.cookie.split(";")[0]
+                            var userID = document.cookie.split(";")[1]
+                            var Fo_id = elem.parentElement.getAttribute("Fo_id");
+                            var f_id = elem.parentElement.getAttribute("f_id")
                             if(Fo_id != null || Fo_id != undefined) {
-                                let F_num = Fo_id.split("-")[1]
+                                var F_num = Fo_id.split("-")[1]
                                 username  =  username.substring(9).trim()
                                 userID = userID.substring(8).trim()
-                                let body = {
+                                var body = {
                                     userID: userID,
                                     username: username,
                                     F_num:F_num,
 
                                 }
-                                console.log("the F_num is " + F_num)
                                 IfrPageFuncLib.delFolder (apiConfig.delFolder,body).then((result)=>{
-                                    let body_ = {
+                                    var body_ = {
                                         F_num: IfrPageFuncLib.getCurrentFolder()
                                     }
                                     loadFrame("home",body_)
                                 })
                             }else {
-                                //For file deletion
+                                //For file devarion
                                 username  =  username.substring(9).trim()
                                 userID = userID.substring(8).trim()
-                                let body = {
+                                var body = {
                                     userID:userID,
                                     username:username,
                                     f_id:f_id,
                                 }
                                 IfrPageFuncLib.delFile(apiConfig.delFile,body).then((result) =>{
-                                    let body_ = {
+                                    var body_ = {
                                         F_num: IfrPageFuncLib.getCurrentFolder()
                                     }
                                     loadFrame("home",body_)
@@ -113,6 +262,35 @@ function moreItemListeners (elem) {
                             //info
                             // IfrPageFuncLib.
                             break;
+                        case 3:
+                            //rename
+                            /**
+                             * listen for click 
+                             * then change the a to input field by toggling
+                             * add the folder id the F_id and add it in the session Folder
+                             * rename Folder itself having lo
+                             */
+                            
+
+
+                            var Fo_id = elem.parentElement.getAttribute("Fo_id");
+                            var f_id = elem.parentElement.getAttribute("f_id")
+                            if(Fo_id != null || Fo_id != undefined) {
+                                if(sessionStorage.getItem("renameFolder")){
+                                    var element = document.getElementById(sessionStorage.getItem("renameFolder"));
+                                    element.querySelector('div[attr="small-Folder-name"]').classList.toggle("hide-name");
+                                    element.querySelector('input[attr="small-Folder-new-name"]').classList.toggle("show-input")
+                                }
+                                var element = document.getElementById(Fo_id);
+                                element.querySelector('div[attr="small-Folder-name"]').classList.toggle("hide-name");
+                                element.querySelector('input[attr="small-Folder-new-name"]').classList.toggle("show-input")
+                                sessionStorage.setItem("renameFolder",Fo_id?Fo_id: "F-" +1);
+                                onRenameFolder()
+                            }else {
+                                //For file devarion
+                            }
+
+                           
                         default:
                             break;
                     }
@@ -139,8 +317,6 @@ function moreItemsContentListeners (){
  */
 function homeElementListener () {
     let mainPopBox = IfrElements.mainPopBox;
-    
-
     IfrElements.FolderBtn().forEach((elem)=>{
         elem.addEventListener("click",function(e){
             IfrPageFuncLib.cachePage(IfrPageFuncLib.getCurrentFolder())
@@ -149,7 +325,7 @@ function homeElementListener () {
     })
     IfrElements.FileBtn().forEach((elem)=>{
         elem.addEventListener("click",function(){
-            console.log( "clicked"+splitID(elem.id))
+            getFileInfoFunc(elem)
         })
     })
     IfrElements.moreBtn().forEach((elem)=>{
@@ -162,6 +338,7 @@ function homeElementListener () {
     })
 
 }
+
 function nextPage (elem) {
     //srcdoc might impact performance
     // let sessionSotrage = new sessionStorage();

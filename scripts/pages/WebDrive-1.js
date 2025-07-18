@@ -7,6 +7,7 @@ import * as Weblib from "/scripts/lib/webdrive.lib.js";
 import pageURLs from "/scripts/utils/pageURLs.js";
 import apiConfig from '/scripts/utils/apiConfig.js';
 import * as WebDrivepageFunc2 from "/scripts/pages/WebDrivepageFunc2.js"
+import IfrElements from '../lib/Ifrlib/IfrElements.lib.js';
 /**
  * my category
  * onload
@@ -37,6 +38,7 @@ export class WebDrive {
 		this.createFolder = Elements.createFolder;
 		this.addFiles = Elements.addFiles ;
 		this.addFilesMenu = Elements.addFilesMenu;
+		this.iframe_element = Elements.iframe_element;
 
 		//Run	
 		this.header();
@@ -63,17 +65,14 @@ export class WebDrive {
 			this.mainFunc();
 			this.addFiles_();
 			this.upload();
-			this.createFolder_()
 			this.goBack();
+			this.createFolder_()
 
 			//By default the Element.bodypararms.F_num is zero , so dont need to get that from the session storage
 			//page url is now temporary
 			Weblib.fetchIfrPage(Elements.iframe_element,pageURLs.home,"POST",Elements.bodyParams).then((ifr) => {
-					WebDrive.iframe_();
-				
+					WebDrive.iframe_();	
 			})
-		
-		
 			
 		})
 
@@ -87,8 +86,6 @@ export class WebDrive {
 			}
 		})
 	}
-
-
 	
 	header (){ 
 	
@@ -146,15 +143,19 @@ export class WebDrive {
 	addFiles_() {
 		let addFilesMenu = this.addFilesMenu;
 		
-		this.addFiles.addEventListener("click",function(e){
-			e.stopPropagation()
-			if(window.getComputedStyle(addFilesMenu).display == "none" ){
+		// this.addFiles.addEventListener("click",function(e){
+		// 	e.stopPropagation()
+		// 	if(window.getComputedStyle(addFilesMenu).display == "none" ){
 
-				addFilesMenu.style.display = "flex"
-			}else {
-				addFilesMenu.style.display = "none"
+		// 		addFilesMenu.style.display = "flex"
+		// 	}else {
+		// 		addFilesMenu.style.display = "none"
 
-			}
+		// 	}
+		// })
+		this.addFiles.addEventListener("click",(e)=>{
+			e.stopPropagation();
+			addFilesMenu.classList.toggle("show")
 		})
 	}
 	upload () {
@@ -165,16 +166,39 @@ export class WebDrive {
 		})
 		// Weblib.uploadFile
 	}
-	createFolder_ () {
-		this.createFolder.addEventListener("click",function(){
-			WebDrivepageFunc2.createFolder_()
+	createFolder_ () {	
+	
+		this.createFolder.addEventListener("click",(e)=>{
+			
+			WebDrivepageFunc2.createFolder_().then((result)=>{
+				result = JSON.parse(result)
+				if(result.info != null || result.info != undefined) {{
+					let F_id = result.info.F_id;
+					Elements.iframe_().then((elem)=>{
+						if(elem[0]){
+							console.log(F_id)
+							let element = elem[2].querySelector("#"+F_id);
+							element.querySelector('div[attr="small-Folder-name"]').classList.toggle("hide-name");
+							element.querySelector('input[attr="small-Folder-new-name"]').classList.toggle("show-input")
+							// element.classList.add(".show-input")
+							sessionStorage.setItem("renameFolder",F_id?F_id: "F-" +1);
+							//After this balance process has been undertaken by iframe,In iframe im adding input lisnter
+						}
+					})
+				}}
+			})
+
 		})
 	}
+	
 	goBack () {
 		Elements.BackBtn.addEventListener("click",function(){
 			// Weblib.cacheIfrPage(Elements.iframe_element,pageURLs.home,Weblib.getCurrentFolder())
 			WebDrivepageFunc2.Back()
 		})
+	}
+	photoViewer () {
+
 	}
 	/**
 	 * The lib function must be promise or async await
