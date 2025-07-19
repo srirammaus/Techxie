@@ -33,7 +33,7 @@ dotenv.config({path:'ADDR.env'});
 
 const HOST =process.env.HOST ;
 const PORT = process.env.PORT;
-
+const os = require("os")
 var http = require('http')
 var path = require('path')
 var bodyParser = require('body-parser');
@@ -99,16 +99,33 @@ app.all('*', function (req, res,next) { //useful // 404
  * Try .. catch will pass them to respected Error Middleware
  */
 try {
+function getLocalIpAddress() {
+  const networkInterfaces = os.networkInterfaces();
+  for (const interfaceName in networkInterfaces) {
+    const addresses = networkInterfaces[interfaceName];
+    for (const address of addresses) {
+      // Filter for IPv4 addresses that are not internal (loopback)
+      if (address.family === 'IPv4' && !address.internal) {
+        return address.address;
+      }
+    }
+  }
+  return 'No local IP address found';
+}
 
-   let service =app.listen(PORT,HOST,(err) =>{
+const localIp = getLocalIpAddress();
+console.log(localIp)
+   let service =app.listen(PORT,localIp,(err) =>{
       if(err) console.log(err + "Err")
+      console.log(PORT)
+      console.log(HOST)
       var ADDR = service.address().address;
       var PORT = service.address().port;
       console.log("Running in http://%s : %s",ADDR , PORT);
    })
 }catch(err) {
 
-   next(err);
+   console.log(err.message)
    
 }
 
