@@ -4,6 +4,8 @@
 import Elements from '/scripts/lib/Elements.lib.js';
 import * as Weblib from "/scripts/lib/webdrive.lib.js";
 import pageURLs from "/scripts/utils/pageURLs.js";
+import * as WebDrivepageFunc2 from "/scripts/pages/WebDrivepageFunc2.js"
+
 // export 
 
 export class WebDrive {
@@ -22,7 +24,13 @@ export class WebDrive {
 		this.FILE = Elements.FILE;
 		this.URL = Elements.URL;
 		this.extension = Elements.extension;
-	
+		this.driveUpload = Elements.driveUpload;
+		this.driveUploadInput = Elements.driveUploadInput;
+		this.createFolder = Elements.createFolder;
+		this.addFiles = Elements.addFiles ;
+		this.addFilesMenu = Elements.addFilesMenu;
+		this.iframe_element = Elements.iframe_element;
+		
 		
 		//Run
 		this.OnLoad();
@@ -44,6 +52,7 @@ export class WebDrive {
 				console.log("i happend web 2 resize ")
 				this.header();
 				this.main_();
+		
 				
 				WebDrive.iframe_()
 			}
@@ -51,7 +60,10 @@ export class WebDrive {
 	}
 	OnLoad () {
 		window.addEventListener('load',()=>{
-	
+			this.addFiles_()
+			this.upload()
+			this.goBack()
+			this.createFolder_()
 			Weblib.fetchIfrPage(Elements.iframe_element,pageURLs.home,"POST",Elements.bodyParams).then((ifr) => {
 				WebDrive.iframe_();
 				
@@ -153,8 +165,32 @@ export class WebDrive {
 	}
 	createFolder_ () {	
 	
-		this.createFolder.addEventListener("click",()=>{
-			WebDrivepageFunc2.createFolder_()
+		this.createFolder.addEventListener("click",(e)=>{
+			
+			WebDrivepageFunc2.createFolder_().then((result)=>{
+				result = JSON.parse(result)
+				if(result.info != null || result.info != undefined) {{
+					let F_id = result.info.F_id;
+					Elements.iframe_().then((elem)=>{
+						if(elem[0]){
+							console.log(F_id)
+							let element = elem[2].querySelector("#"+F_id);
+							element.querySelector('div[attr="small-Folder-name"]').classList.toggle("hide-name");
+							element.querySelector('input[attr="small-Folder-new-name"]').classList.toggle("show-input")
+							// element.classList.add(".show-input")
+							sessionStorage.setItem("renameFolder",F_id?F_id: "F-" +1);
+							//After this balance process has been undertaken by iframe,In iframe im adding input lisnter
+						}
+					})
+				}}
+			})
+
+		})
+	}
+	goBack () {
+		Elements.BackBtn.addEventListener("click",function(){
+			// Weblib.cacheIfrPage(Elements.iframe_element,pageURLs.home,Weblib.getCurrentFolder())
+			WebDrivepageFunc2.Back()
 		})
 	}
 	reload() {

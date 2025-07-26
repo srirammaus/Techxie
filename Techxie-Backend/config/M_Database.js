@@ -1,12 +1,19 @@
 //Mongo Db Database -- mongo db database works on DCD - 1.database 2.collection .document .[i.e:our current prj data is db,user datails is collection, document what we are saving]
 var mongoclient = require('mongodb').MongoClient;
 var HOST,USERNAME,PASSWORD,DATABASE_NAME,PORT;
-HOST = "mongodb.railway.internal";
+
+HOST = "localhost";
 PORT = "27017";
-USERNAME = "mongo";
-PASSWORD = "ctxNOedMVDzgpqLbBbXVUiTDJtonnNSs";
+USERNAME = "";
+PASSWORD = "";
 DATABASE_NAME = "data";
-var myURL = "mongodb://mongo:ctxNOedMVDzgpqLbBbXVUiTDJtonnNSs@gondola.proxy.rlwy.net:33508"
+var myURL = "mongodb://"+ HOST +":" +PORT+"/";
+// HOST = "mongodb.railway.internal";
+// PORT = "27017";
+// USERNAME = "mongo";
+// PASSWORD = "ctxNOedMVDzgpqLbBbXVUiTDJtonnNSs";
+// DATABASE_NAME = "data";
+// var myURL = "mongodb://mongo:ctxNOedMVDzgpqLbBbXVUiTDJtonnNSs@gondola.proxy.rlwy.net:33508"
 // var myURL = "mongodb://"+ HOST +":" +PORT+"/";
 var ERR;
 function getConnection(cb){

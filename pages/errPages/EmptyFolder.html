@@ -7,8 +7,239 @@
   <meta charset="utf-8">
   <title></title>
   <link href="style.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fugaz+One&family=Lemon&family=Poppins:wght@200&family=Roboto:ital,wght@1,100;1,300&display=swap" rel="stylesheet">
+
+  	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
 </head>
+<style>
+    :root{
+    --primary-color: #ffff33;
+    --secondary-color: rgba(204, 255, 255, 0.3);
+    --font-primary: 'Poppins', sans-serif;
+    --third-color: #F1F1F1;
+    --four-color: #C3E0E0;
+    --icons-color:#00E0FF;
+
+    --bg:#0B0C1A;
+}
+
+
+body {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+}
+a {
+    color: var(--third-color);
+}
+h2 {
+    color: var(--third-color);
+    font-family: 'Lemon', serif;
+
+}
+i {
+    color: var(--icons-color);
+
+}
+p {
+    color:var(--third-color) ;
+}
+  /* webdrive-1 */
+@media screen and (min-width:800px) {
+.ifr-Folder-map {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    width: 100%;
+    height: 100px;
+    flex: 0 0 auto;
+}
+.ifr-Folder-map > .navigation-wrapper {
+    width: 100%;
+    height: 100%;
+    margin:0;
+    align-items: center;
+    justify-content:flex-start;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 0 0 auto;
+}
+
+.navigation-wrapper .navigation-wrapper-items {
+    display: flex;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    width: 80%;
+
+}
+.navigation-wrapper .navigation-wrapper-items .hidden {
+    /* display: none; */
+}
+.navigation-wrapper .navigation-wrapper-items > div {
+    display: inline-flex;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    width: 5%;
+    
+}
+.ifr-Folder-map  div .fm-Fname-a {
+    /*font-family: 'Poppins', sans-serif;*/
+    font-family: 'Lemon', serif;
+    width: 30%;
+    margin: 0;
+    align-items:center;
+    justify-content: start;
+    text-align: start;
+}
+.ifr-Folder-map  div .fm-Fname-root {
+    align-items:center;
+    justify-content: center;
+    text-align: center;
+}
+.fm-Fname a {
+	font-size:100%;
+}
+.fm-Fname i {
+	font-size:250%
+}
+/* .navigation-wrapper-items .ls-fm-Fname a {
+    display:inline-block;
+    width:20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+} */
+
+.navigation-wrapper-items div  i {
+    margin: 0 0 0 0%;
+    position:relative;
+    display: block;
+    /* z-index:1000; */
+}
+.navigation-wrapper-items div a {
+    overflow:hidden;
+    white-space:nowrap;
+    margin: 0;
+}
+.Folder-wrapper > div {
+    display: inline-flex;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+
+}
+/* webdrive-2 */
+@media screen  and (max-width:800px){
+.ifr-Folder-map {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    width: 100%;
+    height: 100px;
+    flex: 0 0 auto;
+}
+.ifr-Folder-map > .navigation-wrapper {
+    width: 100%;
+    height: 100%;
+    margin:0;
+    align-items: center;
+    justify-content:flex-start;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 0 0 auto;
+}
+
+.navigation-wrapper .navigation-wrapper-items {
+    display: flex;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    width: 80%;
+
+}
+.navigation-wrapper .navigation-wrapper-items .hidden {
+    /* display: none; */
+}
+.navigation-wrapper .navigation-wrapper-items > div {
+    display: flex;
+    position:relative;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    width: 15%;
+    
+}
+.ifr-Folder-map  div .fm-Fname-a {
+    /*font-family: 'Poppins', sans-serif;*/
+    font-family: 'Lemon', serif;
+    width: 30%;
+    margin: 0;
+    align-items:center;
+    justify-content: start;
+    text-align: start;
+    background-color: none;
+}
+.ifr-Folder-map  div .fm-Fname-root {
+    align-items:center;
+    justify-content: center;
+    text-align: center;
+}
+.fm-Fname a {
+	font-size:100%;
+}
+.fm-Fname i {
+	font-size:250%
+}
+/* .navigation-wrapper-items .ls-fm-Fname a {
+    display:inline-block;
+    width:20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+} */
+
+.navigation-wrapper-items div  i {
+    margin: 0 0 0 0%;
+    position:relative;
+    display: block;
+    /* z-index:1000; */
+}
+.navigation-wrapper-items div a {
+    overflow:hidden;
+    white-space:nowrap;
+    margin: 0;
+}
+.Folder-wrapper > div {
+    display: inline-flex;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+
+}
+</style>
 <body>
+  		<div class="ifr-Folder-map" >
+			<!-- <div class="Home"><i class="mdi mdi-home"></i></div> -->
+			<div class="navigation-wrapper">
+				<div class="navigation-wrapper-items" id="navigationWrapperItems">
+					<div class="fm-Fname fm-Fname-root"><a> .</a> <i class="mdi mdi-chevron-right"></i></div>
+					<div class="fm-Fname fm-Fname-a"><a></a> <i class="mdi mdi-chevron-right"></i></div>
+					
+				</div>
+			</div>
+			<div class="after-selected">
+
+			</div>
+		</div>
   <div>
     <h2 >Empty Folder</h2>
   </div>
@@ -23,9 +254,16 @@
     }
   </style>
   <script>
-    !function(){
-      console.log("wentfine change ")
-    }();
+    console.log(navigationWrapperItems.children[1].children[0],"This is default")
+    if(sessionStorage.getItem("F_num")!= 0  && sessionStorage.getItem("F_num") != undefined) {
+        // let parentFolder = IfrPageFuncLib.getParentFolderName()
+        let currentFolder = sessionStorage.getItem("F_num")
+        let parentFolderName = sessionStorage.getItem("pageTracker");
+        parentFolderName = JSON.parse(parentFolderName)[currentFolder];
+        parentFolderName = parentFolderName ? parentFolderName.split("-")[1]: ".";
+        navigationWrapperItems.children[1].children[0].innerHTML = parentFolderName ? parentFolderName:"Default"
+
+    } 
   </script>
 </body>
 

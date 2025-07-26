@@ -33,6 +33,7 @@ export class IfrPage {
                 }
 		})
     }
+    
     loadElements(){
     }
     static IfrProcessDimension(){

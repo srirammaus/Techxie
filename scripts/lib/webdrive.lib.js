@@ -29,7 +29,7 @@ function cacheMedia (f_num) {
 
 }
 
-function pageTracker_ (key = null,value = null){
+function pageTracker_ (key = null,value = null,F_name = null){
     /**
      * set the pageTracker
      * if both key and value is null then it should be set to default
@@ -47,7 +47,7 @@ function pageTracker_ (key = null,value = null){
         console.log(val)
         let clone = Object.assign({},val);
         console.log(clone[key])
-        clone[key]= value;
+        clone[key]= value + "-" + "root"; 
         // console.log(JSON.stringify(clone))
         sessionStorage.setItem("pageTracker",JSON.stringify(clone));
     }
@@ -58,7 +58,8 @@ function getLastPage () {
     let currentFolder = getCurrentFolder();
     let parentFolder = sessionStorage.getItem("pageTracker");
     parentFolder = JSON.parse(parentFolder)[currentFolder];
-    return [currentFolder ,parentFolder];
+    parentFolder = parentFolder ? parentFolder.split("-")[0]: undefined;
+    return [currentFolder ,parentFolder]; //.split("-")[0]
 
 }
 function removePageTrackerItem (key) {
@@ -163,6 +164,12 @@ function setCurrentFolder (F_num) {
 function setParentFolder (P_F_num) {
     sessionStorage.setItem("P_F_num",P_F_num)
 }
+function getParentFolderName (){
+    sessionStorage.getItem("P_F_name")
+}
+function setParentFolderName (F_name) {
+    sessionStorage.setItem("P_F_name",F_name)
+}
 function createFolder (URL,body,method="POST") {
 
       return new Promise((resolve,reject)=>{
@@ -213,6 +220,8 @@ export {fetchPage,
     ,cacheIfrPage,
     isCachedPage,
     getParentFolder,
+    setParentFolderName,
+    getParentFolderName,
     getLastPage,
     pageTracker_,
     removePageTrackerItem,

@@ -79,7 +79,7 @@ function Back () {
     if(currentPage != undefined && currentPage != null && lastPage !=undefined && lastPage != undefined) {
         let page = "home";
         loadFrame(page,body,"POST");
-        console.log(currentPage,lastPage)
+        // console.log(currentPage,lastPage)
         Weblib.setCurrentFolder(lastPage)
         Weblib.removePageTrackerItem (currentPage)
         //Now here actually i changed the current folder , so there shoul be a new Weblib.getLastPage needed

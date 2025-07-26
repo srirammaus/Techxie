@@ -51,7 +51,7 @@ function fetchIfrPageFromIfr (URL,body,method= "POST") {
 function cache () {
 
 }
-function pageTracker_ (key = null,value = null){
+function pageTracker_ (key = null,value = null,F_name){
     /**
      * set the pageTracker
      * if both key and value is null then it should be set to default
@@ -69,12 +69,28 @@ function pageTracker_ (key = null,value = null){
         console.log(val)
         let clone = Object.assign({},val);
         console.log(clone[key])
-        clone[key]= value;
+        clone[key]= value + "-" + F_name;
         // console.log(JSON.stringify(clone))
         sessionStorage.setItem("pageTracker",JSON.stringify(clone));
     }
 
 }
+//May be needed function
+// function getLastPage () {
+//     /**Cache should be implemented later here */
+//     let currentFolder = getCurrentFolder();
+//     let parentFolder = sessionStorage.getItem("pageTracker");
+//     parentFolder = JSON.parse(parentFolder)[currentFolder];
+//     return [currentFolder ,parentFolder];
+
+// }
+// function removePageTrackerItem (key) {
+//     let pageTracker = JSON.parse(sessionStorage.getItem("pageTracker"));
+//     delete pageTracker[key];
+//     sessionStorage.setItem("pageTracker",JSON.stringify(pageTracker))
+
+
+// }
 function delFolder (URL,body,method="POST") {
     return new Promise((resolve,reject)=>{
         fetch(URL,{
@@ -181,6 +197,20 @@ function getParentFolder () {
 function setParentFolder (P_F_num) {
     sessionStorage.setItem("P_F_num",P_F_num)
 }
+function getParentFolderName (){
+    let currentFolder = getCurrentFolder();
+    let parentFolderName = sessionStorage.getItem("pageTracker");
+    parentFolderName = JSON.parse(parentFolderName)[currentFolder];
+    parentFolderName = parentFolderName ? parentFolderName.split("-")[1]: ".";
+    return parentFolderName;
+}
+/**
+ * The below function NOT IN USE becuase pagee tracker have the folder names 
+ * Dont get confused
+ */
+function setParentFolderName (F_name) {
+    sessionStorage.setItem("P_F_name",F_name)
+}
 function splitID(id) { // lib
     id =  id.split("-");
     return id[1];
@@ -246,6 +276,8 @@ export {splitID,
     delFolder,
     viewFile,
     defaultStyles,
+    setParentFolderName,
+    getParentFolderName,
     rename,
         delFile,
         getFileInfo,

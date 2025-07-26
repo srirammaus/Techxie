@@ -1,12 +1,33 @@
 
+:root{
+    --primary-color: #ffff33;
+    --secondary-color: rgb(204, 255, 255,.3);
+    --third-color: #F1F1F1;
+    --four-color: #C3E0E0;
+    --bg:#0B0C1A;
+    --icons-color:#00E0FF;
+
+   /* */
+   }
 body {
 	margin: 0;
 	padding: 0;
 	height: 0;
 	transition: height .5s;
+    background-color: var(--bg);
+
 
 }
+a {
+    color: var(--third-color);
+}
+i {
+    color: var(--icons-color);
 
+}
+p {
+    color:var(--third-color) ;
+}
 .settings {
 	display: flex;
 	width: 100%;
@@ -100,7 +121,7 @@ body {
 		align-items: center;
 		flex-direction:column;
 		color:#1b1111ba;
-		background-color:rgba(255, 255, 255,.8);
+		background-color:rgba(255, 255, 255, 0.08);
 		box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
 		border-radius:5%;
 	}
@@ -158,7 +179,7 @@ body {
 		align-items: center;
 		flex-direction: column;
 		color:#1b1111ba;
-		background-color:rgba(255, 255, 255,.8);
+		background-color:rgba(255, 255, 255, 0.08);
 		box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
 		border-radius:5%;
 		font-family: 'Poppins', sans-serif;
@@ -277,7 +298,7 @@ body {
 		align-items: center;
 		flex-direction:column;
 		color:#1b1111ba;
-		background-color:rgba(255, 255, 255,.8);
+		background-color:rgba(255, 255, 255, 0.08);
 		box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
 		border-radius:5%;
 	}
@@ -329,7 +350,7 @@ body {
 		height: 50%;
 		flex-direction:column;
 		color:#1b1111ba;
-		background-color:rgba(255, 255, 255,.8);
+		background-color:rgba(255, 255, 255, 0.08);
 		box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
 		border-radius:5%;
 	}
@@ -505,7 +526,7 @@ body {
 		align-items: center;
 		flex-direction:column;
 		color:#1b1111ba;
-		background-color: rgba(255, 255, 255, .8);
+		background-color: rgba(255, 255, 255, 0.08);
 		
 
 	}
@@ -563,7 +584,7 @@ body {
 		justify-content: center;
 		align-items: center;
 		color:#1b1111ba;
-		background-color: rgba(255, 255, 255, .8);
+		background-color: rgba(255, 255, 255, 0.08);
 	}
 	.verification-wrapper {
 		display:flex;
@@ -679,7 +700,7 @@ body {
 		align-items: center;
 		flex-direction:column;
 		color:#1b1111ba;
-		background-color: rgba(255, 255, 255, .8);
+		background-color: rgba(255, 255, 255, 0.08);
 	}
 	.phone-items label {
 		display:inline-block;
@@ -729,7 +750,7 @@ body {
 		height: 60%;
 		flex-direction:column;
 		color:#1b1111ba;
-		background-color: rgba(255, 255, 255, .8);
+		background-color: rgba(255, 255, 255, 0.08);
 	}
 	.storage-items .storage-item{
 		display: inline-flex;
@@ -778,7 +799,7 @@ body {
 		align-items: center;
 		flex-direction:column;
 		color:#1b1111ba;
-		background-color: rgba(255, 255, 255, .8);
+		background-color: rgba(255, 255, 255, 0.08);
 		
 	}
 	.password-items label {

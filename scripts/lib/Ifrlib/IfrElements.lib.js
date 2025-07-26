@@ -14,10 +14,12 @@ export default class IfrElements {
     static sections = document.querySelectorAll(".settings > section[class $='-section']");
     static DoneBtn = document.querySelectorAll(".Done-btn")
     static mainPopBox = document.getElementById("mainPopBox");
-	static folder_map = document.querySelector('.Folder-map');
+	static folder_map = document.querySelector('.ifr-Folder-map');
 	static closeBtn = document.querySelectorAll(".close-btn");
 	static gallery_container = document.querySelector(".gallery-container");
 	static videoContainer = document.querySelector(".video-container")
+	static navigationWrapper = document.querySelector(".navigation-wrapper");
+	static navigationWrapperItems = document.querySelector(".navigation-wrapper-items")
 	static small_Folder_new_name = document.querySelectorAll('.small-Folder input[attr="small-Folder-new-name"]')
     static getClickedSection (attr) {
         let elem = document.querySelector(`.settings > section[class=${attr}` );

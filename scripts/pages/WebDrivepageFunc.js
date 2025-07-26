@@ -28,13 +28,15 @@ function GeneralEventListeners(){
         Weblib.setParentFolder(0)
         Weblib.pageTracker_();
     })
-    Elements.body.addEventListener("click",function(e) {
+    window.addEventListener("click",function(e) {
         console.log("Im the first" + window.getComputedStyle(Elements.addFilesMenu).display )
         if(!Elements.addFilesMenu.contains(e.target) && window.getComputedStyle(Elements.addFilesMenu).display != "none" ){
             Elements.addFilesMenu.classList.remove("show")
         }
     })
-    
+    Elements.iframe_element.addEventListener("click",(e)=>{
+        console.log("clicked..")
+    })
 
 }
 
@@ -70,6 +72,7 @@ function sideNav () {
 function loadFrameContent (elemId) {
     Weblib.setCurrentFolder(0);
     Weblib.setParentFolder(0);
+    Weblib.setParentFolderName(".")
     Weblib.pageTracker_();
     switch (elemId) {
         case "0":

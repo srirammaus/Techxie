@@ -21,7 +21,7 @@ function initializeGlobalEventListeners () {
         generalEventListeners()
         homeElementListener();  //This can be any anywhere because of btn
         renameFolder()
-        
+        navigationWrapper()
     });
     IfrElements.DoneBtn.forEach(function(e,i) {
         e.addEventListener('click',function (){
@@ -58,7 +58,7 @@ function loadFiles (f_id ,URL_,elem) {
     console.log(f_id,URL_)
     sessionStorage.setItem("srcURL",URL_);
     console.log(elem)
-    let elem_name = elem.children[24].children[0].innerHTML;
+    let elem_name = elem.children[2].children[0].innerHTML;
     let ext = elem_name.split(".").pop();
     switch (ext) {
         case "pdf":
@@ -132,8 +132,11 @@ function renameFolder () {
 
     window.addEventListener("storage",(e)=>{
         if(e.storageArea == sessionStorage) {
-
-            onRenameFolder();
+            if(sessionStorage.getItem("renameFolder")) {
+                console.log("Storage alteration so error")
+                onRenameFolder();
+                
+            }
         }
     })
 
@@ -153,10 +156,8 @@ function onRenameFolder () {
         username:username,
         userID:userID,
     }
-    console.log("code reached here")
     let elemF_id  = sessionStorage.getItem("renameFolder")
     let elem = IfrElements.getSelectedFolder(elemF_id).querySelector("input");
-    console.log("code reached here")
     elem.addEventListener("change",(e) =>{
         //set limit length
         console.log("Code not reached..")
@@ -204,7 +205,6 @@ function moreItemListeners (elem) {
         //more having three elements they are info,delete , copy
         console.log(elem)
         elem = elem.nextElementSibling;
-        console.log(elem)
 
         //copy 
         
@@ -213,6 +213,8 @@ function moreItemListeners (elem) {
                 if(elem.children[i].contains(e.target) ) {
                     switch (i) {
                         case 0:
+                            e.stopPropagation()
+
                             //delete
                             //you have to make a check here dont forget put it later , may be there may nnot be a cokie
                             // if there any erroo ,then it pases to next page ,while clikcing delete
@@ -272,11 +274,13 @@ function moreItemListeners (elem) {
                              */
                             
 
+                            e.stopPropagation()
 
                             var Fo_id = elem.parentElement.getAttribute("Fo_id");
                             var f_id = elem.parentElement.getAttribute("f_id")
                             if(Fo_id != null || Fo_id != undefined) {
                                 if(sessionStorage.getItem("renameFolder")){
+                                    console.log(Fo_id,f_id)
                                     var element = document.getElementById(sessionStorage.getItem("renameFolder"));
                                     element.querySelector('div[attr="small-Folder-name"]').classList.toggle("hide-name");
                                     element.querySelector('input[attr="small-Folder-new-name"]').classList.toggle("show-input")
@@ -295,7 +299,7 @@ function moreItemListeners (elem) {
                             break;
                     }
                 }
-                e.stopPropagation();
+                // e.stopPropagation();
 
             })
         })
@@ -338,15 +342,29 @@ function homeElementListener () {
     })
 
 }
+function navigationWrapper () {
+    // Shows the last one folders opened
+    // Array.from(IfrElements.navigationWrapperItems.children).forEach(elem=>{
+    //     elem.classList.toggle("hidden")
+    // })
+    console.log("This is default")
+    if(IfrPageFuncLib.getCurrentFolder() != 0  && IfrPageFuncLib.getCurrentFolder() != undefined) {
+        let parentFolder = IfrPageFuncLib.getParentFolderName()
+        IfrElements.navigationWrapperItems.children[1].children[0].innerHTML = parentFolder? parentFolder: "Default"
 
+    } 
+    // console.log(IfrElements.navigationWrapperItems.children)
+}
 function nextPage (elem) {
     //srcdoc might impact performance
     // let sessionSotrage = new sessionStorage();
-    let F_num;
+    let F_num,F_name;
     F_num = IfrPageFuncLib.splitID(elem.id);
-    IfrPageFuncLib.pageTracker_(F_num,IfrPageFuncLib.getCurrentFolder())
+    F_name = elem.children[2].children[0].innerHTML
+    IfrPageFuncLib.pageTracker_(F_num,IfrPageFuncLib.getCurrentFolder(),F_name)
 
-    IfrPageFuncLib.setParentFolder(IfrPageFuncLib.getCurrentFolder())  
+    IfrPageFuncLib.setParentFolder(IfrPageFuncLib.getCurrentFolder()) 
+    IfrPageFuncLib.setParentFolderName("Temp") 
     IfrPageFuncLib.setCurrentFolder(F_num)
    
     let body ={

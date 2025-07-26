@@ -68,14 +68,14 @@ const { errorMonitor } = require('events');
 
 app.engine('Handlebars',Handlebars.engine());
 app.set('view engine','Handlebars');
-app.set('views','../Techxie-Backend/api/routers/views');
+app.set('views','F:/nodejs/projects/Techxie/Techxie-Backend/api/routers/views');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(express.static('../'));
-app.use(express.static("../scripts"))
-app.use(express.static("../pages"))
-app.use(express.static("../pages/errPages"))
+app.use(express.static('F:/nodejs/projects/Techxie/'));
+app.use(express.static("F:/nodejs/projects/Techxie/scripts"))
+app.use(express.static("F:/nodejs/projects/Techxie/pages"))
+app.use(express.static("F:/nodejs/projects/Techxie/pages/errPages"))
 app.use(cookieParser())
 
 app.use(ErrorMiddleware.caughtAnyExceptions)
@@ -114,9 +114,8 @@ function getLocalIpAddress() {
 }
 
 const localIp = getLocalIpAddress();
-const port = 80;
-console.log(localIp + "This is the local IP")
-   let service =app.listen(port,localIp,(err) =>{
+console.log(localIp)
+   let service =app.listen(PORT,HOST,(err) =>{
       if(err) console.log(err + "Err")
       console.log(PORT)
       console.log(HOST)

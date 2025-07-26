@@ -91,11 +91,14 @@ class techxie_{
 		for (let i=0; i< n_project_cards; i++){
 			var project_card = document.createElement("div");
 			var project_Thumbnail = document.createElement("div");
+			var project_Thumbnail_img = document.createElement("img")
 			//we can also use Document.Fragment to store the element instead of array 
 			project_card.className = "project-card";
 			project_Thumbnail.className = "project-Thumbnail"
+			project_Thumbnail_img.src = "/assets/project-thumbnails/techxie.png";
 				project_container.append(project_card)
 				project_card.append(project_Thumbnail);
+				project_Thumbnail.append(project_Thumbnail_img)
 		}
 		btn = document.querySelectorAll(".btn")
 		btn_1_x_y = this.#btn_1.getBoundingClientRect();
@@ -150,7 +153,7 @@ class techxie_{
 	}
 	project_card(){
 		var prj_card,project_Thumbnail,project_card_Desc_container,project_card_Desc,content;//limited content soulfd dbe allowed like 50 words
-		content = "This poject descriptiotn here the stuff here the stuffhere the stuffhere the stuffhere the stuffhere the stuffhere the stuff";
+		content = "TechXie is a student-focused platform to securely upload, manage, and organize files using Node.js, MongoDB, and PHP.";
 		prj_card = document.querySelectorAll(".project-card")
 		project_Thumbnail = document.querySelectorAll(".project-Thumbnail");
 		for (let i in project_Thumbnail){
@@ -159,7 +162,7 @@ class techxie_{
 			project_card_Desc_container.className = "project-card-Desc-container";
 			project_card_Desc.className = "project-card-Desc";
 			if(i == "entries") break; //why this? untill the i reached 5 ther will be no uncaought error[cannot set property of undefined ] but here after 5 in i  there is a string called "entries" idk whether it came from project_Thumbnail or this kind of for in loop , it causes undefined error so it not letting next function work 
-			project_Thumbnail[i].style.backgroundImage = "url('http://techxie.local/asserts/nav-bg.jpg')";
+			project_Thumbnail[i].style.backgroundImage = "url('http://techxie.local/assets/nav-bg.jpg')";
 			prj_card[i].addEventListener("click",function(){
 				window.open("http://bing.com")
 			})
@@ -171,10 +174,27 @@ class techxie_{
 	gallery(){
 		// there are two types of displays they are small width and high height , then another one is 
 		// big width and less height compared to their width 
-		var gallery_container_styles,main_img,gallery_img,top;
+		var gallery_container_styles,main_img,gallery_img,top,gallery_;
 		gallery_container_styles= this.#gallery_container;
 		main_img = document.querySelector(".main-img");
-		gallery_img =  document.querySelector(".gallery-img");
+		gallery_ = document.getElementById("gallery")
+		// You have to get the gallery image data from the db , but now we gonna get this randomly lets say we are having n=10
+		for (let i=0;i<20;i++) {
+			gallery_img =  document.createElement("img");
+			gallery_img.className = "gallery-img";
+			gallery_img.alt = `assets/image-gallery/img-gallery (${1}).png`;
+			gallery_img.setAttribute("img-id",i)
+			if(i % 2 == 0){
+				gallery_img.src = `assets/image-gallery/img-gallery (${i}).png`;
+			}else {
+				console.log(i % 2)
+
+				gallery_img.src = `assets/image-gallery/img-gallery (${i}).jpg`;
+
+			}
+			gallery_.append(gallery_img)
+
+		}	
 		window.addEventListener("load",function(){
 			window.innerWidth < window.innerHeight ? main_img.style.maxHeight = 40/100 * window.innerHeight + "px": main_img.style.maxHeight = 70/100 * window.innerHeight + "px"
 			// gallery_container_styles.style.height = 75/100* window.innerHeight + "px"
@@ -183,7 +203,11 @@ class techxie_{
 			window.innerWidth < window.innerHeight ? main_img.style.maxHeight = 40/100 * window.innerHeight + "px": main_img.style.maxHeight = 70/100 * window.innerHeight + "px"
 			// gallery_container_styles.style.height = 75/100* window.innerHeight + "px"
 		})
-		
+		gallery_.addEventListener("click",(e)=>{
+			let newsrc = e.target.getAttribute("src");
+			main_img.src = newsrc
+			main_img.load()
+		})
 		// gallery_container_styles = this.#gallery_container.getBoundingClientRect();
 		// top = gallery_container_styles.height/2;
 		// a use full one :  but not used in our prjoect document.styleSheets[2].insertRule(`.gallery-container::before,.gallery-container::after {top: ${top}px}`)	
@@ -227,7 +251,7 @@ class techxie_{
 	dump(){
 		console.log("im still alvie")
 	}
-	
+
 }
 new techxie_();
 

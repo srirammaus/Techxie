@@ -85,12 +85,15 @@ class SMTPmailer {
     }
     async sendEmail () {
         const params =await this.getParameters()
+        console.log("---")
+        console.log(await this.getDoc())
+        console.log("---")
         const msg = await this.Transporter().sendMail({
             from:process.env.SRCMAIL,
             to:"srirammaus@gmail.com",
             subject:params.subject.verifyEmail,
             text:"Random Text", 
-            html:this.getDoc(),
+            html: await this.getDoc(),
         })
         // console.log(msg)
     }

@@ -19,14 +19,16 @@
 </head>
 <body>
 		{{!-- Here this is folder navigator > >  > --}}
-		<div class="Folder-map" >
+		<div class="ifr-Folder-map" >
 			<!-- <div class="Home"><i class="mdi mdi-home"></i></div> -->
 			<div class="navigation-wrapper">
 				{{!-- maxiimum llimit three if  more than three "..."--}}
 				<div class="navigation-wrapper-items">
-					<div class="fm-Fname"><a>Folder name</a> <i class="mdi mdi-chevron-right"></i></div>
-					<div class="fm-Fname"><a>Folder name </a></div>
-					<div class="ls-fm-Fname"><a>Folder name</a></div>
+					<div class="fm-Fname"><a> .</a> <i class="mdi mdi-chevron-right"></i></div>
+					<div class="fm-Fname hidden"><a></a> <i class="mdi mdi-chevron-right"></i></div>
+					{{!-- <div class="fm-Fname hidden"><a>Folder name</a> <i class="mdi mdi-chevron-right"></i></div> --}}
+					
+					{{!-- <div class="ls-fm-Fname"><a>Folder name</a></div> --}}
 				</div>
 
 				{{!-- select all btn should be here --}}

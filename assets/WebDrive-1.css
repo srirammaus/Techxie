@@ -1,8 +1,11 @@
 :root{
     --primary-color: #ffff33;
     --secondary-color: rgb(204, 255, 255,.3);
-    --third-color: white;
+    --third-color: #F1F1F1;
     --four-color: #C3E0E0;
+    --bg:#0B0C1A;
+    --icons-color:#00E0FF;
+
    /* */
    }
    
@@ -10,7 +13,17 @@ body {
     display: block;
     margin: 0;
     padding: 0;
-    /* background-color: blue; */
+    background-color: var(--bg);
+}
+a {
+    color: var(--third-color);
+}
+i {
+    color: var(--icons-color);
+
+}
+p {
+    color:var(--third-color) ;
 }
 @supports selector(::-webkit-scrollbar) {
     body::-webkit-scrollbar {
@@ -148,7 +161,7 @@ input[attr= 'search-bar-input'] {
 .search-icon-2 > i {
     display:inline-block;
     position:relative;
-    color:#00000070; 
+    /* color:#00000070;  */
 }
 .search-dropdown {
     /*block*/
@@ -159,7 +172,7 @@ input[attr= 'search-bar-input'] {
     padding: 0;
     z-index:-1;
     /*overflow-y: scroll;*/
-    background: white;
+    background: var(--bg);
     border-bottom-right-radius: 2vw;
     border-bottom-left-radius: 2vw;
     box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
@@ -183,7 +196,6 @@ input[attr= 'search-bar-input'] {
     display: inline-block;
     width: 100%;
     height: 20%;
-    background:white;
     transform: translate(0,40%);
     overflow: hidden;
 
@@ -238,12 +250,12 @@ input[attr= 'search-bar-input'] {
     position: relative;
     width: 100%;
     height:15%;
-    color: #000000bd;
+    /* color: #000000bd; */
 }
 .nav-item:hover {
     scale: 1.1 1.1;
     border-radius: 50px;
-    background: white;
+    /* background: white; */
     box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
 
 }
@@ -342,7 +354,7 @@ input[attr= 'search-bar-input'] {
     height:100%;
     align-items:center;
     justify-content:center;
-    color: #000000bd;
+    /* color: #000000bd; */
 }
 .Folder-map > .Folder-wrapper {
     width: 15%;
@@ -374,9 +386,8 @@ input[attr= 'search-bar-input'] {
     z-index: 100;
     height:100%;
     width:100%;
-    background:white;
+    background-color: var(--bg);
     border-radius: 10px;
-    background: white;
     box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
 }
 .add-files > .dropdown > .dropdown-menu li{
@@ -414,7 +425,7 @@ input[attr= 'search-bar-input'] {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     cursor: pointer;
-    color:#808080;
+    /* color:#808080; */
 
 }
 .Folder-map .sort-by {
@@ -422,8 +433,15 @@ input[attr= 'search-bar-input'] {
     text-align: left;
 }
 
-
-.Folder-map > .navigation-wrapper {
+.ifr-Folder-map {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    width: 100%;
+    height: 15%;
+    flex: 0 0 auto;
+}
+.ifr-Folder-map > .navigation-wrapper {
     width: 100%;
     height: 100%;
     margin:0;
@@ -443,8 +461,11 @@ input[attr= 'search-bar-input'] {
     
 }
 .navigation-wrapper .navigation-wrapper-items {
-    max-width: 25%;
+    max-width: 30%;
     overflow:hidden;
+}
+.navigation-wrapper .navigation-wrapper-items .hidden {
+    /* display: none; */
 }
 .navigation-wrapper .navigation-wrapper-items > div {
     display: inline-flex;
@@ -483,6 +504,20 @@ input[attr= 'search-bar-input'] {
     padding-right:5%;
 
 }
+.ifr-Folder-map > div .fm-Fname {
+    display:inline-flex;
+    /*font-family: 'Poppins', sans-serif;*/
+    font-family: 'Lemon', serif;
+  
+    align-items:center;
+    transform:translate(0%,5%);
+}
+.fm-Fname a {
+	font-size:80%;
+}
+.fm-Fname i {
+	font-size:250%
+}
 .small-frame-items {
     display:flex;
     position: relative;
@@ -492,6 +527,7 @@ input[attr= 'search-bar-input'] {
     overflow-y: scroll;
     flex: 0 0 auto;
 }
+
 @supports selector(::-webkit-scrollbar) { 
     .small-frame-items::-webkit-scrollbar {
         width: 5px;
@@ -523,8 +559,7 @@ input[attr= 'search-bar-input'] {
     width:23%;
     cursor: pointer;
 
-    /*color:#00000070;*/
-    color: #000000a6;
+    /* color: #000000a6; */
     align-items: center;
     
 }
@@ -548,7 +583,7 @@ input[attr= 'search-bar-input'] {
 
 .small-Folder div[attr="small-Folder-name"] a,.small-File div[attr="small-File-name"] a {
     font-family: 'Poppins', sans-serif;
-    color: #000000d4;
+    /* color: #000000d4; */
     font-weight: bold;
     font-size:100%;
     /*transform:translate(-70%,0);  */
@@ -751,7 +786,7 @@ input[attr= 'search-bar-input'] {
     text-align:center;
     justify-content:center;
     align-items:center;
-    color:white;
+    /* color:white; */
     font-family: 'Poppins', sans-serif;
     font-size:65%;
     box-shadow: 1px 1px 15px 5px #aaaaaa,-1px -1px 15px 5px #aaaaaa;
